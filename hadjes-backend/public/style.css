@@ -456,7 +456,36 @@ footer {
     cursor: pointer;
   }
 
+#mobile-sidebar-container {
+  position: relative;
+  z-index: 1000;
+}
 
+#mini-filter-bar {
+  position: relative;
+  z-index: 2;
+}
+
+#sidebar-wrapper {
+  position: absolute;
+  top: 48px;
+  left: 0;
+  right: 0;
+  display: none;
+  transform: translateY(-10px);
+  opacity: 0;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+  background: white;
+  border-radius: 0 0 8px 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+
+#sidebar-wrapper.show-mobile-sidebar {
+  display: block;
+  transform: translateY(0);
+  opacity: 1;
+}
 
 
 
