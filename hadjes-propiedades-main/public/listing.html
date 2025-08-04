@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Listing Detail</title>
+  <link rel="stylesheet" href="style.css" />
+  <!-- Fonts: Exo 2 (headlines) + Open Sans (body) -->
+  <link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@500;700&family=Open+Sans:wght@300;400;600&display=swap" rel="stylesheet">
+
+</head>
+  
+  
+<body class="sidebar-layout"> 
+
+  <header>
+  <div class="header-logo-and-search">
+      <a href="index.html" class="brand-button">Hadjes Propiedades</a>
+
+    <div class="filter-bar">
+      <div class="filter-options">
+      <label><input type="radio" name="operation" value="venta"> VENTA / BUY</label>
+      <label><input type="radio" name="operation" value="alquiler"> ALQUILER / RENT</label>
+      <label><input type="radio" name="operation" value="temporal"> ALQUILER TEMPORAL / TEMPORARY RENT</label>
+    </div>
+
+    <select class="property-type" name="type">
+      <option value="">Propiedad</option>
+      <option value="casa">Casa</option>
+      <option value="departamento">Departamento</option>
+      <option value="edificio">Edificio</option>
+      <option value="cochera">Cochera</option>
+      <option value="local">Local</option>
+      <option value="oficina">Oficina</option>
+      <option value="campo">Campo</option>
+      <option value="lote">Lote</option>
+    </select>
+
+
+    <input name="q" type="text" class="search-input" placeholder="Ubicación / Location, keyword..." /> 
+    <button id="search-button" class="search-button">🔍</button>
+  </div>
+</div>
+
+  </header>
+  
+  // SIDEBAR
+  
+  <div id="sidebar-wrapper">
+  <aside class="sidebar-filters">
+    <form id="sidebar-form">
+      <h3>Filtrar Propiedades</h3>
+
+      <div class="filter-group">
+        <label><input type="radio" name="operation" value="venta"> Venta</label><br>
+        <label><input type="radio" name="operation" value="alquiler"> Alquiler</label><br>
+        <label><input type="radio" name="operation" value="temporal"> Temporal</label>
+      </div>
+
+      <div class="filter-group">
+        <label>Tipo de Propiedad:</label><br>
+        <label><input type="checkbox" name="type" value="casa"> Casa</label><br>
+        <label><input type="checkbox" name="type" value="departamento"> Departamento</label><br>
+        <label><input type="checkbox" name="type" value="oficina"> Oficina</label><br>
+        <label><input type="checkbox" name="type" value="local"> Local</label>
+      </div>
+
+      <div class="filter-group">
+        <label>Ubicación:</label><br>
+        <label><input type="checkbox" name="location" value="belgrano"> Belgrano</label><br>
+        <label><input type="checkbox" name="location" value="palermo"> Palermo</label><br>
+        <label><input type="checkbox" name="location" value="recoleta"> Recoleta</label>
+      </div>
+
+      <div class="filter-group">
+        <label>Ambientes:</label><br>
+        <label><input type="checkbox" name="ambientes" value="1"> 1</label><br>
+        <label><input type="checkbox" name="ambientes" value="2"> 2</label><br>
+        <label><input type="checkbox" name="ambientes" value="3"> 3</label><br>
+        <label><input type="checkbox" name="ambientes" value="4"> 4+</label>
+      </div>
+
+      <div class="filter-group">
+        <label>Precio Mínimo:</label><br>
+        <input type="number" name="priceMin" />
+
+        <label>Precio Máximo:</label><br>
+        <input type="number" name="priceMax" />
+      </div>
+
+      <button id="sidebar-search-button" type="submit">Filtrar</button>
+    </form>
+  </aside>
+</div>
+
+  // SIDEBAR
+
+  
+  <div id="listings">
+    <p>Loading listing...</p>
+  </div>
+
+<script>
+  
+  const params = new URLSearchParams(window.location.search);
+  const slug = params.get('slug');
+  
+  async function fetchListings() {
+    const res = await fetch('https://hadjes-backend.onrender.com/listings');
+    const listings = await res.json();
+
+  // sidebar modification backup reserve 
+    
+    const params = new URLSearchParams(window.location.search);
+
+    const types = params.get('type')?.split(',') || [];
+    const operation = params.get('operation');
+    const locations = params.get('location')?.split(',') || [];
+    const ambientes = params.get('ambientes')?.split(',') || [];
+    const priceMin = parseFloat(params.get('priceMin'));
+    const priceMax = parseFloat(params.get('priceMax'));
+    const keyword = params.get('q')?.toLowerCase() || '';
+
+    const filtered = listings.filter(listing => {
+    const matchOperation = !operation || listing.operation === operation;
+    const matchType = types.length === 0 || types.includes(listing.type);
+    const matchLocation = locations.length === 0 || locations.includes(listing.location);
+    const matchAmbientes = ambientes.length === 0 || ambientes.includes(String(listing.ambientes));
+    const matchPriceMin = isNaN(priceMin) || listing.price >= priceMin;
+    const matchPriceMax = isNaN(priceMax) || listing.price <= priceMax;
+    const matchKeyword = !keyword ||
+      listing.title.toLowerCase().includes(keyword) ||
+      listing.description.toLowerCase().includes(keyword) ||
+      listing.location.toLowerCase().includes(keyword);
+
+    return matchOperation && matchType && matchLocation && matchAmbientes && matchPriceMin && matchPriceMax && matchKeyword;
+  });
+
+  const listingsDiv = document.getElementById('listings');
+  listingsDiv.innerHTML = '';
+
+  if (filtered.length === 0) {
+    listingsDiv.innerHTML = '<p>No se encontraron propiedades que coincidan.</p>';
+    return;
+  }
+
+  filtered.forEach(listing => {
+    const div = document.createElement('div');
+    div.className = 'listing';
+    div.innerHTML = `
+      <a href="listing.html?slug=${listing.slug || listing._id}" style="text-decoration: none; color: inherit;">
+        <div class="listing-box">
+          <img src="${listing.imageUrl}" width="300" />
+          <h3>${listing.title}</h3>
+          <p>${listing.description}</p>
+          <p><strong>Precio:</strong> $${listing.price}</p>
+          <p><strong>Ubicación:</strong> ${listing.location}</p>
+        </div>
+      </a>
+    `;
+    listingsDiv.appendChild(div);
+  });
+}
+
+  // sidebar modification
+  
+  async function fetchSingleListing(slug) {
+  try {
+    const res = await fetch('https://hadjes-backend.onrender.com/listings');
+    const listings = await res.json();
+
+    const listing = listings.find(item => item.slug === slug || item._id === slug);
+
+    const container = document.getElementById('listings');
+    container.innerHTML = '';
+
+    if (!listing) {
+      container.innerHTML = '<p>❌ Listing not found.</p>';
+      return;
+    }
+
+    const div = document.createElement('div');
+    div.className = 'listing-detail';
+    div.innerHTML = `
+      <h2>${listing.title}</h2>
+      <img src="${listing.imageUrl}" width="400" />
+      <p>${listing.description}</p>
+      <p><strong>Price:</strong> $${listing.price}</p>
+      <p><strong>Location:</strong> ${listing.location}</p>
+      <p><strong>Type:</strong> ${listing.type}</p>
+      <p><strong>Operation:</strong> ${listing.operation}</p>
+    `;
+    container.appendChild(div);
+  } catch (err) {
+    console.error('Error loading single listing:', err);
+  }
+}
+  // SIDEBAR FUNCTIONS
+  
+  document.addEventListener('DOMContentLoaded', () => {
+  const sidebarBtn = document.getElementById('sidebar-search-button');
+  if (sidebarBtn) {
+    sidebarBtn.addEventListener('click', function (e) {
+      e.preventDefault();
+
+      const params = new URLSearchParams();
+
+      // Get checked types
+      const types = Array.from(document.querySelectorAll('input[name="type"]:checked')).map(i => i.value);
+      if (types.length) params.set('type', types.join(','));
+
+      // Operation
+      const operation = document.querySelector('input[name="operation"]:checked')?.value;
+      if (operation) params.set('operation', operation);
+
+      // Locations
+      const locations = Array.from(document.querySelectorAll('input[name="location"]:checked')).map(i => i.value);
+      if (locations.length) params.set('location', locations.join(','));
+
+      // Ambientes
+      const ambientes = Array.from(document.querySelectorAll('input[name="ambientes"]:checked')).map(i => i.value);
+      if (ambientes.length) params.set('ambientes', ambientes.join(','));
+
+      // Price min/max
+      const priceMin = document.querySelector('input[name="priceMin"]')?.value;
+      const priceMax = document.querySelector('input[name="priceMax"]')?.value;
+      if (priceMin) params.set('priceMin', priceMin);
+      if (priceMax) params.set('priceMax', priceMax);
+
+      // Redirect to filtered URL
+      window.location.href = `listing.html?${params.toString()}`;
+    });
+  }
+});
+
+  //SIDEBAR FUNCTIONS
+  
+    document.addEventListener('DOMContentLoaded', () => {
+    const btn = document.getElementById('search-button');
+    if (btn) {
+      btn.addEventListener('click', function (e) {
+        e.preventDefault();
+
+        const params = new URLSearchParams();
+
+        // ✅ Keyword input
+        const q = document.querySelector('input[name="q"]')?.value;
+        if (q) params.set('q', q);
+
+        // ✅ Operation radio
+        const operation = document.querySelector('input[name="operation"]:checked')?.value;
+        if (operation) params.set('operation', operation);
+
+        // ✅ Property type dropdown
+        const type = document.querySelector('select[name="type"]')?.value;
+        if (type) params.set('type', type);
+
+        // 🚀 Redirect with all selected filters
+        window.location.href = `listing.html?${params.toString()}`;
+      });
+    }
+  });
+
+  document.addEventListener('DOMContentLoaded', () => {
+  if (slug) {
+    fetchSingleListing(slug);
+  } else {
+    fetchListings();
+  }
+});
+
+</script>
+
+
+</body>
+</html>
