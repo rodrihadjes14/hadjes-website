@@ -12,6 +12,12 @@
   
   
 <body class="sidebar-layout"> 
+  
+  <section id="mini-filter-bar">
+    <span>🔍 Filtrar</span>
+    <button id="expand-filters">⋯</button>
+  </section>
+
 
   <header>
   <div class="header-logo-and-search">
@@ -272,17 +278,16 @@
   
 </script>
   
-<!-- Mobile Sidebar Toggle Button -->
-<button id="sidebar-toggle">⚙️</button>
-
 <script>
-  const toggleBtn = document.getElementById('sidebar-toggle');
-  if (toggleBtn) {
-    toggleBtn.addEventListener('click', () => {
-      document.body.classList.toggle('sidebar-active');
-    });
-  }
+  const expandBtn = document.getElementById('expand-filters');
+  const sidebarWrapper = document.getElementById('sidebar-wrapper');
+
+  expandBtn.addEventListener('click', () => {
+    sidebarWrapper.classList.toggle('show-mobile-sidebar');
+  });
 </script>
+
+
 
 
 </body>
