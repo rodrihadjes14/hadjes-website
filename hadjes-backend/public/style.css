@@ -342,24 +342,28 @@ footer {
   .filter-bar {
     flex-direction: column;
     align-items: stretch;
-    gap: 15px;
-    padding: 20px;
-  }
-
-  .filter-options {
-    display: flex;
-    flex-direction: column;
     gap: 10px;
-    align-items: flex-start;
+    padding: 10px;
   }
 
-  .search-input,
+  .filter-options label {
+    display: block;
+    margin: 5px 0;
+    text-align: left;
+  }
+
   .property-type,
+  .search-input,
   .search-button {
     width: 100%;
     font-size: 1rem;
   }
+
+  .search-button {
+    padding: 10px;
+  }
 }
+
 
 /* FILTER BAR RESPONSIVE FOR MOBILE */
 
@@ -384,26 +388,21 @@ footer {
 
 @media (max-width: 768px) {
   #sidebar-wrapper {
-    position: relative;
     width: 100%;
+    margin: 0 auto 1.5rem auto;
     padding: 1rem;
-    margin-bottom: 1.5rem;
-    border-right: none;
-    border-bottom: 1px solid #ddd;
+    border: none;
     background: #fff;
   }
 
   .sidebar-filters {
     width: 100%;
-    height: auto;
-    padding: 0;
-    border: none;
   }
 
   #sidebar-form {
     display: flex;
-    flex-wrap: wrap;
-    gap: 1rem;
+    flex-direction: column;
+    gap: 1.2rem;
   }
 
   .filter-group {
@@ -412,29 +411,28 @@ footer {
 
   .filter-group label {
     display: block;
-    font-size: 0.95rem;
-    margin-bottom: 5px;
+    margin-bottom: 6px;
+    font-size: 1rem;
   }
 
-  .filter-group input[type="checkbox"],
-  .filter-group input[type="radio"] {
-    margin-right: 6px;
+  input[type="checkbox"],
+  input[type="radio"] {
+    margin-right: 8px;
   }
 
-  input[type="number"] {
+  input[type="number"],
+  #sidebar-search-button {
     width: 100%;
-    padding: 0.5rem;
+    padding: 0.7rem;
     font-size: 1rem;
     box-sizing: border-box;
   }
 
   #sidebar-search-button {
-    width: 100%;
-    padding: 0.8rem;
-    font-size: 1rem;
-    background: black;
+    background-color: black;
     color: white;
     border: none;
     cursor: pointer;
   }
 }
+
