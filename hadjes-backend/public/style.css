@@ -387,7 +387,7 @@ footer {
     align-items: center;
     padding: 0 12px;
     box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
-    z-index: 200;
+    z-index: 999;
   }
 
   body {
@@ -408,7 +408,7 @@ footer {
 #sidebar-wrapper.show-mobile-sidebar {
   display: block;
   position: fixed;
-  top: 48px;
+  top: 56px;
   left: 0;
   right: 0;
   max-height: calc(100vh - 56px);
