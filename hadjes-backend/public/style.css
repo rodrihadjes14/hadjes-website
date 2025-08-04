@@ -337,14 +337,13 @@ footer {
 
 /* FILTER BAR RESPONSIVE FOR MOBILE */
 
-
 @media (max-width: 768px) {
   /* Hide desktop filter bar */
   .filter-bar {
     display: none;
   }
 
-  /* Mini filter toolbar */
+  /* Mini top bar */
   #mini-filter-bar {
     position: fixed;
     top: 0;
@@ -363,6 +362,8 @@ footer {
   body {
     padding-top: 48px;
   }
+}
+
 
   /* Sidebar hidden by default */
   #sidebar-wrapper {
@@ -417,7 +418,7 @@ footer {
     border: none;
     cursor: pointer;
   }
-}
+
 
 
 
