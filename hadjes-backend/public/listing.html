@@ -269,6 +269,19 @@
   }
 });
 
+  
+</script>
+  
+<!-- Mobile Sidebar Toggle Button -->
+<button id="sidebar-toggle">⚙️</button>
+
+<script>
+  const toggleBtn = document.getElementById('sidebar-toggle');
+  if (toggleBtn) {
+    toggleBtn.addEventListener('click', () => {
+      document.body.classList.toggle('sidebar-active');
+    });
+  }
 </script>
 
 
