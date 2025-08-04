@@ -15,7 +15,7 @@
 
   <section id="mini-filter-bar">
     <span>🔍 Filtrar</span>
-    <button id="expand-filters">⋯</button>
+    <button id="toggle-sidebar">☰ Filtros</button>
   </section>
 
   <header>
@@ -54,6 +54,7 @@
   
   <div id="sidebar-wrapper">
   <aside class="sidebar-filters">
+    <button id="close-sidebar" style="float:right; font-size:1.2rem; background:none; border:none; cursor:pointer;">✖️</button>
     <form id="sidebar-form">
       <h3>Filtrar Propiedades</h3>
 
@@ -275,6 +276,24 @@
   }
 });
 
+
+  document.addEventListener('DOMContentLoaded', () => {
+    const toggleBtn = document.getElementById('toggle-sidebar');
+    const closeBtn = document.getElementById('close-sidebar');
+    const sidebar = document.getElementById('sidebar-wrapper');
+
+    if (toggleBtn && sidebar) {
+      toggleBtn.addEventListener('click', () => {
+        sidebar.classList.toggle('show-mobile-sidebar');
+      });
+    }
+
+    if (closeBtn && sidebar) {
+      closeBtn.addEventListener('click', () => {
+        sidebar.classList.remove('show-mobile-sidebar');
+      });
+    }
+  });
   
 </script>
 
