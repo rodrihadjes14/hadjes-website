@@ -12,11 +12,6 @@
   
   
 <body class="sidebar-layout"> 
-  
-  <section id="mini-filter-bar">
-    <span>🔍 Filtrar</span>
-    <button id="expand-filters">⋯</button>
-  </section>
 
 
 
@@ -50,6 +45,11 @@
 </div>
 
   </header>
+  
+  <section id="mini-filter-bar">
+    <span>🔍 Filtrar</span>
+    <button id="expand-filters">⋯</button>
+  </section>
   
   // SIDEBAR
   
@@ -116,7 +116,7 @@
     const res = await fetch('https://hadjes-backend.onrender.com/listings');
     const listings = await res.json();
 
-  // sidebar modification backup reserve 
+  // SIDEBAR MODIFICATION BACKUP RESERVE
     
     const params = new URLSearchParams(window.location.search);
 
@@ -169,7 +169,7 @@
   });
 }
 
-  // sidebar modification
+  // SIDEBAR MODIFICATION
   
   async function fetchSingleListing(slug) {
   try {
@@ -278,18 +278,6 @@
 
   
 </script>
-  
-<script>
-  const expandBtn = document.getElementById('expand-filters');
-  const sidebarWrapper = document.getElementById('sidebar-wrapper');
-
-  expandBtn.addEventListener('click', () => {
-    sidebarWrapper.classList.toggle('show-mobile-sidebar');
-  });
-</script>
-
-
-
 
 
 </body>

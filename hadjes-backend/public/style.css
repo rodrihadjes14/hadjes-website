@@ -423,62 +423,6 @@ footer {
 
 
 
-/* FILTER BAR RESPONSIVE FOR MOBILE */
 
-@media (max-width: 768px) {
-  .header-logo-and-search {
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-  }
-
-  .brand-button {
-    font-size: 1.4rem;
-    padding-bottom: 10px;
-  }
-
-  nav {
-    flex-direction: column;
-    align-items: center;
-    gap: 10px;
-  }
-}
-
-@media (max-width: 768px) {
-  /* Hide sidebar by default */
-  #sidebar-wrapper {
-    display: none;
-  }
-
-  /* Define toggle button that shows it */
-  #sidebar-toggle {
-    position: fixed;
-    bottom: 10px;
-    right: 10px;
-    background: #000;
-    color: #fff;
-    border: none;
-    padding: 10px 14px;
-    border-radius: 50%;
-    font-size: 1.2rem;
-    z-index: 200;
-  }
-
-  /* When sidebar is active */
-  .sidebar-active #sidebar-wrapper {
-    display: block;
-    position: fixed;
-    top: 60px;
-    left: 0;
-    width: 90%;
-    max-width: 300px;
-    max-height: calc(100vh - 70px);
-    overflow-y: auto;
-    background: white;
-    padding: 16px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
-    z-index: 150;
-  }
-}
 
 
