@@ -300,9 +300,24 @@ footer {
   padding: 1rem;
 }
 /* Only shift listings when sidebar is present */
-.sidebar-layout #listings {
-  margin-left: 270px;
+@media (min-width: 769px) {
+  .sidebar-layout {
+    display: flex;
+    gap: 20px;
+    padding: 1rem;
+  }
+
+  #sidebar-wrapper {
+    width: 250px;
+    flex-shrink: 0;
+  }
+
+  #listings {
+    flex: 1;
+    padding: 0;
+  }
 }
+
 
  /* SIDEBAR */
 
@@ -383,26 +398,30 @@ footer {
 /* SIDEBAR RESPONSIVE FOR MOBILE*/
 
 
-  /* Sidebar hidden by default */
-  #sidebar-wrapper {
-    display: none;
-  }
+ #sidebar-wrapper {
+  display: none;
+  transform: translateX(-100%);
+  transition: transform 0.3s ease, opacity 0.3s ease;
+  opacity: 0;
+}
 
-  /* Sidebar visible when toggled */
-  #sidebar-wrapper.show-mobile-sidebar {
-    display: block;
-    position: fixed;
-    top: 48px;
-    left: 8px;
-    right: 8px;
-    max-height: calc(100vh - 56px);
-    overflow-y: auto;
-    background: #fff;
-    padding: 16px;
-    border-radius: 8px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
-    z-index: 150;
-  }
+#sidebar-wrapper.show-mobile-sidebar {
+  display: block;
+  position: fixed;
+  top: 48px;
+  left: 0;
+  right: 0;
+  max-height: calc(100vh - 56px);
+  overflow-y: auto;
+  background: #fff;
+  padding: 16px;
+  border-radius: 0 0 8px 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  z-index: 150;
+  transform: translateX(0);
+  opacity: 1;
+}
+
 
   #sidebar-form {
     display: flex;
