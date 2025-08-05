@@ -527,21 +527,20 @@ header {
   }
 
   /* Make filters wrap horizontally */
-  .filter-group > div {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: flex-start;
-  gap: 6px 12px; /* row-gap + column-gap */
-}
+  .filter-group div {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    row-gap: 4px;
+  }
 
-.filter-group > div label {
-  display: inline-flex;
-  align-items: center;
-  min-width: 100px;
-  white-space: nowrap;
-  margin: 0;
+  .filter-group div label {
+    display: inline-block;
+    min-width: 110px;
+    white-space: nowrap;
+    margin-bottom: 0.4rem;
+  }
 }
-
 
 /* === TABLET STYLES (769px–1024px) === */
 @media (min-width: 769px) and (max-width: 1024px) {
