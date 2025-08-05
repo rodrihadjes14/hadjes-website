@@ -545,6 +545,15 @@ header {
   }
 }
 
+@media (max-width: 768px) {
+  .filter-group div label {
+    display: inline-block;
+    min-width: 110px; /* Adjust width based on your layout */
+    white-space: nowrap;
+    margin-bottom: 0.4rem;
+  }
+}
+
 
 
 
