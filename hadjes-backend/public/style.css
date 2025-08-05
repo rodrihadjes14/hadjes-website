@@ -592,13 +592,27 @@ header {
 
 @media (max-width: 480px) {
   .input-group {
+    display: flex;           /* Enables horizontal layout */
+    flex-wrap: wrap;         /* Items can wrap onto new lines if needed */
     justify-content: flex-start;
-    gap: 8px 6px; /* tighter spacing on mobile */
+    gap: 8px 6px;            /* Space between the items */
   }
 
   .input-group label {
+    display: flex;           /* Ensures label content (radio/checkbox + text) stays horizontal */
+    align-items: center;     /* Centers content vertically */
     padding: 5px 10px;
-    font-size: 13px;
+    font-size: 13px;         /* Smaller font size for mobile */
+    white-space: nowrap;     /* Prevents text from wrapping */
+    background-color: #f1f1f1;
+    border-radius: 6px;
+    gap: 6px;                /* Space between input and text */
+    cursor: pointer;        /* Makes the label clickable */
+  }
+
+  .input-group input[type="radio"],
+  .input-group input[type="checkbox"] {
+    margin: 0;               /* Removes default margins around inputs */
   }
 }
 
