@@ -281,24 +281,6 @@
   }
 });
 
-
-  document.addEventListener('DOMContentLoaded', () => {
-    const toggleBtn = document.getElementById('toggle-sidebar');
-    const closeBtn = document.getElementById('close-sidebar');
-    const sidebar = document.getElementById('sidebar-wrapper');
-
-    if (toggleBtn && sidebar) {
-      toggleBtn.addEventListener('click', () => {
-        sidebar.classList.toggle('show-mobile-sidebar');
-      });
-    }
-
-    if (closeBtn && sidebar) {
-      closeBtn.addEventListener('click', () => {
-        sidebar.classList.remove('show-mobile-sidebar');
-      });
-    }
-  });
   
 </script>
 

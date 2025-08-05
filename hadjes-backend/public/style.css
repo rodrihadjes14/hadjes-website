@@ -360,34 +360,6 @@ footer {
 
 /* FILTER BAR RESPONSIVE FOR MOBILE */
 
-/*@media (max-width: 768px) {
-  /* 
-.filter-bar {
-    display: none;
-  }
-
-/*
-  #mini-filter-bar {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 48px;
-    background: yellow;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 0 12px;
-    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
-    z-index: 999;
-  }
-
-  body {
-    padding-top: 48px;
-  }
-}
-
-/* SIDEBAR RESPONSIVE FOR MOBILE*/
 
 
 
@@ -430,10 +402,7 @@ footer {
   z-index: 1000;
 }
 
-#mini-filter-bar {
-  position: relative;
-  z-index: 2;
-}
+
 
 
 
@@ -480,25 +449,7 @@ header {
 }
 
 /* === Sidebar Default Hidden (mobile first) === */
-#sidebar-wrapper {
-  display: none;
-}
 
-/* === Show Sidebar for Mobile === */
-#sidebar-wrapper.show-mobile-sidebar {
-  display: block;
-  position: fixed;
-  top: 56px;
-  left: 0;
-  right: 0;
-  max-height: calc(100vh - 56px);
-  overflow-y: auto;
-  background: #fff;
-  padding: 16px;
-  border-radius: 0 0 8px 8px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
-  z-index: 150;
-}
 
 /* === Sidebar for Desktop Layout === */
 @media (min-width: 769px) {
