@@ -545,6 +545,8 @@ header {
   }
 }
 
+/*JUSTIFY BOXES */
+
 @media (max-width: 768px) {
   .filter-group div label {
     display: inline-block;
@@ -554,6 +556,12 @@ header {
   }
 }
 
+.filter-group div {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  row-gap: 4px;
+}
 
 
 
