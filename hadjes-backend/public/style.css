@@ -558,6 +558,8 @@ header {
   }
 }
 
+/* HORIZONTAL ALIGNEMENT OF RADIO BUTTON AND CHECKBOXES SIDEBAR*/
+
 /* ⬅️ New style for all radio/checkbox groups */
 .input-group {
   display: flex;
@@ -584,6 +586,20 @@ header {
 .input-group input[type="radio"],
 .input-group input[type="checkbox"] {
   margin: 0;
+}
+
+/* HORIZONTAL ALIGNEMENT MOBILE RESPONSIVE */
+
+@media (max-width: 480px) {
+  .input-group {
+    justify-content: flex-start;
+    gap: 8px 6px; /* tighter spacing on mobile */
+  }
+
+  .input-group label {
+    padding: 5px 10px;
+    font-size: 13px;
+  }
 }
 
 
