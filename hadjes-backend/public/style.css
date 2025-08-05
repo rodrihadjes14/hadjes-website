@@ -307,7 +307,7 @@ footer {
 
 /* Listings positioned beside sidebar */
 /* Default full-width listing layout */
-#listings {
+/*#listings {
   padding: 1rem;
 }
 /* Only shift listings when sidebar is present */
@@ -345,18 +345,6 @@ footer {
 }
 
 
-/* HERO CONTENT  */
-
-
-/*@media (max-width: 768px) {
-  .hero-content h1 {
-    font-size: 2.2rem;
-  }
-
-  .hero-content p {
-    font-size: 1rem;
-  }
-}
 
 /* FILTER BAR RESPONSIVE FOR MOBILE */
 
@@ -403,24 +391,6 @@ footer {
 }
 
 
-
-
-
-/*@media (min-width: 769px) {
-  .page-layout {
-    display: flex;
-    align-items: flex-start;
-    gap: 20px;
-    padding: 20px;
-  }
-
-
-  #listings {
-    flex: 1;
-    padding: 0;
-  }
-}
-*/
 
 header {
   background: #004d99;
