@@ -106,7 +106,7 @@ nav a { margin: 0 15px; }
 
 .sidebar-filters h3 {
   font-size: 18px;
-  color: red;
+  color: darkblue;
   display: flex;
   align-items: center;
   gap: 8px;
@@ -135,7 +135,7 @@ nav a { margin: 0 15px; }
 }
 
 .sidebar-filters button {
-  background: red;
+  background: #1818b2;
   color: white;
   border: none;
   padding: 10px;
@@ -433,6 +433,65 @@ header {
     flex: 1;
   }
 }
+
+/* === MOBILE RESPONSIVENESS === */
+
+@media (max-width: 768px) {
+  
+#sidebar-wrapper {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 80%;
+  max-width: 300px;
+  height: 100vh;
+  background-color: #fff;
+  padding: 1rem;
+  box-shadow: 2px 0 10px rgba(0,0,0,0.2);
+  z-index: 1000;
+  overflow-y: auto;
+}
+
+/* Show it when toggled */
+#sidebar-wrapper.show-mobile {
+  display: block;
+}
+  
+.mobile-toggle-button {
+  display: block;
+  background: #004d99;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  font-size: 1.2rem;
+  width: 100%;
+  text-align: left;
+  cursor: pointer;
+}
+
+}
+
+@media (min-width: 769px) {
+  .mobile-toggle-button {
+    display: none;
+  }
+}
+
+@media (max-width: 768px) {
+  #listings {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (min-width: 769px) and (max-width: 1024px) {
+  #listings {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+
+
 
 
 

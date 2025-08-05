@@ -44,6 +44,11 @@
   </div>
   </header>
   
+  <!--FILTROS BUTTON!!!!!!-->
+  
+  <button id="open-sidebar" class="mobile-toggle-button">☰ Filtros</button>
+
+  
 
 <!-- SIDEBAR -->
   
@@ -117,9 +122,6 @@
     
   </div>
   
-  <footer>
-    <p>&copy; 2025 Hadjes Propiedades</p>
-  </footer>
 
 <script>
   
@@ -289,10 +291,42 @@
     fetchListings();
   }
 });
-
-  
 </script>
 
+
+  
+<script>
+  
+  // TOGGLE RESPONSIVE MOBILE SIDEBAR OPERATIONS //
+  
+  document.addEventListener('DOMContentLoaded', () => {
+    const openBtn = document.getElementById('open-sidebar');
+    const sidebar = document.getElementById('sidebar-wrapper');
+
+    openBtn?.addEventListener('click', () => {
+      sidebar.classList.toggle('show-mobile');
+    });
+
+    // Optional: Close sidebar if clicked outside (mobile only)
+    document.addEventListener('click', (e) => {
+      if (
+        window.innerWidth <= 768 &&
+        sidebar.classList.contains('show-mobile') &&
+        !sidebar.contains(e.target) &&
+        e.target !== openBtn
+      ) {
+        sidebar.classList.remove('show-mobile');
+      }
+    });
+
+    // Optional: Close on ESC key
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        sidebar.classList.remove('show-mobile');
+      }
+    });
+  });
+</script>
 
 </body>
 </html>
