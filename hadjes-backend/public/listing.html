@@ -20,14 +20,14 @@
   </div>
 
   <header>
-  <div class="header-logo-and-search">
+  <div class="header-container">
       <a href="index.html" class="brand-button">Hadjes Propiedades</a>
 
     <div class="filter-bar">
       <div class="filter-options">
-      <label><input type="radio" name="operation" value="venta"> VENTA / BUY</label>
-      <label><input type="radio" name="operation" value="alquiler"> ALQUILER / RENT</label>
-      <label><input type="radio" name="operation" value="temporal"> ALQUILER TEMPORAL / TEMPORARY RENT</label>
+      <label><input type="radio" name="operation" value="venta"> Venta / Buy</label>
+      <label><input type="radio" name="operation" value="alquiler"> Alquiler / Rent</label>
+      <label><input type="radio" name="operation" value="temporal"> Alquiler Temporal / Temporary Rent</label>
     </div>
 
     <select class="property-type" name="type">
@@ -45,14 +45,14 @@
 
     <input name="q" type="text" class="search-input" placeholder="Ubicación / Location, keyword..." /> 
     <button id="search-button" class="search-button">🔍</button>
+   </div>
   </div>
-</div>
-
   </header>
   
   
   // SIDEBAR
   
+  <div class="page-layout">
   
   <div id="sidebar-wrapper">
   <aside class="sidebar-filters">
@@ -103,11 +103,13 @@
 </div>
 
 
-  // SIDEBAR
+  //sidebar
 
   
   <div id="listings">
     <p>Loading listing...</p>
+  </div>
+    
   </div>
 
 <script>
