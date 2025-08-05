@@ -490,6 +490,19 @@ header {
   }
 }
 
+/*STRETCH MAX WITH SIDEBAR*/
+
+@media (max-width: 768px) {
+  input[type="text"],
+  input[type="number"],
+  select {
+    width: 100%;
+    font-size: 1rem;
+    padding: 10px;
+    box-sizing: border-box;
+  }
+}
+
 
 
 
