@@ -311,20 +311,7 @@ footer {
 #listings {
   padding: 1rem;
 }
-/* Only shift listings when sidebar is present */
-/*@media (min-width: 769px) {
-  .sidebar-layout {
-    display: flex;
-    gap: 20px;
-    padding: 1rem;
-  }
 
-
-  #listings {
-    flex: 1;
-    padding: 0;
-  }
-}
 
 
  /* SIDEBAR */
@@ -419,7 +406,7 @@ header {
   border-radius: 4px;
 }
 
-/* === Sidebar Default Hidden (mobile first) === */
+
 
 
 /* === Sidebar for Desktop Layout === */
