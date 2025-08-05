@@ -54,34 +54,43 @@
     <form id="sidebar-form">
       <h3>Filtrar Propiedades</h3>
 
-      <div class="filter-group">
+      <div class="filter-group" style="display: flex; flex-wrap: wrap; gap: 10px;">
         <label><input type="radio" name="operation" value="venta"> Venta</label><br>
         <label><input type="radio" name="operation" value="alquiler"> Alquiler</label><br>
         <label><input type="radio" name="operation" value="temporal"> Temporal</label>
       </div>
 
       <div class="filter-group">
-        <label>Tipo de Propiedad:</label><br>
-        <label><input type="checkbox" name="type" value="casa"> Casa</label><br>
-        <label><input type="checkbox" name="type" value="departamento"> Departamento</label><br>
-        <label><input type="checkbox" name="type" value="oficina"> Oficina</label><br>
+        <label style="display: block; font-weight: bold; margin-bottom: 0.5rem;">Tipo de Propiedad:</label>
+        <div style="display: flex; flex-wrap: wrap; gap: 10px;">
+        <label><input type="checkbox" name="type" value="casa"> Casa</label>
+        <label><input type="checkbox" name="type" value="departamento"> Departamento</label>
+        <label><input type="checkbox" name="type" value="oficina"> Oficina</label>
         <label><input type="checkbox" name="type" value="local"> Local</label>
+        </div>
       </div>
 
+
       <div class="filter-group">
-        <label>Ubicación:</label><br>
-        <label><input type="checkbox" name="location" value="belgrano"> Belgrano</label><br>
-        <label><input type="checkbox" name="location" value="palermo"> Palermo</label><br>
+        <label style="display: block; font-weight: bold; margin-bottom: 0.5rem;">Ubicación:</label>
+        <div style="display: flex; flex-wrap: wrap; gap: 10px;">
+        <label><input type="checkbox" name="location" value="belgrano"> Belgrano</label>
+        <label><input type="checkbox" name="location" value="palermo"> Palermo</label>
         <label><input type="checkbox" name="location" value="recoleta"> Recoleta</label>
+       </div>
       </div>
 
+
       <div class="filter-group">
-        <label>Ambientes:</label><br>
-        <label><input type="checkbox" name="ambientes" value="1"> 1</label><br>
-        <label><input type="checkbox" name="ambientes" value="2"> 2</label><br>
-        <label><input type="checkbox" name="ambientes" value="3"> 3</label><br>
+        <label style="display: block; font-weight: bold; margin-bottom: 0.5rem;">Ambientes:</label>
+        <div style="display: flex; flex-wrap: wrap; gap: 10px;">
+        <label><input type="checkbox" name="ambientes" value="1"> 1</label>
+        <label><input type="checkbox" name="ambientes" value="2"> 2</label>
+        <label><input type="checkbox" name="ambientes" value="3"> 3</label>
         <label><input type="checkbox" name="ambientes" value="4"> 4+</label>
+       </div>
       </div>
+
 
       <div class="filter-group">
         <label>Precio Mínimo:</label><br>
