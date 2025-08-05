@@ -433,10 +433,25 @@ header {
   }
 }
 
-/* === MOBILE RESPONSIVENESS === tried  */
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* === MOBILE RESPONSIVENESS === tried  */
+/*
 @media (max-width: 768px) {
-  
+
+/*
 #sidebar-wrapper {
   display: none;
   position: fixed;
@@ -452,11 +467,13 @@ header {
   overflow-y: auto;
 }
 
-/* Show it when toggled */
+/*
 #sidebar-wrapper.show-mobile {
   display: block;
 }
-  
+*/
+
+/*
 .mobile-toggle-button {
   display: block;
   background: #004d99;
@@ -471,26 +488,25 @@ header {
 
 }
 
+
+/*
 @media (min-width: 769px) {
   .mobile-toggle-button {
     display: none;
   }
 }
-
+*/
+/*
 @media (max-width: 768px) {
   #listings {
     grid-template-columns: 1fr;
   }
 }
+*/
 
-@media (min-width: 769px) and (max-width: 1024px) {
-  #listings {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
 
 /*STRETCH MAX WITH SIDEBAR - not tried*/
-
+/*
 @media (max-width: 768px) {
   input[type="text"],
   input[type="number"],
@@ -501,9 +517,9 @@ header {
     box-sizing: border-box;
   }
 }
-
+*/
 /* FILTRAR BUTTON SIDEBAR */
-
+/*
 @media (max-width: 768px) {
   #sidebar-search-button {
     width: 100%;
@@ -521,9 +537,9 @@ header {
     background-color: #b71c1c;
   }
 }
-
+*/
 /*REDUCE MARGIN BETWEEN FILTER GROUPS SIDEBAR */
-
+/*
 @media (max-width: 768px) {
   .filter-group {
     margin-bottom: 0.8rem;
@@ -539,30 +555,156 @@ header {
     font-weight: bold;
     display: block;
   }
+*/
 
-  .filter-group div {
-    gap: 8px;
-  }
-}
 
 /*JUSTIFY BOXES */
 
+/*
 @media (max-width: 768px) {
   .filter-group div label {
     display: inline-block;
-    min-width: 110px; /* Adjust width based on your layout */
+    min-width: 110px; 
     white-space: nowrap;
     margin-bottom: 0.4rem;
   }
 }
-
+/*
 .filter-group div {
   display: flex;
   flex-wrap: wrap;
   gap: 8px;
   row-gap: 4px;
 }
+*/
 
+/*CHECK CODE
+ * 
+ * 
+ * 
+ * 
+ * 
+ * 
+ * 
+
+  
+/* === MOBILE STYLES (≤768px) === */
+@media (max-width: 768px) {
+  /* Sidebar toggle button */
+  .mobile-toggle-button {
+    display: block;
+    background: #004d99;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    font-size: 1.2rem;
+    width: 100%;
+    text-align: left;
+    cursor: pointer;
+  }
+
+  /* Sidebar container */
+  #sidebar-wrapper {
+    display: none;
+    position: fixed;
+    top: 0; left: 0;
+    width: 80%;
+    max-width: 300px;
+    height: 100vh;
+    background: #fff;
+    padding: 1rem;
+    box-shadow: 2px 0 10px rgba(0,0,0,0.2);
+    z-index: 1000;
+    overflow-y: auto;
+  }
+
+  /* Sidebar visible when toggled */
+  #sidebar-wrapper.show-mobile {
+    display: block;
+  }
+
+  /* Listings layout - 1 column */
+  #listings {
+    grid-template-columns: 1fr;
+  }
+  
+  
+
+  /* Input fields and selects full width */
+  input[type="text"],
+  input[type="number"],
+  select {
+    width: 100%;
+    font-size: 1rem;
+    padding: 10px;
+    box-sizing: border-box;
+  }
+
+  /* Filter button */
+  #sidebar-search-button {
+    width: 100%;
+    padding: 12px 16px;
+    font-size: 1rem;
+    background-color: #d32f2f;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-weight: bold;
+    cursor: pointer;
+  }
+
+  #sidebar-search-button:hover {
+    background-color: #b71c1c;
+  }
+
+  /* Filter group spacing */
+  .filter-group {
+    margin-bottom: 0.8rem;
+  }
+
+  /* Filter group title (first label) */
+  .filter-group > label:first-child {
+    margin-bottom: 0.3rem;
+    font-weight: bold;
+    display: block;
+    font-size: 0.95rem;
+  }
+
+  /* Filter option labels (not first) */
+  .filter-group label:not(:first-child) {
+    margin: 0;
+    font-size: 0.95rem;
+  }
+
+  /* Make filters wrap horizontally */
+  .filter-group div {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    row-gap: 4px;
+  }
+
+  .filter-group div label {
+    display: inline-block;
+    min-width: 110px;
+    white-space: nowrap;
+    margin-bottom: 0.4rem;
+  }
+}
+
+/* === TABLET STYLES (769px–1024px) === */
+@media (min-width: 769px) and (max-width: 1024px) {
+  #listings {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* === DESKTOP OVERRIDE (hide toggle) === */
+@media (min-width: 769px) {
+  .mobile-toggle-button {
+    display: none;
+  }
+}
 
 
 
