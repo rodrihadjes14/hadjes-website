@@ -307,7 +307,8 @@ footer {
 
 /* Listings positioned beside sidebar */
 /* Default full-width listing layout */
-/*#listings {
+
+#listings {
   padding: 1rem;
 }
 /* Only shift listings when sidebar is present */
