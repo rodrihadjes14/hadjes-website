@@ -331,10 +331,6 @@ footer {
 /* ==== Sidebar Layout & Styling ==== */
 @media (min-width: 769px) {
   
-
-  .sidebar-layout #listings {
-    margin-left: 270px;
-  }
 }
 
 
@@ -450,7 +446,7 @@ footer {
     display: flex;
     align-items: flex-start;
     gap: 20px;
-    padding: 1rem;
+    padding: 20px;
   }
 
 
@@ -530,7 +526,22 @@ header {
   }
 }
 
+@media (min-width: 769px) {
+  .page-layout {
+    display: flex;
+    gap: 20px;
+    align-items: flex-start;
+    padding: 20px;
+  }
 
+  #sidebar-wrapper {
+    flex: 0 0 250px;
+  }
+
+  #listings {
+    flex: 1;
+  }
+}
 
 
 
