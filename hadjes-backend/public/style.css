@@ -311,7 +311,7 @@ footer {
   padding: 1rem;
 }
 /* Only shift listings when sidebar is present */
-@media (min-width: 769px) {
+/*@media (min-width: 769px) {
   .sidebar-layout {
     display: flex;
     gap: 20px;
@@ -328,10 +328,6 @@ footer {
 
  /* SIDEBAR */
 
-/* ==== Sidebar Layout & Styling ==== */
-@media (min-width: 769px) {
-  
-}
 
 
 .sidebar-filters h3 {
@@ -352,7 +348,7 @@ footer {
 /* HERO CONTENT  */
 
 
-@media (max-width: 768px) {
+/*@media (max-width: 768px) {
   .hero-content h1 {
     font-size: 2.2rem;
   }
@@ -364,13 +360,13 @@ footer {
 
 /* FILTER BAR RESPONSIVE FOR MOBILE */
 
-@media (max-width: 768px) {
-  /* Hide desktop filter bar */
-  .filter-bar {
+/*@media (max-width: 768px) {
+  /* 
+.filter-bar {
     display: none;
   }
 
-  /* Mini top bar */
+/*
   #mini-filter-bar {
     position: fixed;
     top: 0;
@@ -441,7 +437,7 @@ footer {
 
 
 
-@media (min-width: 769px) {
+/*@media (min-width: 769px) {
   .page-layout {
     display: flex;
     align-items: flex-start;
@@ -455,6 +451,7 @@ footer {
     padding: 0;
   }
 }
+*/
 
 header {
   background: #004d99;
