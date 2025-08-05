@@ -522,6 +522,29 @@ header {
   }
 }
 
+/*REDUCE MARGIN BETWEEN FILTER GROUPS SIDEBAR */
+
+@media (max-width: 768px) {
+  .filter-group {
+    margin-bottom: 0.8rem;
+  }
+
+  .filter-group label {
+    margin: 0;
+    font-size: 0.95rem;
+  }
+
+  .filter-group > label:first-child {
+    margin-bottom: 0.3rem;
+    font-weight: bold;
+    display: block;
+  }
+
+  .filter-group div {
+    gap: 8px;
+  }
+}
+
 
 
 
