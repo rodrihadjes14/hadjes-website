@@ -58,16 +58,19 @@
   <aside class="sidebar-filters">
     <form id="sidebar-form">
       <h3>Filtrar Propiedades</h3>
-
-      <div class="filter-group" style="display: flex; flex-wrap: wrap; gap: 10px;">
-        <label><input type="radio" name="operation" value="venta"> Venta</label><br>
-        <label><input type="radio" name="operation" value="alquiler"> Alquiler</label><br>
+    
+      <div class="filter-group">
+        <label style="display: block; font-weight: bold; margin-bottom: 0.5rem;">Operación:</label>
+        <div>
+        <label><input type="radio" name="operation" value="venta"> Venta</label>
+        <label><input type="radio" name="operation" value="alquiler"> Alquiler</label>
         <label><input type="radio" name="operation" value="temporal"> Temporal</label>
+       </div>
       </div>
 
       <div class="filter-group">
         <label style="display: block; font-weight: bold; margin-bottom: 0.5rem;">Tipo de Propiedad:</label>
-        <div style="display: flex; flex-wrap: wrap; gap: 10px;">
+        <div>
         <label><input type="checkbox" name="type" value="casa"> Casa</label>
         <label><input type="checkbox" name="type" value="departamento"> Departamento</label>
         <label><input type="checkbox" name="type" value="oficina"> Oficina</label>
@@ -78,7 +81,7 @@
 
       <div class="filter-group">
         <label style="display: block; font-weight: bold; margin-bottom: 0.5rem;">Ubicación:</label>
-        <div style="display: flex; flex-wrap: wrap; gap: 10px;">
+        <div>
         <label><input type="checkbox" name="location" value="belgrano"> Belgrano</label>
         <label><input type="checkbox" name="location" value="palermo"> Palermo</label>
         <label><input type="checkbox" name="location" value="recoleta"> Recoleta</label>
@@ -88,7 +91,7 @@
 
       <div class="filter-group">
         <label style="display: block; font-weight: bold; margin-bottom: 0.5rem;">Ambientes:</label>
-        <div style="display: flex; flex-wrap: wrap; gap: 10px;">
+        <div>
         <label><input type="checkbox" name="ambientes" value="1"> 1</label>
         <label><input type="checkbox" name="ambientes" value="2"> 2</label>
         <label><input type="checkbox" name="ambientes" value="3"> 3</label>
@@ -98,10 +101,10 @@
 
 
       <div class="filter-group">
-        <label>Precio Mínimo:</label><br>
+        <label>Precio Mínimo:</label>
         <input type="number" name="priceMin" />
 
-        <label>Precio Máximo:</label><br>
+        <label>Precio Máximo:</label>
         <input type="number" name="priceMax" />
       </div>
 
