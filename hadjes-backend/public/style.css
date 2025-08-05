@@ -24,6 +24,17 @@ header {
   padding: 20px;
   text-align: center;
 }
+
+.header-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+}
+
 nav a { margin: 0 15px; }
 
 /* Hero section */
@@ -269,7 +280,7 @@ footer {
 }
 
 /* Logo Button and Layout for Header */
-.header-logo-and-search {
+.header-container {
   display: flex;
   justify-content: space-between;
   align-items: center;
