@@ -464,14 +464,6 @@ header {
     z-index: 1;
   }
 
-  #sidebar-wrapper.show-mobile-sidebar {
-    position: relative;
-    top: auto;
-    left: auto;
-    right: auto;
-    transform: none;
-    opacity: 1;
-  }
 }
 
 @media (min-width: 769px) {
