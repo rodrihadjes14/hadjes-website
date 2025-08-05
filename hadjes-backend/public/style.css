@@ -222,8 +222,8 @@ footer {
   color: white;
   border: none;
   border-radius: 8px;
-  font-size: 1.2rem;
-  width: 40px;
+  font-size: 16px;
+  padding: 0 20px;
   height: 40px;
   justify-content: center;
   align-items: center;
