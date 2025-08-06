@@ -602,7 +602,7 @@ header {
   .input-group {
     display: flex;
     flex-wrap: wrap;         /* allows items to move to next line if needed */
-    gap: 10px;               /* spacing between boxes */
+    gap: 8px;               /* spacing between boxes */
     justify-content: flex-start;
   }
 
@@ -610,20 +610,17 @@ header {
     display: inline-flex !important;  /* makes label size match its content */
     align-items: center;
     gap: 6px;                  /* space between input and text */
-    padding: 6px 12px;         /* adds click/tap space */
+    padding: 5px 10px;         /* adds click/tap space */
     background-color: #f1f1f1;
     border-radius: 6px;
     white-space: nowrap;       /* prevents text wrapping inside boxes */
-    font-size: 14px;
+    font-size: 14px !important;
     cursor: pointer;
+    max-width: calc(50% - 8px); /* ✅ fit two items per row */
     box-sizing: border-box;
   }
 
-  .input-group input[type="radio"],
-  .input-group input[type="checkbox"] {
-    margin: 0;
-  }
-}
+
 
 
   .input-group input[type="radio"],
@@ -632,4 +629,4 @@ header {
   }
 }
 
-
+}
