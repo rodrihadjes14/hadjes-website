@@ -60,7 +60,7 @@
       <h3>Filtrar Propiedades</h3>
     
       <div class="dropdown-filter">
-        <button class="dropdown-toggle">Operación</button>
+        <button type="button" class="dropdown-toggle">Operación</button>
         <div class= "dropdown-content input-group">
         <label><input type="radio" name="operation" value="venta"> Venta</label>
         <label><input type="radio" name="operation" value="alquiler"> Alquiler</label>
@@ -69,7 +69,7 @@
       </div>
 
       <div class="dropdown-filter">
-        <button class="dropdown-toggle">Tipo de Propiedad:</button>
+        <button type="button" class="dropdown-toggle">Tipo de Propiedad:</button>
         <div class= "dropdown-content input-group">
         <label><input type="checkbox" name="type" value="casa"> Casa</label>
         <label><input type="checkbox" name="type" value="departamento"> Departamento</label>
@@ -80,7 +80,7 @@
 
 
       <div class="dropdown-filter">
-        <button class="dropdown-toggle">Ubicación:</button>
+        <button type="button" class="dropdown-toggle">Ubicación:</button>
         <div class= "dropdown-content input-group">
         <label><input type="checkbox" name="location" value="belgrano"> Belgrano</label>
         <label><input type="checkbox" name="location" value="palermo"> Palermo</label>
@@ -90,7 +90,7 @@
 
 
       <div class="dropdown-filter">
-        <button class="dropdown-toggle">Ambientes:</button>
+        <button type="button" class="dropdown-toggle">Ambientes:</button>
         <div class= "dropdown-content input-group">
         <label><input type="checkbox" name="ambientes" value="1"> 1</label>
         <label><input type="checkbox" name="ambientes" value="2"> 2</label>
@@ -101,7 +101,7 @@
 
 
       <div class="dropdown-filter">
-        <button class="dropdown-toggle">Precio Mínimo</button>
+        <button type="button" class="dropdown-toggle">Precio Mínimo</button>
         <div class= "dropdown-content input-group">
         <label>Precio Mínimo:</label>
         <input type="number" name="priceMin" />
@@ -109,7 +109,7 @@
       </div>
 
         <div class="dropdown-filter">
-        <button class="dropdown-toggle">Precio Máximo</button>
+        <button type="button" class="dropdown-toggle">Precio Máximo</button>
         <div class= "dropdown-content input group">
         <label>Precio Máximo:</label>
         <input type="number" name="priceMax" />
@@ -342,21 +342,24 @@
 
   
 <script>
-document.addEventListener('DOMContentLoaded', () => {
-  document.querySelectorAll('.dropdown-toggle').forEach(button => {
-    button.addEventListener('click', () => {
-      const content = button.nextElementSibling;
-      const isOpen = content.style.display === 'block';
+  document.addEventListener('DOMContentLoaded', () => {
+    document.querySelectorAll('.dropdown-toggle').forEach(button => {
+      button.addEventListener('click', (e) => {
+        e.preventDefault(); // 👈 important fix
 
-      document.querySelectorAll('.dropdown-content').forEach(c => c.style.display = 'none');
-      document.querySelectorAll('.dropdown-toggle').forEach(b => b.classList.remove('open'));
+        const content = button.nextElementSibling;
+        const isOpen = content.style.display === 'block';
 
-      content.style.display = isOpen ? 'none' : 'block';
-      button.classList.toggle('open', !isOpen);
+        document.querySelectorAll('.dropdown-content').forEach(c => c.style.display = 'none');
+        document.querySelectorAll('.dropdown-toggle').forEach(b => b.classList.remove('open'));
+
+        content.style.display = isOpen ? 'none' : 'block';
+        button.classList.toggle('open', !isOpen);
+      });
     });
   });
-});
 </script>
+
 
 
 </body>
