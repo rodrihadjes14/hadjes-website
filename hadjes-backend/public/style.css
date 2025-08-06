@@ -598,17 +598,33 @@ header {
     gap: 8px 6px;            /* Space between the items */
   }
 
+@media (max-width: 480px) {
+  .input-group {
+    display: flex;
+    flex-wrap: wrap;         /* allows items to move to next line if needed */
+    gap: 10px;               /* spacing between boxes */
+    justify-content: flex-start;
+  }
+
   .input-group label {
-    display: flex;           /* Ensures label content (radio/checkbox + text) stays horizontal */
-    align-items: center;     /* Centers content vertically */
-    padding: 5px 10px;
-    font-size: 13px;         /* Smaller font size for mobile */
-    white-space: nowrap;     /* Prevents text from wrapping */
+    display: inline-flex !important;  /* makes label size match its content */
+    align-items: center;
+    gap: 6px;                  /* space between input and text */
+    padding: 6px 12px;         /* adds click/tap space */
     background-color: #f1f1f1;
     border-radius: 6px;
-    gap: 6px;                /* Space between input and text */
-    cursor: pointer;        /* Makes the label clickable */
+    white-space: nowrap;       /* prevents text wrapping inside boxes */
+    font-size: 14px;
+    cursor: pointer;
+    box-sizing: border-box;
   }
+
+  .input-group input[type="radio"],
+  .input-group input[type="checkbox"] {
+    margin: 0;
+  }
+}
+
 
   .input-group input[type="radio"],
   .input-group input[type="checkbox"] {
