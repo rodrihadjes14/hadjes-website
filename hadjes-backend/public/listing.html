@@ -337,8 +337,14 @@
     button.addEventListener('click', () => {
       const content = button.nextElementSibling;
       const isOpen = content.style.display === 'block';
+
+      // Close all other dropdowns
       document.querySelectorAll('.dropdown-content').forEach(c => c.style.display = 'none');
+      document.querySelectorAll('.dropdown-toggle').forEach(b => b.classList.remove('open'));
+
+      // Toggle current
       content.style.display = isOpen ? 'none' : 'block';
+      button.classList.toggle('open', !isOpen);
     });
   });
 </script>
