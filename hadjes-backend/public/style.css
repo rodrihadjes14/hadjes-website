@@ -104,6 +104,8 @@ nav a { margin: 0 15px; }
   box-shadow: 0 2px 8px rgba(0,0,0,0.05);
 }
 
+/*FILTRAR PROPIEDADES HEADLINE*/
+
 .sidebar-filters h3 {
   font-size: 1 rem;
   color: darkblue;
@@ -113,6 +115,7 @@ nav a { margin: 0 15px; }
   margin-bottom: 1 rem;
 }
 
+/*  CONTROL OVER THE LABELS INSIDE SIDEBAR-FILTERS SECTION  */
 .sidebar-filters label {
   display: block;
   margin-top: 10px;
@@ -120,9 +123,30 @@ nav a { margin: 0 15px; }
   font-size: 14px;
 }
 
-.sidebar-filters select,
-.sidebar-filters input[type="number"],
-.sidebar-filters input[type="radio"] {
+/* CONTROL OVER THE LABELS INTO INPUT-GROUPS */
+
+.input-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.input-group label {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 10px;
+  background-color: #f1f1f1;
+  border-radius: 6px;
+  font-size: 14px;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+/* APPLIES STYLE TO INPUT TYPE: RADIO AND NUMBER*/
+
+.sidebar-filters input[type="number"] {
   margin-top: 5px;
   margin-bottom: 15px;
   width: 100%;
@@ -130,12 +154,17 @@ nav a { margin: 0 15px; }
   font-size: 14px;
 }
 
-.sidebar-filters .filter-section {
-  margin-bottom: 20px;
+.sidebar-filters input[type="radio"] {
+  margin-top: 5px;
+  margin-bottom: 15px;
+  /* Remove width/padding */
 }
 
+
+
+
 .sidebar-filters button {
-  background: #1818b2;
+  background: #004d99;
   color: white;
   border: none;
   padding: 10px;
