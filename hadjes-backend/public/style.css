@@ -105,12 +105,12 @@ nav a { margin: 0 15px; }
 }
 
 .sidebar-filters h3 {
-  font-size: 18px;
+  font-size: 1 rem;
   color: darkblue;
   display: flex;
   align-items: center;
   gap: 8px;
-  margin-bottom: 20px;
+  margin-bottom: 1 rem;
 }
 
 .sidebar-filters label {
@@ -470,7 +470,7 @@ header {
     z-index: 1000;
     overflow-y: auto;
   }
-
+  
   /* Sidebar visible when toggled */
   #sidebar-wrapper.show-mobile {
     display: block;
