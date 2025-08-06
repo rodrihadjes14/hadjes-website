@@ -60,8 +60,8 @@
       <h3>Filtrar Propiedades</h3>
     
       <div class="dropdown-filter">
-        <label style="display: block; font-weight: bold; margin-bottom: 0.5rem;">Operación:</label>
-        <div class= "input-group">
+        <button class="dropdown-toggle">Operación</button>
+        <div class= "dropdown-content input-group">
         <label><input type="radio" name="operation" value="venta"> Venta</label>
         <label><input type="radio" name="operation" value="alquiler"> Alquiler</label>
         <label><input type="radio" name="operation" value="temporal"> Temporal</label>
@@ -69,8 +69,8 @@
       </div>
 
       <div class="dropdown-filter">
-        <label style="display: block; font-weight: bold; margin-bottom: 0.5rem;">Tipo de Propiedad:</label>
-        <div class= "input-group">
+        <button class="dropdown-toggle">Tipo de Propiedad:</button>
+        <div class= "dropdown-content input-group">
         <label><input type="checkbox" name="type" value="casa"> Casa</label>
         <label><input type="checkbox" name="type" value="departamento"> Departamento</label>
         <label><input type="checkbox" name="type" value="oficina"> Oficina</label>
@@ -80,8 +80,8 @@
 
 
       <div class="dropdown-filter">
-        <label style="display: block; font-weight: bold; margin-bottom: 0.5rem;">Ubicación:</label>
-        <div class= "input-group">
+        <button class="dropdown-toggle">Ubicación:</button>
+        <div class= "dropdown-content input-group">
         <label><input type="checkbox" name="location" value="belgrano"> Belgrano</label>
         <label><input type="checkbox" name="location" value="palermo"> Palermo</label>
         <label><input type="checkbox" name="location" value="recoleta"> Recoleta</label>
@@ -90,8 +90,8 @@
 
 
       <div class="dropdown-filter">
-        <label style="display: block; font-weight: bold; margin-bottom: 0.5rem;">Ambientes:</label>
-        <div class= "input-group">
+        <button class="dropdown-toggle">Ambientes:</button>
+        <div class= "dropdown-content input-group">
         <label><input type="checkbox" name="ambientes" value="1"> 1</label>
         <label><input type="checkbox" name="ambientes" value="2"> 2</label>
         <label><input type="checkbox" name="ambientes" value="3"> 3</label>
@@ -101,12 +101,21 @@
 
 
       <div class="dropdown-filter">
+        <button class="dropdown-toggle">Precio Mínimo</button>
+        <div class= "dropdown-content input-group">
         <label>Precio Mínimo:</label>
         <input type="number" name="priceMin" />
+        </div>
+      </div>
 
+        <div class="dropdown-filter">
+        <button class="dropdown-togggle">Precio Máximo</button>
+        <div class= "dropdown-content input group">
         <label>Precio Máximo:</label>
         <input type="number" name="priceMax" />
       </div>
+      </div>
+      
 
       <button id="sidebar-search-button" type="submit">Filtrar</button>
     </form>
@@ -333,21 +342,22 @@
 
   
 <script>
+document.addEventListener('DOMContentLoaded', () => {
   document.querySelectorAll('.dropdown-toggle').forEach(button => {
     button.addEventListener('click', () => {
       const content = button.nextElementSibling;
       const isOpen = content.style.display === 'block';
 
-      // Close all other dropdowns
       document.querySelectorAll('.dropdown-content').forEach(c => c.style.display = 'none');
       document.querySelectorAll('.dropdown-toggle').forEach(b => b.classList.remove('open'));
 
-      // Toggle current
       content.style.display = isOpen ? 'none' : 'block';
       button.classList.toggle('open', !isOpen);
     });
   });
+});
 </script>
+
 
 </body>
 </html>
