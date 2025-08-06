@@ -598,6 +598,13 @@ header {
     gap: 8px 6px;            /* Space between the items */
   }
 
+@media (max-width: 480px) {
+  .input-group {
+    display: flex;
+    flex-wrap: wrap;         /* allows items to move to next line if needed */
+    gap: 8px;               /* spacing between boxes */
+    justify-content: flex-start;
+  }
 
   .input-group label {
     display: inline-flex !important;  /* makes label size match its content */
@@ -622,4 +629,36 @@ header {
   }
 }
 
+}
+
+
+.dropdown-filter {
+  margin-bottom: 16px;
+}
+
+.dropdown-toggle {
+  width: 100%;
+  background-color: #004c99;
+  color: white;
+  padding: 10px 12px;
+  text-align: left;
+  border: none;
+  font-weight: bold;
+  cursor: pointer;
+  border-radius: 6px;
+}
+
+.dropdown-content {
+  display: none;
+  padding: 10px;
+  background-color: #f8f8f8;
+  border-radius: 6px;
+  margin-top: 6px;
+}
+
+.dropdown-content label {
+  display: block;
+  margin-bottom: 8px;
+  font-size: 14px;
+}
 

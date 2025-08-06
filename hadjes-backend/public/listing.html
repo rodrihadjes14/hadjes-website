@@ -59,7 +59,7 @@
     <form id="sidebar-form">
       <h3>Filtrar Propiedades</h3>
     
-      <div class="filter-group">
+      <div class="dropdown-filter">
         <label style="display: block; font-weight: bold; margin-bottom: 0.5rem;">Operación:</label>
         <div class= "input-group">
         <label><input type="radio" name="operation" value="venta"> Venta</label>
@@ -68,7 +68,7 @@
        </div>
       </div>
 
-      <div class="filter-group">
+      <div class="dropdown-filter">
         <label style="display: block; font-weight: bold; margin-bottom: 0.5rem;">Tipo de Propiedad:</label>
         <div class= "input-group">
         <label><input type="checkbox" name="type" value="casa"> Casa</label>
@@ -79,7 +79,7 @@
       </div>
 
 
-      <div class="filter-group">
+      <div class="dropdown-filter">
         <label style="display: block; font-weight: bold; margin-bottom: 0.5rem;">Ubicación:</label>
         <div class= "input-group">
         <label><input type="checkbox" name="location" value="belgrano"> Belgrano</label>
@@ -89,7 +89,7 @@
       </div>
 
 
-      <div class="filter-group">
+      <div class="dropdown-filter">
         <label style="display: block; font-weight: bold; margin-bottom: 0.5rem;">Ambientes:</label>
         <div class= "input-group">
         <label><input type="checkbox" name="ambientes" value="1"> 1</label>
@@ -100,7 +100,7 @@
       </div>
 
 
-      <div class="filter-group">
+      <div class="dropdown-filter">
         <label>Precio Mínimo:</label>
         <input type="number" name="priceMin" />
 
@@ -327,6 +327,18 @@
       if (e.key === 'Escape') {
         sidebar.classList.remove('show-mobile');
       }
+    });
+  });
+</script>
+
+  
+<script>
+  document.querySelectorAll('.dropdown-toggle').forEach(button => {
+    button.addEventListener('click', () => {
+      const content = button.nextElementSibling;
+      const isOpen = content.style.display === 'block';
+      document.querySelectorAll('.dropdown-content').forEach(c => c.style.display = 'none');
+      content.style.display = isOpen ? 'none' : 'block';
     });
   });
 </script>
