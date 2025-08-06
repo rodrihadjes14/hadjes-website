@@ -598,13 +598,6 @@ header {
     gap: 8px 6px;            /* Space between the items */
   }
 
-@media (max-width: 480px) {
-  .input-group {
-    display: flex;
-    flex-wrap: wrap;         /* allows items to move to next line if needed */
-    gap: 8px;               /* spacing between boxes */
-    justify-content: flex-start;
-  }
 
   .input-group label {
     display: inline-flex !important;  /* makes label size match its content */
@@ -629,4 +622,4 @@ header {
   }
 }
 
-}
+
