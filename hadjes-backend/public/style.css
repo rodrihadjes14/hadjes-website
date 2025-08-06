@@ -659,7 +659,7 @@ header {
   gap: 6px;
   padding: 6px 10px;
   margin: 4px;
-  background-color: #f1f1f1;
+  background-color: transparent;
   border-radius: 6px;
   font-size: 14px;
   white-space: nowrap;
