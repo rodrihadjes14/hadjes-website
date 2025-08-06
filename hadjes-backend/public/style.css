@@ -671,3 +671,31 @@ header {
   margin: 0;
 }
 
+/*OPERATION IN THE SIDEBAR MENU MODIFICATIONS FOR MOBILE VIEW*/
+
+@media (max-width: 480px) {
+  .operation-group {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 10px;
+  }
+
+  .operation-group label {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 10px;
+    background-color: #f1f1f1;
+    border-radius: 6px;
+    font-size: 14px;
+    white-space: nowrap;
+    flex: 1 1 auto;
+  }
+
+  /* Optional: prevent overflow on very small screens */
+  .operation-group label input {
+    flex-shrink: 0;
+  }
+}
+
