@@ -465,7 +465,7 @@ header {
     max-width: 300px;
     height: 100vh; 
     background: white;
-    padding: 28rem;
+    padding: 1 rem 1.5 rem;
     box-shadow: 2px 0 10px rgba(0,0,0,0.2);
     z-index: 1000;
     overflow-y: auto;
