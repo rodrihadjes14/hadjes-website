@@ -104,11 +104,11 @@ nav a { margin: 0 15px; }
   box-shadow: 0 2px 8px rgba(0,0,0,0.05);
 }
 
-/*FILTRAR PROPIEDADES HEADLINE*/
+/*'FILTRAR PROPIEDADES' HEADLINE*/
 
 .sidebar-filters h3 {
   font-size: 1 rem;
-  color: darkblue;
+  color: #272729;
   display: flex;
   align-items: center;
   gap: 8px;
