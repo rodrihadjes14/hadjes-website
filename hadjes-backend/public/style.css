@@ -506,7 +506,7 @@ header {
   }
 
   #sidebar-search-button:hover {
-    background-color: #b71c1c;
+    background-color: #004d99;
   }
 
   /* Filter group spacing */
@@ -590,7 +590,7 @@ header {
 
 /* HORIZONTAL ALIGNEMENT MOBILE RESPONSIVE */
 
-@media (max-width: 480px) {
+@media (max-width: 769px) {
   .input-group {
     display: flex;           /* Enables horizontal layout */
     flex-wrap: wrap;         /* Items can wrap onto new lines if needed */
