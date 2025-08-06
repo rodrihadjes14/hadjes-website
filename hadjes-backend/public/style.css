@@ -463,8 +463,8 @@ header {
     top: 0; left: 0;
     width: 80%;
     max-width: 300px;
-    height: 100vh; /*correct this*/
-    background: #000000;
+    height: 100vh; 
+    background: white;
     padding: 28rem;
     box-shadow: 2px 0 10px rgba(0,0,0,0.2);
     z-index: 1000;
