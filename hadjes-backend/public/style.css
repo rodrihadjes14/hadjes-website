@@ -78,16 +78,6 @@ header {
   text-align: center;
 }
 
-.header-container {
-  max-width: 1200px;
-  margin: 0 auto;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  align-items: center;
-  gap: 20px;
-}
-
 
 /* LOGO BUTTON AND SEARCH BAR */
 
@@ -112,6 +102,8 @@ header {
   border-radius: 4px;
   transition: background-color 0.3s ease;
   display: inline-block;
+  margin-top: 8px;
+  margin-bottom: 8px;
 }
 
 .brand-button:hover {
@@ -428,7 +420,7 @@ footer {
 }
 
 
-/* HEADER */
+
 
 
 
