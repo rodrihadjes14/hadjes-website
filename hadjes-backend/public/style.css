@@ -17,23 +17,7 @@ h1, h2, h3, h4, h5, h6,
 
 a { color: #0066cc; text-decoration: none; }
 
-/* Header */
-header {
-  background: #004d99;
-  color: white;
-  padding: 20px;
-  text-align: center;
-}
 
-.header-container {
-  max-width: 1200px;
-  margin: 0 auto;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  align-items: center;
-  gap: 20px;
-}
 
 nav a { margin: 0 15px; }
 
@@ -86,10 +70,12 @@ nav a { margin: 0 15px; }
 
 /* HEADER */
 
+
 header {
   background: #004d99;
   color: white;
   padding: 20px;
+  text-align: center;
 }
 
 .header-container {
@@ -102,15 +88,6 @@ header {
   gap: 20px;
 }
 
-.brand-button {
-  font-size: 1.5rem;
-  font-weight: bold;
-  color: #fff;
-  text-decoration: none;
-  padding: 8px 12px;
-  border: 2px solid #fff;
-  border-radius: 4px;
-}
 
 /* LOGO BUTTON AND SEARCH BAR */
 
@@ -124,7 +101,7 @@ header {
   margin-bottom: 15px;
 }
 
-.brand-button {
+.brand-button { /* take a look at this one */
   font-size: 22px;
   font-weight: bold;
   color: #333;
@@ -134,6 +111,26 @@ header {
   border-radius: 5px;
   transition: background-color 0.3s ease;
   display: inline-block;
+}
+
+.brand-button {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #fff;
+  text-decoration: none;
+  padding: 8px 12px;
+  border: 2px solid #fff;
+  border-radius: 4px;
+}
+
+.brand-button {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #fff;
+  text-decoration: none;
+  padding: 8px 12px;
+  border: 2px solid #fff;
+  border-radius: 4px;
 }
 
 .brand-button:hover {
@@ -235,13 +232,24 @@ header {
   font-size: 16px;                      /* 🔠 Adjust size as needed */
   font-weight: 600;                     /* 🔸 Optional: makes text bolder */
   color: #333;                          /* 🎨 Text color */
-  background-color: #f1f1f1;            /* 🔘 Optional background */
+  background-color: #004d99;            /* 🔘 Optional background */
   padding: 10px 12px;                   /* 📏 Adjust spacing */
   border-radius: 6px;                   /* ⭕ Rounded corners */
   border: 1px solid #ccc;               /* 🧱 Optional border */
   cursor: pointer;
 }
 
+/* APPLIES TO ALL BUTTONS INSIDE SIDEBAR FILTERS */
+
+.sidebar-filters button {
+  background: #004d99;
+  color: white;
+  border: none;
+  padding: 10px;
+  font-weight: bold;
+  cursor: pointer;
+  width: 100%;
+}
 
 /*'FILTRAR PROPIEDADES' HEADLINE*/
 
@@ -300,18 +308,6 @@ header {
   /* Remove width/padding */
 }
 
-
-/* APPLIES TO ALL BUTTONS INSIDE SIDEBAR FILTERS */
-
-.sidebar-filters button {
-  background: #004d99;
-  color: white;
-  border: none;
-  padding: 10px;
-  font-weight: bold;
-  cursor: pointer;
-  width: 100%;
-}
 
 
 
@@ -450,34 +446,8 @@ footer {
   z-index: 1000;
 }
 
+
 /* HEADER */
-
-header {
-  background: #004d99;
-  color: white;
-  padding: 20px;
-}
-
-.header-container {
-  max-width: 1200px;
-  margin: 0 auto;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  align-items: center;
-  gap: 20px;
-}
-
-.brand-button {
-  font-size: 1.5rem;
-  font-weight: bold;
-  color: #fff;
-  text-decoration: none;
-  padding: 8px 12px;
-  border: 2px solid #fff;
-  border-radius: 4px;
-}
-
 
 
 
