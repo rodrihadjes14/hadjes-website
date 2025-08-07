@@ -208,10 +208,13 @@ footer {
   gap: 10px;
   background: white;
   padding: 15px;
-  border-radius: 30px;
+  border-radius: 20px;
   justify-content: center;
   align-items: center;
-  margin: 20px auto;
+  margin-left: 5px;
+  margin-right: 5px;
+  margin-top: 8px;
+  margin-bottom: 8px;
   max-width: 90%;
   box-shadow: 0 2px 6px rgba(0,0,0,0.1);
 }
@@ -236,10 +239,10 @@ footer {
 
 .property-type,
 .search-input {
-  padding: 10px;
+  padding: 6px 8px;
   border: 1px solid #ccc;
   border-radius: 10px;
-  font-size: 1rem;
+  font-size: 0.85rem;
 }
 
 .search-input {
@@ -322,7 +325,7 @@ footer {
 /* LOGO BUTTON AND SEARCH BAR */
 
 .header-logo-and-search {
-  padding: 0 15px;
+  padding: 0 15px; /*to add equal margin left and right */
   display: flex;
   justify-content: space-between;
   align-items: center;
