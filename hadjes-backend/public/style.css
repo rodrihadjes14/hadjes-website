@@ -319,8 +319,10 @@ footer {
   line-height: 1.6;
 }
 
-/* Logo Button and Layout for Header */
+/* LOGO BUTTON AND SEARCH BAR */
+
 .header-logo-and-search {
+  padding: 0 15px;
   display: flex;
   justify-content: space-between;
   align-items: center;
