@@ -315,32 +315,11 @@ header {
 
 
 
-
-
-
-/* Properties */
-.properties {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-  padding: 20px;
-}
-
-.property-card {
-  border: 1px solid #ddd;
-  border-radius: 4px;
-  overflow: hidden;
-  text-align: center;
-}
-.property-card img {
-  width: 100%;
-  height: auto;
-}
-.property-card h3 { margin: 10px 0 5px; }
-.property-card p { margin-bottom: 15px; }
-
 /* Sections */
 section { padding: 40px 20px; }
+
+
+
 
 /* Footer */
 footer {
@@ -562,7 +541,7 @@ header {
     top: 0; left: 0;
     width: 80%;
     max-width: 300px;
-    height: 100vh; 
+    height: 60vh; 
     background: white;
     padding: 1 rem 1.5 rem;
     box-shadow: 2px 0 10px rgba(0,0,0,0.2);
