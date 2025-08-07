@@ -208,7 +208,7 @@ footer {
   gap: 10px;
   background: white;
   padding: 15px;
-  border-radius: 20px;
+  border-radius: 10px;
   justify-content: center;
   align-items: center;
   margin-left: 5px;
@@ -240,6 +240,7 @@ footer {
 .property-type,
 .search-input {
   padding: 6px 8px;
+  height: 34px;
   border: 1px solid #ccc;
   border-radius: 10px;
   font-size: 0.85rem;
@@ -258,7 +259,8 @@ footer {
   border-radius: 8px;
   font-size: 16px;
   padding: 0 20px;
-  height: 40px;
+  height: 34px;
+  display: flex;  
   justify-content: center;
   align-items: center;
   cursor: pointer;
