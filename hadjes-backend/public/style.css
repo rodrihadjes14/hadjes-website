@@ -228,6 +228,21 @@ header {
   box-shadow: 0 2px 8px rgba(0,0,0,0.05);
 }
 
+/* SIDEBAR DROPDOWN-TOGGLE */
+
+.dropdown-toggle {
+  font-family: 'Exo 2', sans-serif; /* 🔤 Change the font here */
+  font-size: 16px;                      /* 🔠 Adjust size as needed */
+  font-weight: 600;                     /* 🔸 Optional: makes text bolder */
+  color: #333;                          /* 🎨 Text color */
+  background-color: #f1f1f1;            /* 🔘 Optional background */
+  padding: 10px 12px;                   /* 📏 Adjust spacing */
+  border-radius: 6px;                   /* ⭕ Rounded corners */
+  border: 1px solid #ccc;               /* 🧱 Optional border */
+  cursor: pointer;
+}
+
+
 /*'FILTRAR PROPIEDADES' HEADLINE*/
 
 .sidebar-filters h3 {
