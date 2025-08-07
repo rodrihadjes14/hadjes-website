@@ -128,11 +128,10 @@
   <!-- SIDEBAR -->
 
   
-  <div id="listings">
-    <p>Loading listing...</p>
-  </div>
-    
-  </div>
+  <section id="results">
+  <h2>Resultados / Results</h2>
+  <div id="search-listings">Loading results…</div>
+</section>
   
 
 <script>
@@ -171,7 +170,7 @@
     return matchOperation && matchType && matchLocation && matchAmbientes && matchPriceMin && matchPriceMax && matchKeyword;
   });
 
-  const listingsDiv = document.getElementById('listings');
+  const listingsDiv = document.getElementById('search-listings');
   listingsDiv.innerHTML = '';
 
   if (filtered.length === 0) {

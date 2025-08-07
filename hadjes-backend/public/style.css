@@ -75,7 +75,8 @@ header {
   background: #004d99;
   color: white;
   text-align: center;
-  padding: 0; /* top-bottom 12px, sides 20px */
+  padding-top: 10px; 
+  padding-bottom: 10px;
 }
 
 
@@ -84,13 +85,14 @@ header {
 /* LOGO BUTTON AND SEARCH BAR */
 
 .header-logo-and-search {
-  padding: 0 15px; /*to add equal margin left and right */
+  padding: 0 50px; /*to add equal margin left and right */
   display: flex;
   justify-content: space-between;
   align-items: center;
   flex-wrap: wrap;
   gap: 10px;
-  margin-bottom: 15px;
+  margin-top: 10px;
+  margin-bottom: 10px;
 }
 
 
@@ -99,14 +101,11 @@ header {
   font-weight: bold;
   color: #fff;
   text-decoration: none;
-  padding-top: 10px;
-  padding-bottom: 10px;
+  padding: 10px 20px 10px 20px;
   border: 2px solid #fff;
   border-radius: 4px;
   transition: background-color 0.3s ease;
   display: inline-block;
-  margin-top: 8px;
-  margin-bottom: 8px;
 }
 
 .brand-button:hover {
@@ -121,25 +120,23 @@ header {
   font-family: 'Open Sans', sans-serif;
   display: flex;
   flex-wrap: wrap;
-  gap: 10px;
+  gap: 15px;
   background: white;
-  padding-top: 10px;
-  padding-bottom: 10px;
+  padding: 5px 20px 5px 20px;
   border-radius: 10px;
   justify-content: center;
   align-items: center;
-  margin-left: 5px;
-  margin-right: 5px;
+  margin-left: 10px;
+  margin-right: 10px;
   margin-top: 8px;
   margin-bottom: 8px;
   max-width: 90%;
   box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  border: 5px solid #ffffff;
 }
 
-.brand-button,
-.filter-bar {
-  border: 5px solid red;
-}
+
+
 
 /* APPLIES MARGIN BETWEEN LABELS*/
 
@@ -192,6 +189,64 @@ header {
   background-color: #f5f5f5;
 }
 
+
+/*SIDEBARRRR */
+
+
+
+
+.sidebar-filters h3 {
+  margin-top: 0;
+  font-size: 1.2rem;
+}
+
+.filter-group {
+  margin-bottom: 1.5rem;
+}
+
+.filter-group label {
+  display: block;
+  margin: 0.25rem 0;
+}
+
+
+  #sidebar-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .filter-group {
+    width: 100%;
+  }
+
+  .filter-group label {
+    font-size: 0.95rem;
+    margin-bottom: 5px;
+    display: block;
+  }
+
+  input[type="number"] {
+    width: 100%;
+    padding: 0.5rem;
+    font-size: 1rem;
+    box-sizing: border-box;
+  }
+
+  #sidebar-search-button {
+    width: 100%;
+    padding: 0.8rem;
+    font-size: 1rem;
+    background: black;
+    color: white;
+    border: none;
+    cursor: pointer;
+  }
+
+#mobile-sidebar-container {
+  position: relative;
+  z-index: 1000;
+}
 
 
 /*SIDEBAR */
@@ -290,21 +345,15 @@ header {
   /* Remove width/padding */
 }
 
+/* H2 PROPERTIES */
 
-
-
-/* Sections */
-section { padding: 40px 20px; }
-
-
-
-
-/* Footer */
-footer {
-  background: #eee;
+.properties h2 {
   text-align: center;
-  padding: 20px;
 }
+
+
+/* SECTIONS */
+section { padding: 40px 20px; }
 
 
 
@@ -312,11 +361,9 @@ footer {
 
 
 /* Listings Layout */
+
 #listings {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr); /* 🔧 exactly 3 columns */
-  gap: 20px;
-  padding: 20px 0;
+  padding: 5px;
 }
 
 
@@ -346,9 +393,31 @@ footer {
   margin-top: 10px;
 }
 
-.properties h2 {
-  text-align: center;
+/*slider */
+
+.slider-wrapper {
+  overflow: hidden;
+  width: 100%;
+  margin: auto;
 }
+
+.slider-track {
+  display: flex;
+  gap: 20px; /* Adds spacing between cards */
+  transition: transform 0.5s ease;
+}
+
+.listing-box {
+  flex: 0 0 calc(33.333% - 13.33px); /* Makes space for gap! */
+  box-sizing: border-box;
+  background: white;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 10px;
+}
+
+
+
 
 /* ABOUT-CONTACT*/
 
@@ -365,68 +434,16 @@ footer {
 }
 
 
-/* Listings positioned beside sidebar */
-/* Default full-width listing layout */
 
-#listings {
-  padding: 1rem;
-}
-
- /* SIDEBAR */
-
-
-.sidebar-filters h3 {
-  margin-top: 0;
-  font-size: 1.2rem;
-}
-
-.filter-group {
-  margin-bottom: 1.5rem;
-}
-
-.filter-group label {
-  display: block;
-  margin: 0.25rem 0;
+/* Footer */
+footer {
+  background: #eee;
+  text-align: center;
+  padding: 20px;
 }
 
 
-  #sidebar-form {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-  }
 
-  .filter-group {
-    width: 100%;
-  }
-
-  .filter-group label {
-    font-size: 0.95rem;
-    margin-bottom: 5px;
-    display: block;
-  }
-
-  input[type="number"] {
-    width: 100%;
-    padding: 0.5rem;
-    font-size: 1rem;
-    box-sizing: border-box;
-  }
-
-  #sidebar-search-button {
-    width: 100%;
-    padding: 0.8rem;
-    font-size: 1rem;
-    background: black;
-    color: white;
-    border: none;
-    cursor: pointer;
-  }
-
-#mobile-sidebar-container {
-  position: relative;
-  z-index: 1000;
-}
 
 
 
@@ -460,10 +477,7 @@ footer {
     flex: 0 0 250px;
   }
 
-  #listings {
-    flex: 1;
-  }
-}
+ 
 
 
 
