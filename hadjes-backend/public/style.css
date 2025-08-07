@@ -114,6 +114,79 @@ header {
 
 
 
+/*FILTER BAR */
+
+.filter-bar {
+  font-family: 'Open Sans', sans-serif;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  background: white;
+  padding: 15px;
+  border-radius: 10px;
+  justify-content: center;
+  align-items: center;
+  margin-left: 5px;
+  margin-right: 5px;
+  margin-top: 8px;
+  margin-bottom: 8px;
+  max-width: 90%;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+
+/* APPLIES MARGIN BETWEEN LABELS*/
+
+.filter-options label {
+  margin-right: 15px;
+  font-family: 'Exo 2', sans-serif;
+  font-weight: 500;
+  color: #333;
+  text-transform: capitalize;
+}
+
+/*APPLIES SPACE BETWEEN RADIO BUTTON AND TEXT*/
+
+.filter-options input[type="radio"] {
+  margin-right: 5px;
+}
+
+/* Adds 10px of internal space inside the PLACEHOLDER AND DROPDOWN BOX */
+
+.property-type,
+.search-input {
+  padding: 6px 8px;
+  height: 34px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  font-size: 0.85rem;
+}
+
+.search-input {
+  width: 200px;
+}
+
+/* BUSCAR BUTTON*/
+
+.search-button {
+  background: #004d99;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  padding: 0 20px;
+  height: 34px;
+  display: flex;  
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+
+.search-button:hover {
+  background-color: #f5f5f5;
+}
+
+
+
 /*SIDEBAR */
 
 
@@ -228,79 +301,9 @@ footer {
   padding: 20px;
 }
 
-/*FILTER BAR */
-
-.filter-bar {
-  font-family: 'Open Sans', sans-serif;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-  background: white;
-  padding: 15px;
-  border-radius: 10px;
-  justify-content: center;
-  align-items: center;
-  margin-left: 5px;
-  margin-right: 5px;
-  margin-top: 8px;
-  margin-bottom: 8px;
-  max-width: 90%;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-}
-
-/* APPLIES MARGIN BETWEEN LABELS*/
-
-.filter-options label {
-  margin-right: 15px;
-  font-family: 'Exo 2', sans-serif;
-  font-weight: 500;
-  color: #333;
-  text-transform: capitalize;
-}
-
-/*APPLIES SPACE BETWEEN RADIO BUTTON AND TEXT*/
-
-.filter-options input[type="radio"] {
-  margin-right: 5px;
-}
-
-/* Adds 10px of internal space inside the PLACEHOLDER AND DROPDOWN BOX */
-
-.property-type,
-.search-input {
-  padding: 6px 8px;
-  height: 34px;
-  border: 1px solid #ccc;
-  border-radius: 10px;
-  font-size: 0.85rem;
-}
-
-.search-input {
-  width: 200px;
-}
-
-/* BUSCAR BUTTON*/
-
-.search-button {
-  background: #004d99;
-  color: white;
-  border: none;
-  border-radius: 8px;
-  font-size: 16px;
-  padding: 0 20px;
-  height: 34px;
-  display: flex;  
-  justify-content: center;
-  align-items: center;
-  cursor: pointer;
-}
-
-.search-button:hover {
-  background-color: #f5f5f5;
-}
 
 
-/* HERE IS WHERE HEADER WAS */
+/* HERE IS WHERE FILTER BAR WAS */
 
 
 
