@@ -266,7 +266,7 @@ async function fetchListings() {
   
   
   
-  // SIDEBAR MODIFICATION
+  // FETCHING A SINGLE LISTING
   
   async function fetchSingleListing(slug) {
   try {
@@ -275,8 +275,15 @@ async function fetchListings() {
 
     const listing = listings.find(item => item.slug === slug || item._id === slug);
 
-    const container = document.getElementById('listings');
+    const container = document.getElementById('search-listings');
     container.innerHTML = '';
+    
+    container.classList.remove('search-grid');
+    container.classList.add('single-view');
+    
+    const pager = document.getElementById('pagination');
+    if (pager) pager.style.display = 'none';
+
 
     if (!listing) {
       container.innerHTML = '<p>❌ Listing not found.</p>';

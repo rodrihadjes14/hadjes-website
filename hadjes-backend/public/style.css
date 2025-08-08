@@ -800,8 +800,6 @@ footer {
 
 
 
-
-
 /* Keep the blue dropdown style on desktop (beats the later purple rule) */
 @media (min-width: 1025px) {
   .dropdown-toggle {
@@ -818,5 +816,86 @@ footer {
   overflow: hidden;
   clip: rect(1px, 1px, 1px, 1px);
   white-space: nowrap;
+}
+
+/* --- LISTING GRID POLISH --- */
+
+/* Make sure grid items don’t overflow their cells */
+.search-grid > * {
+  min-width: 0;
+}
+
+/* Listing card basics */
+.search-grid .listing-box {
+  display: block;
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+  border: 1px solid #e6e6e6;
+  border-radius: 8px;
+  padding: 12px;
+  background: #fff;
+}
+
+/* Images: responsive and not huge */
+.search-grid .listing-box img {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-height: 220px;
+  object-fit: cover;
+  border-radius: 6px;
+  margin-bottom: 10px;
+}
+
+/* Titles: reduce extra spacing */
+.search-grid .listing-box h3 {
+  font-size: 1rem;
+  line-height: 1.3;
+  margin: 6px 0 6px;
+}
+
+/* Paragraph spacing inside cards */
+.search-grid .listing-box p {
+  margin: 6px 0;
+}
+
+/* Pagination: clearer active/hover states */
+/* Pagination: blue buttons with hover to white */
+.pagination {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  justify-content: center;
+  margin: 18px 0 8px;
+}
+
+.pagination button,
+.pagination .page-btn {
+  padding: 8px 12px;
+  border: 1px solid #004aad;  /* dark blue border */
+  background: #004aad;        /* dark blue background */
+  color: white;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.pagination .page-btn.active {
+  border-color: #002d66;      /* slightly darker border for active */
+  background: #002d66;        /* slightly darker background */
+  color: white;
+  font-weight: 600;
+}
+
+.pagination button:hover,
+.pagination .page-btn:hover {
+  background: white;
+  color: #004aad;
+}
+
+.pagination button:disabled {
+  opacity: 0.5;
+  cursor: default;
 }
 
