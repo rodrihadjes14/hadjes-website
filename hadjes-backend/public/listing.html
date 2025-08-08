@@ -13,19 +13,20 @@
 
 <body class="sidebar-layout"> 
   
-
+  
   <header>
   <div class="header-logo-and-search">
       <a href="index.html" class="brand-button">Hadjes Propiedades</a>
 
     <div class="filter-bar">
       <div class="filter-options">
-      <label><input type="radio" name="operation" value="venta"> Venta / Buy</label>
-      <label><input type="radio" name="operation" value="alquiler"> Alquiler / Rent</label>
-      <label><input type="radio" name="operation" value="temporal"> Alquiler Temporal / Temporary Rent</label>
+        <label for="op-venta"><input id="op-venta" type="radio" name="operation" value="venta"> Venta / Buy</label>
+        <label for="op-alquiler"><input id="op-alquiler" type="radio" name="operation" value="alquiler"> Alquiler / Rent</label>
+        <label for="op-temporal"><input id="op-temporal" type="radio" name="operation" value="temporal"> Alquiler Temporal / Temporary Rent</label>
     </div>
 
-    <select class="property-type" name="type">
+    <label for="type-select" class="visually-hidden">Tipo de propiedad</label>
+    <select id="type-select" class="property-type" name="type">
       <option value="">Propiedad</option>
       <option value="casa">Casa</option>
       <option value="departamento">Departamento</option>
@@ -38,7 +39,9 @@
     </select>
 
 
-    <input name="q" type="text" class="search-input" placeholder="Ubicación / Location, keyword..." /> 
+    <label for="search-q" class="visually-hidden">Buscar ubicación o palabra clave</label>
+    <input id="search-q" name="q" type="text" class="search-input" placeholder="Ubicación / Location, keyword..." />
+      
     <button id="search-button" class="search-button">Buscar</button>
    </div>
   </div>
@@ -102,18 +105,18 @@
 
       <div class="dropdown-filter">
         <button type="button" class="dropdown-toggle">Precio Mínimo</button>
-        <div class= "dropdown-content input-group operation group">
-        <label>Precio Mínimo:</label>
-        <input type="number" name="priceMin" />
+        <div class="dropdown-content input-group operation group">
+         <label for="priceMin">Precio Mínimo:</label>
+         <input id="priceMin" type="number" name="priceMin" />
         </div>
       </div>
-
-        <div class="dropdown-filter">
+      
+      <div class="dropdown-filter">
         <button type="button" class="dropdown-toggle">Precio Máximo</button>
-        <div class= "dropdown-content input group operation group">
-        <label>Precio Máximo:</label>
-        <input type="number" name="priceMax" />
-      </div>
+        <div class="dropdown-content input group operation group">
+          <label for="priceMax">Precio Máximo:</label>
+          <input id="priceMax" type="number" name="priceMax" />
+        </div>
       </div>
       
 
@@ -122,80 +125,147 @@
   </aside>
 </div>
     
-
-
-
-  <!-- SIDEBAR -->
-
-  
-  <section id="results">
-  <h2>Resultados / Results</h2>
-  <div id="search-listings">Loading results…</div>
+  <!--SEARCH RESULTS-->
+    
+  <section id="properties" class="properties">
+  <h2>Resultados Relacionados a Tu Busqueda/ Filtered Results</h2>
+  <div id="search-listings" class="search-grid">Loading results…</div>
+  <nav id="pagination" class="pagination" aria-label="Resultados paginados"></nav>
 </section>
-  
+    
+    
+</div>
+    
 
+
+  
+  
+  
+<!--SCRIPT-->
+  
 <script>
   
+async function fetchListings() {
+  // 1) Fetch all listings from your backend
+  const res = await fetch('https://hadjes-backend.onrender.com/listings');
+  const listings = await res.json();
+
+  // 2) Read filters from URL (keeps your current behavior)
   const params = new URLSearchParams(window.location.search);
-  const slug = params.get('slug');
-  
-  async function fetchListings() {
-    const res = await fetch('https://hadjes-backend.onrender.com/listings');
-    const listings = await res.json();
+  const types = params.get('type')?.split(',') || [];
+  const operation = params.get('operation');
+  const locations = params.get('location')?.split(',') || [];
+  const ambientes = params.get('ambientes')?.split(',') || [];
+  const priceMin = parseFloat(params.get('priceMin'));
+  const priceMax = parseFloat(params.get('priceMax'));
+  const keyword = (params.get('q') || '').toLowerCase();
 
-  // SIDEBAR MODIFICATION BACKUP RESERVE
-    
-    const params = new URLSearchParams(window.location.search);
-
-    const types = params.get('type')?.split(',') || [];
-    const operation = params.get('operation');
-    const locations = params.get('location')?.split(',') || [];
-    const ambientes = params.get('ambientes')?.split(',') || [];
-    const priceMin = parseFloat(params.get('priceMin'));
-    const priceMax = parseFloat(params.get('priceMax'));
-    const keyword = params.get('q')?.toLowerCase() || '';
-
-    const filtered = listings.filter(listing => {
+  // 3) Apply filters
+  const filtered = listings.filter(listing => {
     const matchOperation = !operation || listing.operation === operation;
     const matchType = types.length === 0 || types.includes(listing.type);
     const matchLocation = locations.length === 0 || locations.includes(listing.location);
     const matchAmbientes = ambientes.length === 0 || ambientes.includes(String(listing.ambientes));
     const matchPriceMin = isNaN(priceMin) || listing.price >= priceMin;
     const matchPriceMax = isNaN(priceMax) || listing.price <= priceMax;
-    const matchKeyword = !keyword ||
-      listing.title.toLowerCase().includes(keyword) ||
-      listing.description.toLowerCase().includes(keyword) ||
-      listing.location.toLowerCase().includes(keyword);
+    const matchKeyword =
+      !keyword ||
+      (listing.title && listing.title.toLowerCase().includes(keyword)) ||
+      (listing.description && listing.description.toLowerCase().includes(keyword)) ||
+      (listing.location && listing.location.toLowerCase().includes(keyword));
 
-    return matchOperation && matchType && matchLocation && matchAmbientes && matchPriceMin && matchPriceMax && matchKeyword;
+    return (
+      matchOperation &&
+      matchType &&
+      matchLocation &&
+      matchAmbientes &&
+      matchPriceMin &&
+      matchPriceMax &&
+      matchKeyword
+    );
   });
 
-  const listingsDiv = document.getElementById('search-listings');
-  listingsDiv.innerHTML = '';
+  // 4) Hook containers (grid + pagination)
+  const grid = document.getElementById('search-listings');
+  const pager = document.getElementById('pagination');
+  grid.innerHTML = '';
+  pager.innerHTML = '';
 
+  // 5) Empty state
   if (filtered.length === 0) {
-    listingsDiv.innerHTML = '<p>No se encontraron propiedades que coincidan.</p>';
+    grid.innerHTML = '<p>No properties match your filters.</p>';
     return;
   }
 
-  filtered.forEach(listing => {
-    const div = document.createElement('div');
-    div.className = 'listing';
-    div.innerHTML = `
-      <a href="listing.html?slug=${listing.slug || listing._id}" style="text-decoration: none; color: inherit;">
-        <div class="listing-box">
-          <img src="${listing.imageUrl}" width="300" />
-          <h3>${listing.title}</h3>
-          <p>${listing.description}</p>
-          <p><strong>Precio:</strong> $${listing.price}</p>
-          <p><strong>Ubicación:</strong> ${listing.location}</p>
-        </div>
-      </a>
-    `;
-    listingsDiv.appendChild(div);
-  });
+  // 6) Pagination state
+  const PAGE_SIZE = 24; // 3 columns × 8 rows
+  let currentPage = 1;
+  const totalPages = Math.ceil(filtered.length / PAGE_SIZE);
+
+  // 7) Render current page
+  function renderPage(page) {
+    currentPage = page;
+    grid.innerHTML = '';
+
+    const start = (page - 1) * PAGE_SIZE;
+    const end = start + PAGE_SIZE;
+    const slice = filtered.slice(start, end);
+
+    slice.forEach(listing => {
+      // Each item is a child of the grid; .search-grid CSS makes it fit the column
+      const wrapper = document.createElement('div');
+      wrapper.innerHTML = `
+        <a href="listing.html?slug=${listing.slug || listing._id}" style="text-decoration: none; color: inherit;">
+          <div class="listing-box">
+            ${listing.imageUrl ? `<img src="${listing.imageUrl}" alt="${listing.title || ''}" />` : ''}
+            <h3>${listing.title || 'Untitled listing'}</h3>
+            ${listing.description ? `<p>${listing.description}</p>` : ''}
+            ${typeof listing.price !== 'undefined' ? `<p><strong>Price:</strong> $${listing.price}</p>` : ''}
+            ${listing.location ? `<p><strong>Location:</strong> ${listing.location}</p>` : ''}
+          </div>
+        </a>
+      `;
+      grid.appendChild(wrapper);
+    });
+
+    renderPagination();
+    // Optional: jump to top after page change
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  // 8) Render pagination controls
+  function renderPagination() {
+    pager.innerHTML = '';
+
+    const prev = document.createElement('button');
+    prev.textContent = 'Prev';
+    prev.disabled = currentPage === 1;
+    prev.addEventListener('click', () => renderPage(currentPage - 1));
+    pager.appendChild(prev);
+
+    for (let i = 1; i <= totalPages; i++) {
+      const btn = document.createElement('button');
+      btn.textContent = i;
+      btn.className = 'page-btn' + (i === currentPage ? ' active' : '');
+      btn.addEventListener('click', () => renderPage(i));
+      pager.appendChild(btn);
+    }
+
+    const next = document.createElement('button');
+    next.textContent = 'Next';
+    next.disabled = currentPage === totalPages;
+    next.addEventListener('click', () => renderPage(currentPage + 1));
+    pager.appendChild(next);
+  }
+
+  // 9) Initial render
+  renderPage(1);
 }
 
+
+  
+  
+  
   // SIDEBAR MODIFICATION
   
   async function fetchSingleListing(slug) {
@@ -232,7 +302,7 @@
   // SIDEBAR FUNCTIONS
   
   document.addEventListener('DOMContentLoaded', () => {
-  const sidebarBtn = document.getElementById('sidebar-search-button');
+  const sidebarBtn = document.getElementById('sidebar-search-button'); 
   if (sidebarBtn) {
     sidebarBtn.addEventListener('click', function (e) {
       e.preventDefault();
@@ -296,13 +366,20 @@
   });
 
   document.addEventListener('DOMContentLoaded', () => {
-  if (slug) {
-    fetchSingleListing(slug);
-  } else {
-    fetchListings();
-  }
-});
+    // Read URL params safely
+    const params = new URLSearchParams(window.location.search);
+    const slug = params.get('slug'); // <-- NOW slug is defined
+
+    // If you have a single-listing page behavior, use it when slug exists.
+    if (slug && typeof fetchSingleListing === 'function') {
+      fetchSingleListing(slug);
+    } else {
+      // Default: load the paginated listings grid
+      fetchListings();
+    }
+  });
 </script>
+
 
 
   

@@ -110,6 +110,8 @@ header {
 
 .brand-button:hover {
   background-color: #f5f5f5;
+  transform: scale(1.02);
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
 }
 
 
@@ -187,6 +189,8 @@ header {
 
 .search-button:hover {
   background-color: #f5f5f5;
+  transform: scale(1.02);
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
 }
 
 
@@ -345,11 +349,22 @@ header {
   /* Remove width/padding */
 }
 
+
+
+
+
 /* H2 PROPERTIES */
 
 .properties h2 {
   text-align: center;
+  margin-bottom: 30px;
 }
+
+.results h2 {
+  text-align: center;
+}
+
+
 
 
 /* SECTIONS */
@@ -359,8 +374,7 @@ section { padding: 40px 20px; }
 
 
 
-
-/* Listings Layout */
+/* LISTINGS LAYOUT */
 
 #listings {
   padding: 5px;
@@ -393,7 +407,7 @@ section { padding: 40px 20px; }
   margin-top: 10px;
 }
 
-/*slider */
+/* SLIDER INDEX PAGE */
 
 .slider-wrapper {
   overflow: hidden;
@@ -407,14 +421,87 @@ section { padding: 40px 20px; }
   transition: transform 0.5s ease;
 }
 
-.listing-box {
-  flex: 0 0 calc(33.333% - 13.33px); /* Makes space for gap! */
+/* Slider-only sizing */
+.slider-track .listing-box {
+  flex: 0 0 calc(33.333% - 13.33px);
   box-sizing: border-box;
   background: white;
   border: 1px solid #ccc;
   border-radius: 5px;
   padding: 10px;
 }
+
+
+/* SEARCH RESULTS ON LISTING.HTML GRID */
+
+/* === Search results grid (listing.html) === */
+.search-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 20px;
+}
+
+/* Keep cards tidy in the grid */
+.search-grid .listing-box {
+  width: 100%;
+  height: 100%;
+  min-width: 0; /* prevents overflow in some browsers */
+}
+
+.search-grid .listing-box img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* Pagination styles */
+.pagination {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  justify-content: center;
+  align-items: center;
+  margin-top: 24px;
+}
+
+.pagination button {
+  background: #004d99;
+  color: #fff;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.pagination button[disabled] {
+  opacity: 0.5;
+  cursor: default;
+}
+
+.pagination .page-btn.active {
+  background: #222; /* current page */
+}
+
+
+
+/* ✅ Optional: make the grid 2 columns on tablets, 1 on small phones */
+@media (max-width: 1024px) {
+  .search-grid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 640px) {
+  .search-grid { grid-template-columns: 1fr; }
+}
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -470,15 +557,26 @@ footer {
     display: flex;
     gap: 20px;
     align-items: flex-start;
-    padding: 20px;
+    padding: 20px 20px;
   }
 
   #sidebar-wrapper {
-    flex: 0 0 250px;
+    display: block;      /* ensure visible on desktop */
+    flex: 0 0 260px;     /* fixed sidebar width */
+    width: 260px;        /* explicit width for good measure */
   }
 
- 
+  #properties,          /* your <section id="properties">… */
+  .properties {         /* class hook just in case */
+    flex: 1 1 auto;
+    min-width: 0;        /* prevents overflow pushing layout */
+  }
 
+  /* Prevents sidebar from stretching to full width on desktop */
+  .page-layout #sidebar-wrapper .sidebar-filters {
+    width: auto;
+  }
+}
 
 
   
@@ -520,11 +618,7 @@ footer {
     display: block;
   }
 
-  /* Listings layout - 1 column */
-  #listings {
-    grid-template-columns: 1fr;
-  }
-  
+ 
   
 
   /* Input fields and selects full width */
@@ -589,12 +683,8 @@ footer {
   }
 }
 
-/* === TABLET STYLES (769px–1024px) === */
-@media (min-width: 769px) and (max-width: 1024px) {
-  #listings {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
+
+
 
 /* === DESKTOP OVERRIDE (hide toggle) === */
 @media (min-width: 769px) {
@@ -648,8 +738,6 @@ footer {
   }
 }
 
-}
-
 /* Container Styles */
 .sidebar-filters {
   width: 100%;
@@ -658,21 +746,10 @@ footer {
   border: 1px solid #ddd;
   font-family: Arial, sans-serif;
 }
-
-/* Dropdown Button */
-.dropdown-toggle {
-  width: 100%;
-  background-color: #880099;
-  color: white;
-  padding: 10px 12px;
-  border: none;
-  text-align: left;
-  font-weight: bold;
-  cursor: pointer;
-  border-radius: 6px;
-  position: relative;
-  font-size: 15px;
+  
 }
+
+
 
 /* Arrow Icon */
 .dropdown-toggle::after {
@@ -716,7 +793,30 @@ footer {
   margin: 0;
 }
 
-/*OPERATION IN THE SIDEBAR MENU MODIFICATIONS FOR MOBILE VIEW*/
 
 
+
+
+
+
+
+
+
+/* Keep the blue dropdown style on desktop (beats the later purple rule) */
+@media (min-width: 1025px) {
+  .dropdown-toggle {
+    background-color: #004d99;
+    color: #fff;
+    border: 1px solid #ccc;
+  }
+}
+
+
+.visually-hidden {
+  position: absolute !important;
+  height: 1px; width: 1px;
+  overflow: hidden;
+  clip: rect(1px, 1px, 1px, 1px);
+  white-space: nowrap;
+}
 
