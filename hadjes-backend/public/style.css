@@ -989,3 +989,40 @@ footer {
   }
 }
 
+/* SLIDER MOBILE RESPONSIVE */
+
+
+/* Slider: 1 card per view on mobile, no peeking */
+/* ===== Slider (mobile): 1 card per view with visible gap, no peeking ===== */
+@media (max-width: 768px) {
+  /* Set a single source of truth for the gap */
+  .slider-wrapper {
+    --slide-gap: 12px;     /* adjust this for more/less space between cards */
+    overflow: hidden;
+    padding: 0;            /* no side padding or it will create a “peek” */
+  }
+
+  /* Keep the visual gap between slides */
+  .slider-track {
+    gap: var(--slide-gap);
+  }
+
+  /* Each slide is viewport minus the gap so step = viewport */
+  .slider-track .listing-box {
+    flex: 0 0 calc(100% - var(--slide-gap));
+    max-width: calc(100% - var(--slide-gap));
+    min-width: calc(100% - var(--slide-gap));
+    margin: 0;                 /* avoid margins that break the math */
+    box-sizing: border-box;
+    padding: 10px;             /* inner padding; safe */
+  }
+
+  .slider-track .listing-box img {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+}
+
+
+

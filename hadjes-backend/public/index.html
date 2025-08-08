@@ -139,40 +139,100 @@
   initializeSlider();
   }
     
-  function initializeSlider() {
-  const track = document.querySelector('.slider-track');
-  const cards = document.querySelectorAll('.listing-box');
-  if (cards.length <= 3) return;
+ function initializeSlider() {
+  const wrapper = document.querySelector('.slider-wrapper');
+  const track   = document.querySelector('.slider-track');
+  if (!wrapper || !track) return;
 
-  const cardWidth = cards[0].getBoundingClientRect().width + 20; // 20px = gap
+  // Grab only the original cards (before cloning)
+  const cards = track.querySelectorAll('.listing-box');
+  const originalCount = cards.length;
+  if (originalCount === 0) return;
 
-  // Clone first 3 cards and append
-  const clones = Array.from(cards).slice(0, 3).map(card => {
-    const clone = card.cloneNode(true);
-    clone.classList.add('clone');
-    return clone;
-  });
-  clones.forEach(clone => track.appendChild(clone));
+  // If too few cards, skip autoplay/loop
+  if (originalCount <= 3) return;
 
-  let index = 0;
-  const totalCards = cards.length;
+  // Decide how many we show per "viewport"
+  // Mobile: 1 per view, Desktop: 3 per view (matches your layout)
+  const MOBILE_BP = 768;
+  let perView = window.innerWidth <= MOBILE_BP ? 1 : 3;
 
-  const move = () => {
-    index++;
-    track.style.transition = 'transform 0.5s ease';
-    track.style.transform = `translateX(-${index * cardWidth}px)`;
+  // Read current gap from CSS so desktop math stays correct
+  function getGap() {
+    const cs = getComputedStyle(track);
+    // gap is the property for flexbox in modern browsers; fallback to columnGap if needed
+    return parseFloat(cs.gap || cs.columnGap || '0') || 0;
+  }
 
-    if (index === totalCards) {
-      setTimeout(() => {
-        track.style.transition = 'none';
-        index = 0;
-        track.style.transform = `translateX(0)`;
-      }, 500);
+  // How far to move for 1 step:
+  // - On mobile: exactly the visible viewport width
+  // - On desktop: width of one card + gap (your original behavior)
+  function getStepWidth() {
+    if (perView === 1) {
+      return wrapper.clientWidth; // mobile: move one full screen
+    } else {
+      const gap = getGap();
+      const cardW = cards[0].getBoundingClientRect().width;
+      return cardW + gap; // desktop: slide by one card
     }
-  };
+  }
 
+  // Clone a small number of cards for the seamless loop
+  const cloneCount = Math.min(perView, originalCount);
+  for (let i = 0; i < cloneCount; i++) {
+    const clone = cards[i].cloneNode(true);
+    clone.classList.add('clone');
+    track.appendChild(clone);
+  }
+
+  let index = 0;                   // counts how many steps we have moved
+  const totalCards = originalCount; // how many *original* positions we cycle through
+
+  function goTo(idx, { instant = false } = {}) {
+    index = idx;
+    if (instant) {
+      track.style.transition = 'none';
+    } else {
+      track.style.transition = 'transform 0.5s ease';
+    }
+    const x = -(index * getStepWidth());
+    track.style.transform = `translateX(${x}px)`;
+
+    if (instant) {
+      // re-enable transition on next frame
+      requestAnimationFrame(() => {
+        track.style.transition = 'transform 0.5s ease';
+      });
+    }
+  }
+
+  function move() {
+    goTo(index + 1);
+    // When we've stepped past the last original card into the clones, snap back
+    if (index >= totalCards) {
+      setTimeout(() => {
+        goTo(0, { instant: true }); // teleport (no animation) back to the start
+      }, 500); // matches the 0.5s transition
+    }
+  }
+
+  // Keep alignment on resize (e.g., rotate phone)
+  // Note: if you resize across the 768px breakpoint, perView changes.
+  // We recalc perView and re-align. If you need *perfect* behavior across
+  // live resizes, re-initialize from scratch — but this is good enough for real use.
+  function handleResize() {
+    const newPerView = window.innerWidth <= MOBILE_BP ? 1 : 3;
+    if (newPerView !== perView) {
+      perView = newPerView;
+    }
+    goTo(index, { instant: true }); // realign transform for the new width
+  }
+  window.addEventListener('resize', handleResize);
+
+  // Start autoplay
   setInterval(move, 3000);
 }
+
 
 
 
