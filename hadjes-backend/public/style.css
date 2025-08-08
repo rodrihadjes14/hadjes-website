@@ -697,47 +697,120 @@ footer {
 
 
 
-/* HORIZONTAL ALIGNEMENT MOBILE RESPONSIVE */
 
-@media (max-width: 769px) {
-  .input-group {
-    display: flex;           /* Enables horizontal layout */
-    flex-wrap: wrap;         /* Items can wrap onto new lines if needed */
-    justify-content: flex-start;
-    gap: 8px 6px;            /* Space between the items */
-  }
+/* Center brand button on mobile */
 
-@media (max-width: 480px) {
-  .input-group {
+@media (max-width: 768px) {
+  .brand-button {
     display: flex;
-    flex-wrap: wrap;         /* allows items to move to next line if needed */
-    gap: 8px;               /* spacing between boxes */
-    justify-content: flex-start;
-  }
-
-  .input-group label {
-    display: inline-flex !important;  /* makes label size match its content */
-    align-items: center;
-    gap: 6px;                  /* space between input and text */
-    padding: 5px 10px;         /* adds click/tap space */
-    background-color: #f1f1f1;
-    border-radius: 6px;
-    white-space: nowrap;       /* prevents text wrapping inside boxes */
-    font-size: 14px !important;
-    cursor: pointer;
-    max-width: calc(50% - 8px); /* ✅ fit two items per row */
-    box-sizing: border-box;
-  }
-
-
-
-
-  .input-group input[type="radio"],
-  .input-group input[type="checkbox"] {
-    margin: 0;               /* Removes default margins around inputs */
+    justify-content: center; /* centers horizontally */
+    align-items: center;     /* centers vertically within its container */
+    margin: 0 auto;          /* ensures it's centered if it has a fixed width */
   }
 }
 
+/* CENTER FILTER BAR */
+
+/* ===== Filter bar: definitive mobile & tablet behavior ===== */
+
+/* 0) Header stacking on mobile: brand above, filter bar centered below */
+@media (max-width: 768px) {
+  .header-logo-and-search {
+    display: flex;
+    flex-direction: column;
+    align-items: center;   /* centers brand + filter bar */
+    gap: 8px;
+  }
+}
+
+/* 1) Filter bar block: centered, wrapping */
+@media (max-width: 768px) {
+  .filter-bar {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;     /* center the whole group */
+    align-items: center;
+    gap: 8px 10px;               /* row gap / column gap */
+    width: 100%;
+    max-width: 680px;            /* optional cap so it doesn't stretch too wide */
+    padding: 8px 12px;
+    margin: 0 auto;
+  }
+
+  /* Radios container: wrap neatly and stay centered */
+  .filter-bar .filter-options {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 8px;
+    width: 100%;
+  }
+
+  /* Radio + label as a single "chip" that doesn't break */
+  .filter-bar .filter-options label {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;                    /* space between radio and text */
+    padding: 6px 10px;           /* larger tap target */
+    background: #f1f1f1;
+    border-radius: 8px;
+    white-space: nowrap;         /* keep radio + text together */
+    margin: 0;                   /* neutralize stray margins */
+    font-size: 14px;
+  }
+
+  .filter-bar .filter-options input[type="radio"] {
+    margin: 0;                   /* prevent layout shifts */
+    vertical-align: middle;
+  }
+
+  /* Select sits nicely in the row, but doesn't stretch too much */
+  .filter-bar select.property-type {
+    flex: 0 1 auto;
+    max-width: 100%;
+  }
+
+  /* Search input takes its own full row for usability */
+  .filter-bar .search-input {
+    flex: 1 1 100%;
+    min-width: 260px;            /* prevents being too tiny on very narrow screens */
+    max-width: 680px;
+  }
+
+  /* Search button sits centered under/next to the input as space allows */
+  .filter-bar .search-button {
+    flex: 0 0 auto;
+  }
+}
+
+/* 2) Tablet (769–1024px): still centered but more room */
+@media (min-width: 769px) and (max-width: 1024px) {
+  .filter-bar {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px 12px;
+    width: 100%;
+    max-width: 900px;
+    margin: 0 auto;
+  }
+  .filter-bar .filter-options {
+    justify-content: center;
+    gap: 8px 10px;
+    width: 100%;
+  }
+  .filter-bar .search-input {
+    flex: 1 1 100%;
+    max-width: 900px;
+  }
+}
+
+
+
+
+  
+  
+  
 /* Container Styles */
 .sidebar-filters {
   width: 100%;
