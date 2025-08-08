@@ -268,21 +268,29 @@ async function fetchListings() {
   
   // FETCHING A SINGLE LISTING
   
-  async function fetchSingleListing(slug) {
+ async function fetchSingleListing(slug) {
   try {
+    // 1) Grab containers and guard early
+    const container = document.getElementById('search-listings');
+    if (!container) {
+      console.error('Single view container not found');
+      return;
+    }
+    const pager = document.getElementById('pagination');
+
+    // 2) Prepare the container for single view
+    container.innerHTML = '';
+    container.classList.remove('search-grid');
+    container.classList.add('single-view');
+    if (pager) pager.style.display = 'none';
+
+    // 3) Quick loader feedback
+    container.innerHTML = '<p>Loading listing…</p>';
+
     const res = await fetch('https://hadjes-backend.onrender.com/listings');
     const listings = await res.json();
 
     const listing = listings.find(item => item.slug === slug || item._id === slug);
-
-    const container = document.getElementById('search-listings');
-    container.innerHTML = '';
-    
-    container.classList.remove('search-grid');
-    container.classList.add('single-view');
-    
-    const pager = document.getElementById('pagination');
-    if (pager) pager.style.display = 'none';
 
 
     if (!listing) {
@@ -301,6 +309,8 @@ async function fetchListings() {
       <p><strong>Type:</strong> ${listing.type}</p>
       <p><strong>Operation:</strong> ${listing.operation}</p>
     `;
+    
+    container.innerHTML = ''; 
     container.appendChild(div);
   } catch (err) {
     console.error('Error loading single listing:', err);
