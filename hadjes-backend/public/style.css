@@ -22,50 +22,51 @@ a { color: #0066cc; text-decoration: none; }
 nav a { margin: 0 15px; }
 
 /* Hero section */
-.hero-section {
-  background-image: url('images/hero-bg.jpg');  /* 🔁 Replace with your actual image path */
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  height: 80vh; /* Adjust as needed */
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  color: white;
-  padding: 2rem;
+
+.hero {
   position: relative;
+  height: 100vh; /* full screen height */
+  overflow: hidden;
 }
 
-.hero-section::before {
-  content: '';
+.hero-video {
   position: absolute;
-  top: 0; left: 0;
+  top: 0;
+  left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0, 0, 0, 0.4); /* dark overlay */
-  z-index: 1;
+  object-fit: cover; /* makes video fill without stretching */
+  z-index: 0;
 }
 
-.hero-content {
+.hero-overlay {
   position: relative;
-  z-index: 2;
-  text-align: center; /* 🔹 Add this */
-  max-width: 800px;
-  margin: 0 auto;      /* 🔹 Ensures it's centered in block */
+  z-index: 1; /* ensures text is above the video */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  color: white;
+  text-align: center;
+  background: rgba(0, 0, 0, 0.3); /* optional transparent overlay for readability */
+  padding: 20px;
 }
 
-
-.hero-content h1 {
-  font-family: 'Exo 2', sans-serif;
-  font-size: 3rem;
-  margin-bottom: 0.5rem;
+.hero-overlay h1 {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
 }
 
-.hero-content p {
-  font-family: 'Open Sans', sans-serif;
+.hero-overlay p {
   font-size: 1.2rem;
+  max-width: 600px;
 }
+
+
+
+/* ===== Hero Section ===== */
+
 
 
 /* HEADER */
@@ -1023,6 +1024,5 @@ footer {
     height: auto;
   }
 }
-
 
 
