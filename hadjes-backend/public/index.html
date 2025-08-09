@@ -88,9 +88,34 @@
   
   
 <script>
+  
+  async function fetchWithRetry(url, tries = 3) {
+  let lastErr;
+  for (let i = 1; i <= tries; i++) {
+    try {
+      const res = await fetch(url, { cache: 'no-store' });
+      if (res.ok) return await res.json();
+      console.warn(`Fetch failed with ${res.status} (attempt ${i}/${tries})`);
+    } catch (err) {
+      lastErr = err;
+      console.warn(`Fetch error: ${err.message} (attempt ${i}/${tries})`);
+    }
+    await new Promise(r => setTimeout(r, i * 600)); // 0.6s, 1.2s, 1.8s
+  }
+  throw lastErr || new Error('Failed to fetch after retries');
+}
+
+  
   async function fetchListings() {
-  const res = await fetch('https://hadjes-backend.onrender.com/listings');
-  const listings = await res.json();
+  let listings = [];
+  try {
+  listings = await fetchWithRetry('https://hadjes-backend.onrender.com/listings', 3);
+  } catch (e) {
+  console.error('Could not load listings:', e);
+  document.getElementById('slider-listings').innerHTML = '<p>Temporarily unavailable. Please try again.</p>';
+  return; // stop here so we don’t render undefined
+  }
+
 
   const params = new URLSearchParams(window.location.search);
 
@@ -99,10 +124,16 @@
 
   const filtered = listings.filter(listing => {
     const matchOperation = !operation || listing.operation === operation;
+    
+    const title = (listing.title || '').toLowerCase();
+    const desc  = (listing.description || '').toLowerCase();
+    const loc   = (listing.location || '').toLowerCase();
+
     const matchKeyword = !keyword ||
-      listing.title.toLowerCase().includes(keyword) ||
-      listing.description.toLowerCase().includes(keyword) ||
-      listing.location.toLowerCase().includes(keyword);
+      title.includes(keyword) ||
+      desc.includes(keyword) ||
+      loc.includes(keyword);
+
 
     return matchOperation && matchKeyword;
   });
@@ -117,22 +148,44 @@
 
 // on trial //
     
- filtered.forEach(listing => {
-      const div = document.createElement('div');
-      div.className = 'listing-box';
-      div.innerHTML = `
-        <a href="listing.html?slug=${listing.slug || listing._id}" style="text-decoration: none; color: inherit;">
-          <div>
-            <img src="${listing.imageUrl}" width="300" />
-            <h3>${listing.title}</h3>
-            <p>${listing.description}</p>
-            <p><strong>Price:</strong> $${listing.price}</p>
-            <p><strong>Location:</strong> ${listing.location}</p>
-          </div>
-        </a>
-      `;
-      listingsDiv.appendChild(div);
-    });
+ // on trial //
+
+  filtered.forEach(listing => {
+  const targetSlug = listing.slug || listing._id || '';
+  const href = targetSlug ? `listing.html?slug=${targetSlug}` : '#';
+
+  // Use a placeholder only if you have one; otherwise omit the <img>
+  // Option A: local placeholder file (recommended)
+  // const imageHTML = listing.imageUrl
+  //   ? `<img src="${listing.imageUrl}" alt="${listing.title || ''}" onerror="this.onerror=null; this.src='placeholder.jpg'">`
+  //   : `<img src="placeholder.jpg" alt="No image">`;
+
+  // Option B: omit the <img> if missing (no 404s, no placeholder needed)
+  const imageHTML = listing.imageUrl
+    ? `<img src="${listing.imageUrl}" alt="${listing.title || ''}" onerror="this.style.display='none'">`
+    : '';
+
+  const title = listing.title || 'Untitled listing';
+  const desc  = listing.description ? `<p>${listing.description}</p>` : '';
+  const price = (typeof listing.price !== 'undefined') ? `<p><strong>Price:</strong> $${listing.price}</p>` : '';
+  const loc   = listing.location ? `<p><strong>Location:</strong> ${listing.location}</p>` : '';
+
+  const div = document.createElement('div');
+  div.className = 'listing-box';
+  div.innerHTML = `
+    <a href="${href}" style="text-decoration: none; color: inherit;">
+      <div>
+        ${imageHTML}
+        <h3>${title}</h3>
+        ${desc}
+        ${price}
+        ${loc}
+      </div>
+    </a>
+  `;
+  listingsDiv.appendChild(div);
+});
+
 
 // slider on trial //
     
