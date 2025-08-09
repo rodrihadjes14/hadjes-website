@@ -88,212 +88,220 @@
   
   
 <script>
-  
+  // Retry helper to handle occasional 502s from backend
   async function fetchWithRetry(url, tries = 3) {
-  let lastErr;
-  for (let i = 1; i <= tries; i++) {
-    try {
-      const res = await fetch(url, { cache: 'no-store' });
-      if (res.ok) return await res.json();
-      console.warn(`Fetch failed with ${res.status} (attempt ${i}/${tries})`);
-    } catch (err) {
-      lastErr = err;
-      console.warn(`Fetch error: ${err.message} (attempt ${i}/${tries})`);
+    let lastErr;
+    for (let i = 1; i <= tries; i++) {
+      try {
+        const res = await fetch(url, { cache: 'no-store' });
+        if (res.ok) return await res.json();
+        console.warn(`Fetch failed with ${res.status} (attempt ${i}/${tries})`);
+      } catch (err) {
+        lastErr = err;
+        console.warn(`Fetch error: ${err.message} (attempt ${i}/${tries})`);
+      }
+      await new Promise(r => setTimeout(r, i * 600)); // 0.6s, 1.2s, 1.8s
     }
-    await new Promise(r => setTimeout(r, i * 600)); // 0.6s, 1.2s, 1.8s
+    throw lastErr || new Error('Failed to fetch after retries');
   }
-  throw lastErr || new Error('Failed to fetch after retries');
-}
 
-  
+  // Load listings for the HOME slider
   async function fetchListings() {
-  let listings = [];
-  try {
-  listings = await fetchWithRetry('https://hadjes-backend.onrender.com/listings', 3);
-  } catch (e) {
-  console.error('Could not load listings:', e);
-  document.getElementById('slider-listings').innerHTML = '<p>Temporarily unavailable. Please try again.</p>';
-  return; // stop here so we don’t render undefined
-  }
-
-
-  const params = new URLSearchParams(window.location.search);
-
-  const operation = params.get('operation');
-  const keyword = params.get('q')?.toLowerCase() || '';
-
-  const filtered = listings.filter(listing => {
-    const matchOperation = !operation || listing.operation === operation;
-    
-    const title = (listing.title || '').toLowerCase();
-    const desc  = (listing.description || '').toLowerCase();
-    const loc   = (listing.location || '').toLowerCase();
-
-    const matchKeyword = !keyword ||
-      title.includes(keyword) ||
-      desc.includes(keyword) ||
-      loc.includes(keyword);
-
-
-    return matchOperation && matchKeyword;
-  });
-
-  const listingsDiv = document.getElementById('slider-listings');
-  listingsDiv.innerHTML = '';
-
-  if (filtered.length === 0) {
-    listingsDiv.innerHTML = '<p>No matching listings found.</p>';
-    return;
-  }
-
-// on trial //
-    
- // on trial //
-
-  filtered.forEach(listing => {
-  const targetSlug = listing.slug || listing._id || '';
-  const href = targetSlug ? `listing.html?slug=${targetSlug}` : '#';
-
-  // Use a placeholder only if you have one; otherwise omit the <img>
-  // Option A: local placeholder file (recommended)
-  // const imageHTML = listing.imageUrl
-  //   ? `<img src="${listing.imageUrl}" alt="${listing.title || ''}" onerror="this.onerror=null; this.src='placeholder.jpg'">`
-  //   : `<img src="placeholder.jpg" alt="No image">`;
-
-  // Option B: omit the <img> if missing (no 404s, no placeholder needed)
-  const imageHTML = listing.imageUrl
-    ? `<img src="${listing.imageUrl}" alt="${listing.title || ''}" onerror="this.style.display='none'">`
-    : '';
-
-  const title = listing.title || 'Untitled listing';
-  const desc  = listing.description ? `<p>${listing.description}</p>` : '';
-  const price = (typeof listing.price !== 'undefined') ? `<p><strong>Price:</strong> $${listing.price}</p>` : '';
-  const loc   = listing.location ? `<p><strong>Location:</strong> ${listing.location}</p>` : '';
-
-  const div = document.createElement('div');
-  div.className = 'listing-box';
-  div.innerHTML = `
-    <a href="${href}" style="text-decoration: none; color: inherit;">
-      <div>
-        ${imageHTML}
-        <h3>${title}</h3>
-        ${desc}
-        ${price}
-        ${loc}
-      </div>
-    </a>
-  `;
-  listingsDiv.appendChild(div);
-});
-
-
-// slider on trial //
-    
-  initializeSlider();
-  }
-    
- function initializeSlider() {
-  const wrapper = document.querySelector('.slider-wrapper');
-  const track   = document.querySelector('.slider-track');
-  if (!wrapper || !track) return;
-
-  // Grab only the original cards (before cloning)
-  const cards = track.querySelectorAll('.listing-box');
-  const originalCount = cards.length;
-  if (originalCount === 0) return;
-
-  // If too few cards, skip autoplay/loop
-  if (originalCount <= 3) return;
-
-  // Decide how many we show per "viewport"
-  // Mobile: 1 per view, Desktop: 3 per view (matches your layout)
-  const MOBILE_BP = 768;
-  let perView = window.innerWidth <= MOBILE_BP ? 1 : 3;
-
-  // Read current gap from CSS so desktop math stays correct
-  function getGap() {
-    const cs = getComputedStyle(track);
-    // gap is the property for flexbox in modern browsers; fallback to columnGap if needed
-    return parseFloat(cs.gap || cs.columnGap || '0') || 0;
-  }
-
-  // How far to move for 1 step:
-  // - On mobile: exactly the visible viewport width
-  // - On desktop: width of one card + gap (your original behavior)
-  function getStepWidth() {
-    if (perView === 1) {
-      return wrapper.clientWidth; // mobile: move one full screen
-    } else {
-      const gap = getGap();
-      const cardW = cards[0].getBoundingClientRect().width;
-      return cardW + gap; // desktop: slide by one card
+    let listings = [];
+    try {
+      listings = await fetchWithRetry('https://hadjes-backend.onrender.com/listings', 3);
+    } catch (e) {
+      console.error('Could not load listings:', e);
+      const slider = document.getElementById('slider-listings');
+      if (slider) slider.innerHTML = '<p>Temporarily unavailable. Please try again.</p>';
+      return;
     }
-  }
 
-  // Clone a small number of cards for the seamless loop
-  const cloneCount = Math.min(perView, originalCount);
-  for (let i = 0; i < cloneCount; i++) {
-    const clone = cards[i].cloneNode(true);
-    clone.classList.add('clone');
-    track.appendChild(clone);
-  }
+    const params = new URLSearchParams(window.location.search);
+    const operation = params.get('operation');
+    const keyword = (params.get('q') || '').toLowerCase();
 
-  let index = 0;                   // counts how many steps we have moved
-  const totalCards = originalCount; // how many *original* positions we cycle through
+    const filtered = listings.filter(listing => {
+      const matchOperation = !operation || listing.operation === operation;
 
-  function goTo(idx, { instant = false } = {}) {
-    index = idx;
-    if (instant) {
-      track.style.transition = 'none';
-    } else {
-      track.style.transition = 'transform 0.5s ease';
+      // Safe lowercase
+      const title = (listing.title || '').toLowerCase();
+      const desc  = (listing.description || '').toLowerCase();
+      const loc   = (listing.location || '').toLowerCase();
+
+      const matchKeyword =
+        !keyword ||
+        title.includes(keyword) ||
+        desc.includes(keyword) ||
+        loc.includes(keyword);
+
+      return matchOperation && matchKeyword;
+    });
+
+    const listingsDiv = document.getElementById('slider-listings');
+    if (!listingsDiv) return;
+    listingsDiv.innerHTML = '';
+
+    if (filtered.length === 0) {
+      listingsDiv.innerHTML = '<p>No matching listings found.</p>';
+      return;
     }
-    const x = -(index * getStepWidth());
-    track.style.transform = `translateX(${x}px)`;
 
-    if (instant) {
-      // re-enable transition on next frame
-      requestAnimationFrame(() => {
+    // Render slider cards (safe href/src)
+    filtered.forEach(listing => {
+      const targetSlug = listing.slug || listing._id || '';
+      const href = targetSlug ? `listing.html?slug=${targetSlug}` : '#';
+
+      // If you have a local placeholder, swap Option B for Option A:
+      // const imageHTML = listing.imageUrl
+      //   ? `<img src="${listing.imageUrl}" alt="${listing.title || ''}" onerror="this.onerror=null; this.src='placeholder.jpg'">`
+      //   : `<img src="placeholder.jpg" alt="No image">`;
+
+      // Option B: hide <img> if missing/broken
+      const imageHTML = listing.imageUrl
+        ? `<img src="${listing.imageUrl}" alt="${listing.title || ''}" onerror="this.style.display='none'">`
+        : '';
+
+      const title = listing.title || 'Untitled listing';
+      const desc  = listing.description ? `<p>${listing.description}</p>` : '';
+      const price = (typeof listing.price !== 'undefined') ? `<p><strong>Price:</strong> $${listing.price}</p>` : '';
+      const loc   = listing.location ? `<p><strong>Location:</strong> ${listing.location}</p>` : '';
+
+      const div = document.createElement('div');
+      div.className = 'listing-box';
+      div.innerHTML = `
+        <a href="${href}" style="text-decoration: none; color: inherit;">
+          <div>
+            ${imageHTML}
+            <h3>${title}</h3>
+            ${desc}
+            ${price}
+            ${loc}
+          </div>
+        </a>
+      `;
+      listingsDiv.appendChild(div);
+    });
+
+    initializeSlider();
+  }
+
+  // Seamless infinite slider (desktop: 3 per view, mobile: 1 per view)
+  function initializeSlider() {
+    const wrapper = document.querySelector('.slider-wrapper');
+    const track   = document.querySelector('.slider-track');
+    if (!wrapper || !track) return;
+
+    // After rendering, count originals
+    const cards = track.querySelectorAll('.listing-box');
+    const originalCount = cards.length;
+    if (originalCount === 0) return;
+    if (originalCount <= 3) return; // not enough to loop nicely
+
+    const MOBILE_BP = 768;
+    let perView = window.innerWidth <= MOBILE_BP ? 1 : 3;
+
+    function getGap() {
+      const cs = getComputedStyle(track);
+      return parseFloat(cs.gap || cs.columnGap || '0') || 0;
+    }
+
+    function getStepWidth() {
+      if (perView === 1) {
+        return wrapper.clientWidth; // move by viewport width on mobile
+      } else {
+        const gap = getGap();
+        const cardW = cards[0].getBoundingClientRect().width;
+        return cardW + gap; // desktop: one card + gap
+      }
+    }
+
+    // --- Seamless loop setup: clone both ends ---
+    const originals = Array.from(cards);
+    const cloneN = Math.min(perView, originalCount);
+
+    // tail clones (last N) -> prepend
+    const tailClones = originals.slice(-cloneN).map(n => {
+      const c = n.cloneNode(true); c.classList.add('clone'); return c;
+    });
+    tailClones.forEach(c => track.insertBefore(c, track.firstChild));
+
+    // head clones (first N) -> append
+    const headClones = originals.slice(0, cloneN).map(n => {
+      const c = n.cloneNode(true); c.classList.add('clone'); return c;
+    });
+    headClones.forEach(c => track.appendChild(c));
+
+    // Indices of real slides after inserting clones
+    let index = perView;                           // start on first REAL
+    const firstReal = perView;
+    const lastReal  = perView + originalCount - 1;
+
+    // Teleport control + autoplay id
+    let autoplayId = null;
+    let isTeleporting = false;
+
+    function goTo(idx, { instant = false } = {}) {
+      index = idx;
+
+      if (instant) {
+        isTeleporting = true;
+        track.style.transition = 'none';
+      } else {
         track.style.transition = 'transform 0.5s ease';
-      });
+      }
+
+      const x = -(index * getStepWidth());
+      track.style.transform = `translateX(${x}px)`;
+
+      if (instant) {
+        // Force reflow so transform applies immediately w/o transition
+        void track.offsetHeight;
+        // Re-enable transition next frame and clear flag
+        requestAnimationFrame(() => {
+          track.style.transition = 'transform 0.5s ease';
+          isTeleporting = false;
+        });
+      }
     }
+
+    function move() {
+      if (isTeleporting) return;
+      goTo(index + 1);
+    }
+
+    // Start positioned at first REAL slide (instant)
+    goTo(index, { instant: true });
+
+    // Seamless loop: when we hit clones, teleport to matching real
+    track.addEventListener('transitionend', () => {
+      if (index > lastReal) {
+        goTo(firstReal, { instant: true });
+        return;
+      }
+      if (index < firstReal) {
+        goTo(lastReal, { instant: true });
+      }
+    });
+
+    // Keep alignment on resize
+    function handleResize() {
+      const newPerView = window.innerWidth <= MOBILE_BP ? 1 : 3;
+      if (newPerView !== perView) {
+        perView = newPerView;
+      }
+      goTo(index, { instant: true });
+    }
+    window.addEventListener('resize', handleResize);
+
+    // Autoplay
+    autoplayId = setInterval(move, 3000);
   }
 
-  function move() {
-    goTo(index + 1);
-    // When we've stepped past the last original card into the clones, snap back
-    if (index >= totalCards) {
-      setTimeout(() => {
-        goTo(0, { instant: true }); // teleport (no animation) back to the start
-      }, 500); // matches the 0.5s transition
-    }
-  }
-
-  // Keep alignment on resize (e.g., rotate phone)
-  // Note: if you resize across the 768px breakpoint, perView changes.
-  // We recalc perView and re-align. If you need *perfect* behavior across
-  // live resizes, re-initialize from scratch — but this is good enough for real use.
-  function handleResize() {
-    const newPerView = window.innerWidth <= MOBILE_BP ? 1 : 3;
-    if (newPerView !== perView) {
-      perView = newPerView;
-    }
-    goTo(index, { instant: true }); // realign transform for the new width
-  }
-  window.addEventListener('resize', handleResize);
-
-  // Start autoplay
-  setInterval(move, 3000);
-}
-
-
-
-
-//slider //
-
-fetchListings();
-
+  // Kick things off
+  fetchListings();
 </script>
+
 
 
 <script>
