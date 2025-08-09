@@ -14,6 +14,9 @@ h1, h2, h3, h4, h5, h6,
   font-weight: 700;
   letter-spacing: 0.015em;
 }
+h2 {
+  font-size: 2rem;
+}
 
 a { color: #0066cc; text-decoration: none; }
 
@@ -73,7 +76,7 @@ nav a { margin: 0 15px; }
 
 
 header {
-  background: #004d99;
+  background: #4e4f50;
   color: white;
   text-align: center;
   padding-top: 10px; 
@@ -111,6 +114,7 @@ header {
 
 .brand-button:hover {
   background-color: #f5f5f5;
+  color: #4e4f50;
   transform: scale(1.02);
   box-shadow: 0 0 10px rgba(0,0,0,0.1);
 }
@@ -147,7 +151,7 @@ header {
   margin-right: 15px;
   font-family: 'Exo 2', sans-serif;
   font-weight: 500;
-  color: #333;
+  color: #4e4f50;
   text-transform: capitalize;
 }
 
@@ -175,7 +179,7 @@ header {
 /* BUSCAR BUTTON*/
 
 .search-button {
-  background: #004d99;
+  background: #4e4f50;
   color: white;
   border: none;
   border-radius: 8px;
@@ -190,8 +194,10 @@ header {
 
 .search-button:hover {
   background-color: #f5f5f5;
+  color: #4e4f50;
   transform: scale(1.02);
   box-shadow: 0 0 10px rgba(0,0,0,0.1);
+  border: 2px solid #efdc8c;
 }
 
 
@@ -242,7 +248,7 @@ header {
     width: 100%;
     padding: 0.8rem;
     font-size: 1rem;
-    background: black;
+    background: #4e4f50;
     color: white;
     border: none;
     cursor: pointer;
@@ -525,7 +531,7 @@ section { padding: 40px 20px; }
 
 /* Footer */
 footer {
-  background: #eee;
+  background: #4e4f50;
   text-align: center;
   padding: 20px;
 }
@@ -1025,4 +1031,71 @@ footer {
   }
 }
 
+/* SECTIONS INDEX LISTING */
+
+
+
+
+/* Make option-box match listing card style */
+
+.options-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Same card width as slider */
+  gap: 20px; /* Same gap between cards as slider */
+  max-width: 100%; /* Same max width as slider wrapper */
+  margin: 40px 0; /* Center the grid horizontally */
+  padding: 0 10px; /* Remove extra side padding to match slider alignment */
+}
+
+.option-box {
+  /* Copy look from listing-box */
+  background-color: #fff;
+  border-radius: 8px;
+  padding: 15px;
+  text-align: center;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  
+  /* Match width and height */
+  width: 100%;
+  min-height: 100%; /* fill height in grid row */
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.option-box h3 {
+  font-family: 'Exo 2', sans-serif;
+  font-weight: 700;
+  letter-spacing: 0.015em;
+  font-size: 1.7rem;
+}
+
+.option-box ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.option-box ul li {
+  margin: 6px 0;
+}
+
+.option-box ul li a {
+  text-decoration: none;
+  color: #2f3133;
+  font-weight: 500;
+}
+
+.option-box ul li a:hover {
+  text-decoration: underline;
+}
+
+
+/* ===== Responsive adjustments ===== */
+@media (max-width: 768px) {
+  .options-grid {
+    grid-template-columns: 1fr; /* 1 column on small screens */
+  }
+}
 
