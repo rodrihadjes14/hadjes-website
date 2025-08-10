@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Quienes Somos</title>
+  <meta name="description" content="Somos expertos en Real Estate" />
+  <link rel="stylesheet" href="style.css" />  
+  <link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@500;700&family=Open+Sans:wght@300;400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+
+ <header>
+  <div class="header-logo-and-search">
+      <a href="index.html" class="brand-button">Hadjes Propiedades</a>
+
+    <div class="filter-bar">  
+      <div class="filter-options">
+      <label><input type="radio" name="operation" value="venta"> Venta</label>
+      <label><input type="radio" name="operation" value="alquiler"> Alquiler</label>
+      <label><input type="radio" name="operation" value="temporal"> Alquiler Temporal</label>
+    </div>
+
+    <select class="property-type" name="type">
+      <option value="">Propiedad</option>
+      <option value="casa">Casa</option>
+      <option value="departamento">Departamento</option>
+      <option value="edificio">Edificio</option>
+      <option value="cochera">Cochera</option>
+      <option value="local">Local</option>
+      <option value="oficina">Oficina</option>
+      <option value="campo">Campo</option>
+      <option value="lote">Lote</option>
+    </select>
+
+
+    <input name="q" type="text" class="search-input" placeholder="Ubicación / Location, keyword..." /> 
+    <button id="search-button" class="search-button">Buscar</button>
+  </div>
+</div>
+
+  </header>
+  
+
+  <main class="page-layout">
+    
+ <section class="who-we-are-section">
+   
+   
+   
+  <h1>Quienes Somos</h1>
+   
+   
+  <p class="who-intro">
+    Somos un equipo dedicado a simplificar la búsqueda de propiedades a través de 
+    la transparencia, datos fácticos y una experiencia centrada en la información y asesoramiento personalizado. 
+    Con más de 30 años de trayectoria en la construcción, evaluamos los índices del mercado con consistencia para ofrecerle a nuestros
+    clientes las soluciones mas adecuadas a sus necesidades y recomendaciones en materia de inversiones.
+    Nuestros profesionales entienden que es una responsabilidad la constante capacitación en materia financiera, contable e inmobiliaria,
+    tanto dentro como fuera del territorio de la República Argentina. 
+  </p>
+   
+   
+   
+  <h2>Nuestros Miembros</h2>
+  <!-- Team grid -->
+  <div class="team-grid">
+    <!-- Card 1 -->
+    <a class="team-card" href="#" aria-label="María Pérez" style="--photo:url('assets/team/maria.jpg')" tabindex="0">
+      <span class="team-card__overlay" aria-hidden="true">María Pérez</span>
+    </a>
+
+    <!-- Card 2 -->
+    <a class="team-card" href="#" aria-label="Juan Gómez" style="--photo:url('assets/team/juan.jpg')" tabindex="0">
+      <span class="team-card__overlay" aria-hidden="true">Juan Gómez</span>
+    </a>
+
+    <!-- Card 3 -->
+    <a class="team-card" href="#" aria-label="Lucía Fernández" style="--photo:url('assets/team/lucia.jpg')" tabindex="0">
+      <span class="team-card__overlay" aria-hidden="true">Lucía Fernández</span>
+    </a>
+
+    <!-- Card 4 -->
+    <a class="team-card" href="#" aria-label="Diego Ruiz" style="--photo:url('assets/team/diego.jpg')" tabindex="0">
+      <span class="team-card__overlay" aria-hidden="true">Diego Ruiz</span>
+    </a>
+  </div>
+   
+</section>
+
+  </main>
+
+  
+  <!-- Fallback footer (we’ll replace with your real footer in Step 3) -->
+   <footer>
+    <p>&copy; 2025 Hadjes Propiedades</p>
+  </footer> 
+
+  
+
+  
+  
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const btn = document.getElementById('search-button');
+    if (btn) {
+      btn.addEventListener('click', function (e) {
+        e.preventDefault();
+
+        const params = new URLSearchParams();
+
+        // ✅ Keyword input
+        const q = document.querySelector('input[name="q"]')?.value;
+        if (q) params.set('q', q);
+
+        // ✅ Operation radio
+        const operation = document.querySelector('input[name="operation"]:checked')?.value;
+        if (operation) params.set('operation', operation);
+
+        // ✅ Property type dropdown
+        const type = document.querySelector('select[name="type"]')?.value;
+        if (type) params.set('type', type);
+
+        // 🚀 Redirect with all selected filters
+        window.location.href = `listing.html?${params.toString()}`;
+      });
+    }
+  });
+</script>
+
+  
+  
+  
+  
+</body>
+</html>
+

@@ -76,7 +76,7 @@ nav a { margin: 0 15px; }
 
 
 header {
-  background: #4e4f50;
+  background: #272727;
   color: white;
   text-align: center;
   padding-top: 10px; 
@@ -114,7 +114,7 @@ header {
 
 .brand-button:hover {
   background-color: #f5f5f5;
-  color: #4e4f50;
+  color: #272727;
   transform: scale(1.02);
   box-shadow: 0 0 10px rgba(0,0,0,0.1);
 }
@@ -151,7 +151,7 @@ header {
   margin-right: 15px;
   font-family: 'Exo 2', sans-serif;
   font-weight: 500;
-  color: #4e4f50;
+  color: #272727;
   text-transform: capitalize;
 }
 
@@ -179,7 +179,7 @@ header {
 /* BUSCAR BUTTON*/
 
 .search-button {
-  background: #4e4f50;
+  background: #272727;
   color: white;
   border: none;
   border-radius: 8px;
@@ -194,31 +194,18 @@ header {
 
 .search-button:hover {
   background-color: #f5f5f5;
-  color: #4e4f50;
+  color: #272727;
   transform: scale(1.02);
   box-shadow: 0 0 10px rgba(0,0,0,0.1);
   border: 2px solid #efdc8c;
 }
 
 
-/*SIDEBARRRR */
+/*SIDEBAR */
 
 
+/* "FILTRAR PROPIEDADES" */
 
-
-.sidebar-filters h3 {
-  margin-top: 0;
-  font-size: 1.2rem;
-}
-
-.filter-group {
-  margin-bottom: 1.5rem;
-}
-
-.filter-group label {
-  display: block;
-  margin: 0.25rem 0;
-}
 
 
   #sidebar-form {
@@ -227,15 +214,7 @@ header {
     gap: 1rem;
   }
 
-  .filter-group {
-    width: 100%;
-  }
 
-  .filter-group label {
-    font-size: 0.95rem;
-    margin-bottom: 5px;
-    display: block;
-  }
 
   input[type="number"] {
     width: 100%;
@@ -244,15 +223,7 @@ header {
     box-sizing: border-box;
   }
 
-  #sidebar-search-button {
-    width: 100%;
-    padding: 0.8rem;
-    font-size: 1rem;
-    background: #4e4f50;
-    color: white;
-    border: none;
-    cursor: pointer;
-  }
+
 
 #mobile-sidebar-container {
   position: relative;
@@ -261,8 +232,17 @@ header {
 
 
 /*SIDEBAR */
+/*'FILTRAR PROPIEDADES' HEADLINE AND CONTAINER*/
 
-
+.sidebar-filters h3 {
+  font-size: 1.2 rem;
+  color: #272727;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 1 rem;
+  margin-top: 0;
+}
 
 .sidebar-filters {
   width: 250px;
@@ -270,7 +250,6 @@ header {
   border: 1px solid #eee;
   padding: 20px;
   font-family: 'Exo 2', sans-serif;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
 }
 
 /* SIDEBAR DROPDOWN-TOGGLE */
@@ -279,8 +258,8 @@ header {
   font-family: 'Exo 2', sans-serif; /* 🔤 Change the font here */
   font-size: 16px;                      /* 🔠 Adjust size as needed */
   font-weight: 600;                     /* 🔸 Optional: makes text bolder */
-  color: #333;                          /* 🎨 Text color */
-  background-color: #004d99;            /* 🔘 Optional background */
+  color: #272727;                          /* 🎨 Text color */
+  background-color: #272727;            /* 🔘 Optional background */
   padding: 10px 12px;                   /* 📏 Adjust spacing */
   border-radius: 6px;                   /* ⭕ Rounded corners */
   border: 1px solid #ccc;               /* 🧱 Optional border */
@@ -290,7 +269,7 @@ header {
 /* APPLIES TO ALL BUTTONS INSIDE SIDEBAR FILTERS */
 
 .sidebar-filters button {
-  background: #004d99;
+  background: #272727;
   color: white;
   border: none;
   padding: 10px;
@@ -299,16 +278,11 @@ header {
   width: 100%;
 }
 
-/*'FILTRAR PROPIEDADES' HEADLINE*/
-
-.sidebar-filters h3 {
-  font-size: 1 rem;
-  color: #272729;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  margin-bottom: 1 rem;
+.sidebar-filters button:hover {
+  background: white;  
+  color: #272727;     
 }
+
 
 /*  CONTROL OVER THE LABELS INSIDE SIDEBAR-FILTERS SECTION  */
 
@@ -356,7 +330,28 @@ header {
   /* Remove width/padding */
 }
 
+sidebar-filters .sidebar-search-button,
+.sidebar-filters #sidebar-search-button {
+    width: 100%;
+    padding: 10px 12px;
+    font-size: 1rem;
+    background: #272727;
+    color: white;
+    border: 2px solid transparent;
+    cursor: pointer;
+    border-radius: 5px;  
+    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
 
+  }
+
+.sidebar-filters .sidebar-search-button:hover,
+.sidebar-filters #sidebar-search-button:hover {
+  background-color: #f5f5f5;
+  color: #272727;
+  transform: scale(1.02);
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+  border: 2px solid #efdc8c;
+}
 
 
 
@@ -526,17 +521,30 @@ section { padding: 40px 20px; }
   margin: 0 auto;
   line-height: 1.6;
 }
-
+#about h2,
+#contact h2 {
+  margin-top: 10px;
+  margin-bottom: 30px;
+}
 
 
 /* Footer */
 footer {
-  background: #4e4f50;
+  background: #272727;
   text-align: center;
   padding: 20px;
 }
 
+/* Step 2: stop the footer <p> margin from creating a gap below */
+footer p {
+  margin: 0;            /* removes the default ~16px margin */
+}
 
+/* (optional) give the footer some padding so it still has breathing room */
+footer {
+  padding: 12px 0;
+  text-align: center;   /* matches your current layout */
+}
 
 
 
@@ -827,7 +835,7 @@ footer {
   font-family: Arial, sans-serif;
 }
   
-}
+
 
 
 
@@ -1098,4 +1106,138 @@ footer {
     grid-template-columns: 1fr; /* 1 column on small screens */
   }
 }
+
+
+
+/* WHO WE ARE PAGE */
+
+
+/* ===== WHO WE ARE (About) ===== */
+/* Container: centered, with a sensible max width */
+.who-we-are-section {
+  max-width: 1100px;
+  margin: 0  auto 0; /* remove bottom margin so it can't push into the footer */
+  padding: 20px;
+  text-align: center; /* ensures all direct child text aligns center */
+}
+
+/* Center the H2 */
+.who-we-are-section h1,
+.who-we-are-section h2 {
+  text-align: center;
+  font-family: 'Exo 2', sans-serif;
+  font-weight: 600;
+  letter-spacing: 0.015em;
+  
+}
+
+.who-we-are-section h1 { 
+  font-size: 2rem;
+  margin-bottom: 30px;
+  margin-top: 30px;
+}
+.who-we-are-section h2 { 
+  font-size: 1.75rem;
+  margin-bottom: 50px;
+  margin-top: 30px;
+}
+
+.who-we-are-section h1:first-child {
+  margin-top: 0; /* rely on section padding instead */
+}
+
+/* Center the intro paragraph block and text */
+.who-we-are-section .who-intro {
+  text-align: center;        /* change to justify if you prefer */
+  color: #2f3133;
+  max-width: 900px;          /* keeps lines readable */
+  margin-top: 10px;  /* was 10px 10px 10px 10px; -> auto centers the block */
+  margin-bottom: 10px;
+  margin-left: 10px;
+  margin-right: 10px;
+  line-height: 1.6;
+  font-size: 1.05rem;
+}
+
+
+
+/* Grid: add auto side margin so the grid aligns with the section center */
+.team-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 16px;
+  margin: 16px auto 0;       /* centers the grid block within the section */
+}
+
+
+/* Card base: uses CSS var for the image */
+.team-card {
+  position: relative;
+  display: block;
+  width: 100%;
+  aspect-ratio: 1 / 1;               /* perfect square cards */
+  background-image: var(--photo);
+  background-size: cover;
+  background-position: center;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  transform: translateZ(0);          /* smoother animations */
+}
+
+/* Dark gradient to improve text contrast */
+.team-card::before {
+  content: "";
+  position: absolute; inset: 0;
+  background: linear-gradient(to top, rgba(0,0,0,0.45), rgba(0,0,0,0.05));
+  transition: opacity 0.25s ease;
+  opacity: 0.8;
+}
+
+/* Overlay name label */
+.team-card__overlay {
+  position: absolute; inset: auto 0 0 0;   /* bottom strip */
+  padding: 10px 12px;
+  text-align: center;
+  color: #fff;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  background: rgba(0,0,0,0.55);
+  transform: translateY(100%);
+  transition: transform 0.25s ease;
+}
+
+/* Hover/focus reveal */
+.team-card:hover .team-card__overlay,
+.team-card:focus-visible .team-card__overlay {
+  transform: translateY(0%);
+}
+
+.team-card:hover::before,
+.team-card:focus-visible::before {
+  opacity: 1;
+}
+
+/* Keyboard accessibility */
+.team-card:focus-visible {
+  outline: 3px solid #efdc8c;
+  outline-offset: 2px;
+  border-radius: 12px;
+}
+
+/* Responsive grid breakpoints */
+@media (max-width: 1024px) {
+  .team-grid { grid-template-columns: repeat(3, 1fr); }
+}
+@media (max-width: 768px) {
+  .team-grid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 480px) {
+  .team-grid { grid-template-columns: 1fr; }
+}
+
+
+
+
+
 
