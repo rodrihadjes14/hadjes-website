@@ -1602,7 +1602,8 @@ footer {
   opacity: .9;
 }
 
-* Center the social icons row */
+/*Center the social icons row */
+
 .social-links {
   display: flex;        /* you already have this from before, keep it */
   gap: 12px;            /* keep your spacing */
