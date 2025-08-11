@@ -1617,8 +1617,8 @@ footer {
 
 /* 1) Footer container: remove vertical padding, tighten type */
 .site-footer {
-  padding-top: 0;
-  padding-bottom: 0;
+  padding-top: 5px;
+  padding-bottom: 5px;
   font-size: 14px;          /* slightly smaller text */
   line-height: 1.2;         /* compact line-height */
 }
@@ -1649,7 +1649,7 @@ footer {
 
 /* 6) Bottom strip: remove padding, avoid border height cost */
 .footer-bottom {
-  margin: 0;
+  margin: 5px;
   padding: 0;                              /* no vertical padding */
   border-top: 0;                           /* borders add height */
   box-shadow: inset 0 1px 0 rgba(255,255,255,.15); /* visual divider w/o height */
