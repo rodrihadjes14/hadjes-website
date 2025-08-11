@@ -1555,10 +1555,10 @@ footer {
 
 /* Bottom strip */
 .footer-bottom {
-  margin-top: 18px;
-  margin-bottom: 5px;
+  margin-top: 0;
+  margin-bottom: 0;
   padding-top: 5px;
-  padding-bottom: 5px;
+  padding-bottom: 0;
   border-top: 1px solid rgba(255,255,255,.15);
 }
 .footer-bottom p { margin: 0; opacity: .8; }
