@@ -17,7 +17,8 @@
   <header>
   <div class="header-logo-and-search">
       <a href="index.html" class="brand-button">Hadjes Propiedades</a>
-
+    
+    <div class="header-right">
     <div class="filter-bar">
       <div class="filter-options">
       <label><input type="radio" name="operation" value="venta"> Venta</label>
@@ -41,7 +42,12 @@
     <input name="q" type="text" class="search-input" placeholder="Ubicación / Location, keyword..." /> 
     <button id="search-button" class="search-button">Buscar</button>
   </div>
-</div>
+      <nav class="header-links" aria-label="Páginas del sitio">
+        <a href="who-we-are.html">Quiénes Somos</a>
+        <a href="contact.html">Hacé tu consulta</a>
+      </nav>
+    </div>
+  </div>
 
   </header>
 
@@ -125,9 +131,7 @@
     <p>Teléfono: +54 11 1234-5678</p>
   </section>
 
-  <footer>
-    <p>&copy; 2025 Hadjes Propiedades</p>
-  </footer>
+<div id="footer-root"></div>
   
   
   
@@ -377,6 +381,7 @@
   });
 </script>
 
+<script src="/js/footer-loader.js" defer></script>
 
 
 </body>

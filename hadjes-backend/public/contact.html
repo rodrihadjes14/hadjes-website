@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Contact</title>
+  <meta name="description" content="Contacto Hadjes Propiedades" />
+  <link rel="stylesheet" href="style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@500;700&family=Open+Sans:wght@300;400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <!-- Header (same structure as who-we-are.html for visual consistency) -->
+  <header>
+  <div class="header-logo-and-search">
+      <a href="index.html" class="brand-button">Hadjes Propiedades</a>
+    
+    <div class="header-right">
+    <div class="filter-bar">
+      <div class="filter-options">
+      <label><input type="radio" name="operation" value="venta"> Venta</label>
+      <label><input type="radio" name="operation" value="alquiler"> Alquiler</label>
+      <label><input type="radio" name="operation" value="temporal"> Alquiler Temporal</label>
+    </div>
+
+    <select class="property-type" name="type">
+      <option value="">Propiedad</option>
+      <option value="casa">Casa</option>
+      <option value="departamento">Departamento</option>
+      <option value="edificio">Edificio</option>
+      <option value="cochera">Cochera</option>
+      <option value="local">Local</option>
+      <option value="oficina">Oficina</option>
+      <option value="campo">Campo</option>
+      <option value="lote">Lote</option>
+    </select>
+
+
+    <input name="q" type="text" class="search-input" placeholder="Ubicación / Location, keyword..." /> 
+    <button id="search-button" class="search-button">Buscar</button>
+  </div>
+      <nav class="header-links" aria-label="Páginas del sitio">
+        <a href="who-we-are.html">Quiénes Somos</a>
+        <a href="contact.html">Hacé tu consulta</a>
+      </nav>
+    </div>
+  </div>
+
+  </header>
+
+  
+  
+  <!-- Main -->
+  <main class="page-layout contact-page">
+    <section class="contact-grid" aria-label="Sección de contacto">
+      
+      <!-- Left column -->
+      <div class="left">
+        <h1>Contact</h1>
+        <p>Dejanos tu mensaje que uno de nuestros profesionales te va a asesorar. </p>
+
+        <form id="contact-form" novalidate>
+          <!-- 1) Nombre y Apellido -->
+          <div class="field">
+            <label for="nombre">Nombre y Apellido</label>
+            <input id="nombre" name="nombre" type="text" placeholder="Ej: María Pérez" required autocomplete="name">
+          </div>
+
+          <!-- 2) Dropdown motivo -->
+          <div class="field">
+            <label for="motivo">Motivo</label>
+            <select id="motivo" name="motivo" required>
+              <option value="" selected disabled>Seleccioná una opción</option>
+              <option>comprar</option>
+              <option>alquilar</option>
+              <option>vender</option>
+              <option>consultar</option>
+            </select>
+          </div>
+
+          <!-- 3) Teléfono -->
+          <div class="field">
+            <label for="telefono">Teléfono</label>
+            <input id="telefono" name="telefono" type="tel" inputmode="tel" placeholder="+54 11 5555-5555" required autocomplete="tel">
+          </div>
+
+          <!-- 4) Email -->
+          <div class="field">
+            <label for="email">Email</label>
+            <input id="email" name="email" type="email" placeholder="tu@correo.com" required autocomplete="email">
+          </div>
+
+          <!-- 5) Comentario -->
+          <div class="field">
+            <label for="comentario">Comentario</label>
+            <textarea id="comentario" name="comentario" placeholder="Contanos más sobre tu consulta..." required></textarea>
+          </div>
+
+          <button type="submit" class="btn">Enviar</button>
+        </form>
+      </div>
+
+      <!-- Right column -->
+      <aside class="right">
+        <div class="map-wrap" aria-hidden="false">
+          <!-- 🗺️ TIP: Cambiá la dirección en el parámetro 'q=' para apuntar a tu ubicación exacta -->
+          <iframe
+            class="map"
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"
+            src="https://www.google.com/maps?q=Av.+Corrientes+1234,+CABA&hl=es&z=15&output=embed"
+            title="Mapa de la ubicación de la inmobiliaria"
+          ></iframe>
+        </div>
+
+        <div class="contact-info">
+          <strong>Hadjes Propiedades</strong>
+          <address>
+            <div>Alberdi 151, C1878, Quilmes <a href="tel:+541155555555">Tel:+54 114-081-8689</a></div>
+            <div>Email: <a id="store-email" href="mailto:info@hadjespropiedades.com">info@hadjespropiedades.com</a></div>
+          </address>
+        </div>
+      </aside>
+      
+    </section>
+  </main>
+
+  <footer>
+    <p>&copy; 2025 Hadjes Propiedades</p>
+  </footer>
+
+  <!-- JS: mantiene el buscador del header y arma un mail con los datos del formulario -->
+  <script>
+    // Header search (igual que en who-we-are.html)
+    document.addEventListener('DOMContentLoaded', () => {
+      const btn = document.getElementById('search-button');
+      if (btn) {
+        btn.addEventListener('click', function (e) {
+          e.preventDefault();
+          const params = new URLSearchParams();
+          const q = document.querySelector('input[name="q"]')?.value;
+          if (q) params.set('q', q);
+          const operation = document.querySelector('input[name="operation"]:checked')?.value;
+          if (operation) params.set('operation', operation);
+          const type = document.querySelector('select[name="type"]')?.value;
+          if (type) params.set('type', type);
+          window.location.href = `listing.html?${params.toString()}`;
+        });
+      }
+    });
+
+    // Envío del formulario por mailto (podés reemplazar por POST a tu backend)
+    (function () {
+      const form = document.getElementById('contact-form');
+      const STORE_EMAIL = 'info@hadjespropiedades.com'; // <-- cambiá si corresponde
+
+      form.addEventListener('submit', function (e) {
+        e.preventDefault();
+
+        // Validación mínima nativa del navegador
+        if (!form.checkValidity()) {
+          form.reportValidity();
+          return;
+        }
+
+        const nombre = document.getElementById('nombre').value.trim();
+        const motivo = document.getElementById('motivo').value;
+        const telefono = document.getElementById('telefono').value.trim();
+        const email = document.getElementById('email').value.trim();
+        const comentario = document.getElementById('comentario').value.trim();
+
+        const subject = encodeURIComponent(`Contacto Web - ${motivo} - ${nombre}`);
+        const bodyLines = [
+          `Nombre y Apellido: ${nombre}`,
+          `Motivo: ${motivo}`,
+          `Teléfono: ${telefono}`,
+          `Email: ${email}`,
+          '',
+          'Comentario:',
+          comentario
+        ];
+        const body = encodeURIComponent(bodyLines.join('\n'));
+
+        window.location.href = `mailto:${STORE_EMAIL}?subject=${subject}&body=${body}`;
+      });
+    })();
+  </script>
+</body>
+</html>

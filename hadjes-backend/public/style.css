@@ -127,7 +127,7 @@ header {
   font-family: 'Open Sans', sans-serif;
   display: flex;
   flex-wrap: wrap;
-  gap: 15px;
+  gap: 5px;
   background: white;
   padding: 5px 20px 5px 20px;
   border-radius: 10px;
@@ -1112,7 +1112,7 @@ footer {
 /* WHO WE ARE PAGE */
 
 
-/* ===== WHO WE ARE (About) ===== */
+/* ===== WHO WE ARE ( */
 /* Container: centered, with a sensible max width */
 .who-we-are-section {
   max-width: 1100px;
@@ -1121,7 +1121,9 @@ footer {
   text-align: center; /* ensures all direct child text aligns center */
 }
 
-/* Center the H2 */
+
+/*H1 AND H2 */
+
 .who-we-are-section h1,
 .who-we-are-section h2 {
   text-align: center;
@@ -1148,7 +1150,7 @@ footer {
 
 /* Center the intro paragraph block and text */
 .who-we-are-section .who-intro {
-  text-align: center;        /* change to justify if you prefer */
+  text-align: justify;        /* change to justify if you prefer */
   color: #2f3133;
   max-width: 900px;          /* keeps lines readable */
   margin-top: 10px;  /* was 10px 10px 10px 10px; -> auto centers the block */
@@ -1160,8 +1162,9 @@ footer {
 }
 
 
+/* GRID */
 
-/* Grid: add auto side margin so the grid aligns with the section center */
+
 .team-grid {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
@@ -1239,5 +1242,269 @@ footer {
 
 
 
+
+
+/* CONTACT */
+/* Step 1: shrink side padding only on the contact page */
+.contact-page.page-layout {
+  padding-left: 8px;
+  padding-right: 8px;
+  /* keep your existing top/bottom padding from .page-layout */
+}
+
+/* ===== Contact Page Layout ===== */
+.contact-page .contact-grid {
+  display: grid;
+  grid-template-columns: 1.2fr 1.2fr;
+  gap: 24px;
+  /* Put a max width on the entire 2-column block and center it */
+  max-width: 1600px;
+  margin: 0 auto; /* centers the grid as a whole */
+  padding-left: 0;
+  padding-right: 0;
+}
+
+
+
+/* Left column */
+.contact-page .left > h1 {
+  margin: 0 0 10px;
+  font-size: clamp(28px, 4vw, 40px);
+}
+.contact-page .left > p {
+  margin: 0 0 45px; /* top, left and right, bottom */
+  color: var(--muted, #5d5d66);
+  text-align: left;
+}
+
+.contact-page #contact-form { 
+  display: grid;
+  gap: 8px;
+  justify-items: stretch;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.contact-page .field { 
+  display: grid; 
+  gap: 1px; 
+  justify-items: stretch;
+  width: 100%;
+}
+
+.contact-page .field label {
+  justify-self: start;   /* align this grid item to the left */
+  text-align: left;      /* (optional) make the label text itself left-aligned */
+}
+
+
+.contact-page label { 
+  font-weight: 500; 
+  font-size: 0.95rem; 
+}
+
+/* FORM CONTAINERS */
+
+.contact-page input,
+.contact-page select,
+.contact-page textarea {
+  width: 70%;
+  max-width: 640px;
+  justify-self: start;       
+  margin-inline: 0;    
+  border: 1px solid var(--border, #e6e6ee);
+  border-radius: 10px;
+  padding: 5px 10px;
+  background: transparent;
+  font: inherit;
+}
+
+.contact-page textarea { min-height: 120px; resize: vertical; }
+.contact-page input:focus,
+.contact-page select:focus,
+.contact-page textarea:focus {
+  outline: none;
+  border-color: var(--accent, #2458ff);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent, #2458ff) 25%, transparent);
+  
+}
+.contact-page .btn {
+  display: inline-block;
+  border: 1px solid var(--accent, #2458ff);
+  background: var(--accent, #2458ff);
+  color: #fff;
+  padding: 10px 16px;
+  border-radius: 999px;
+  font-weight: 700;
+  cursor: pointer;
+  justify-self: left;
+}
+.contact-page .btn:hover { filter: brightness(2.05); }
+
+/* RIGHT COLUMN */
+
+.contact-page .map-wrap {
+  border-radius: 10px;
+  overflow: hidden;
+  border: 1px solid var(--border, #e6e6ee);
+  margin-top: 130px;
+  width: 100%;
+}
+.contact-page .map {
+  display: block;
+  width: 100%;
+  min-height: 320px;
+  border: 0;
+}
+.contact-page .right {
+  display: grid;            /* ensures we can control child alignment */
+  align-content: start;     /* stack from the top */
+  justify-items: stretch;   /* <-- key: children fill the column width */
+}
+
+.contact-page address { font-style: normal; color: var(--muted, #5d5d66); }
+.contact-page address a { color: inherit; text-decoration: none; }
+.contact-page address a:hover { text-decoration: underline; }
+.contact-page .social { display: flex; flex-wrap: wrap; gap: 10px; }
+.contact-page .social a {
+  border: 1px solid var(--border, #e6e6ee);
+  padding: 5px 10px;
+  border-radius: 12px;
+  text-decoration: none;
+  color: inherit;
+}
+.contact-page .social a:hover { border-color: var(--accent, #2458ff); }
+
+
+@media (max-width: 600px) {
+  .contact-page input,
+  .contact-page select,
+  .contact-page textarea {
+    width: 100%;
+    max-width: 100%;
+  }
+}
+  
+.contact-page .contact-info {
+  margin-top: 15px;
+  display: grid;
+  gap: 10px;
+  width: 100%;
+}
+
+/* Make items in the right column (map + contact-info) use full track width */
+.contact-page .right {
+  display: grid;            /* ensures we can control child alignment */
+  align-content: start;     /* stack from the top */
+  justify-items: stretch;   /* <-- key: children fill the column width */
+}
+
+@media (min-width: 769px) {
+  /* Contact page: reduce side padding on desktop */
+  .contact-page.page-layout {
+    padding-left: 8px;
+    padding-right: 8px;
+  }
+}
+@media (min-width: 769px) {
+  .contact-page.page-layout { padding: 0 8px; }
+}
+
+
+
+
+
+
+/* Desktop: stack filter bar + links on the right, align left edges */
+@media (min-width: 769px) {
+  .header-right {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start; /* left edges align */
+    gap: 6px;
+  }
+
+  .header-links {
+    display: flex;
+    gap: 18px;
+    margin-left: 10px;      /* match .filter-bar's left margin (10px) */
+  }
+
+  .header-links a {
+    color: #fff;            /* header is dark (#272727) */
+    font-family: 'Exo 2', sans-serif;
+    font-weight: 600;
+    text-decoration: none;
+    line-height: 1;
+    padding: 4px 0;
+  }
+
+  .header-links a:hover {
+    text-decoration: underline;
+  }
+}
+
+/* Desktop: make the right header stack (filter + links) claim space */
+@media (min-width: 1025px) {
+  .header-right {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;  /* left edges align */
+    gap: 6px;
+    flex: 1 1 auto;           /* take the remaining row space */
+    min-width: 640px;         /* prevents cramped wrapping on medium desktops */
+  }
+}
+
+@media (min-width: 1025px) {
+  /* Let the bar use full width and avoid wrapping */
+  .header-right .filter-bar {
+    width: 100%;
+    max-width: none;          /* override the global 90% cap */
+    flex-wrap: nowrap;        /* keep on one line */
+    align-items: center;
+    gap: 20px;                /* a bit tighter so it all fits */
+  }
+
+  /* Make the search input flexible so it absorbs leftover space */
+  .header-right .filter-bar .search-input {
+    width: 100px;              /* override fixed width in base CSS */
+    flex: 1 1 320px;          /* grows/shrinks as needed, starts at ~320px */        /* don’t get too tiny */
+  }
+
+  /* Button stays compact on the right of the row */
+  .header-right .filter-bar .search-button {
+    flex: 0 0 auto;
+  }
+}
+
+@media (min-width: 1025px) {
+  /* More space between brand-button and header-right */
+  .header-logo-and-search {
+    column-gap: 140px;  /* try 24–32px to taste */
+  }
+}
+
+@media (min-width: 1025px) {
+  /* Make the filter bar hug its content and leave space on the right */
+  .header-right .filter-bar {
+    width: auto;           /* was 100% in a previous tweak */
+    flex-wrap: nowrap;     /* keep everything on one line */
+    align-items: center;
+    gap: 10px;
+    margin-right: 24px;    /* more right space; adjust 16–40px to taste */
+  }
+}
+@media (min-width: 1025px) {
+  .header-right .filter-bar .search-input {
+    width: 220px;          /* shorter input again */
+    min-width: 220px;
+    flex: 0 0 220px;       /* prevents flex from stretching it */
+  }
+
+  .header-right .filter-bar .search-button {
+    flex: 0 0 auto;        /* keep the button compact and on the same line */
+  }
+}
 
 
