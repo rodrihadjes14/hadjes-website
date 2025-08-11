@@ -1570,3 +1570,19 @@ footer {
   .site-footer { text-align: center; }
 }
 
+.social-links {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+.social-link img {
+  width: 24px;
+  height: 24px;
+  display: block;
+  transition: transform .15s ease, opacity .15s ease;
+}
+.social-link:hover img {
+  transform: translateY(-1px);
+  opacity: .9;
+}
+
