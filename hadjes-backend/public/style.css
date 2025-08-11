@@ -1555,12 +1555,12 @@ footer {
 
 /* Bottom strip */
 .footer-bottom {
-  margin-top: 0;
-  margin-bottom: 0;
-  padding-top: 5px;
-  padding-bottom: 0;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  padding-top: 16px;
   border-top: 1px solid rgba(255,255,255,.15);
 }
+
 .footer-bottom p { margin: 0; opacity: .8; }
 
 /* Responsive: stack on small screens */
@@ -1613,3 +1613,57 @@ footer {
 }
 
 
+/* === Ultra-compact footer overrides (paste AFTER your current CSS) === */
+
+/* 1) Footer container: remove vertical padding, tighten type */
+.site-footer {
+  padding-top: 0;
+  padding-bottom: 0;
+  font-size: 14px;          /* slightly smaller text */
+  line-height: 1.2;         /* compact line-height */
+}
+
+/* 2) Kill accidental top/bottom margins from first/last children */
+.site-footer > *:first-child { margin-top: 0; }
+.site-footer > *:last-child  { margin-bottom: 0; }
+
+/* 3) Grid + columns: reduce vertical gaps further */
+.footer-grid {
+  gap: 8px;                 /* was 24px; smaller overall gap */
+  row-gap: 4px;             /* extra-tight vertical gap */
+}
+.footer-col {
+  gap: 4px;                 /* tighter spacing inside each column */
+}
+
+/* 4) Titles + lists: trim margins to minimum */
+.footer-title {
+  margin: 0 0 4px;          /* smaller bottom margin */
+}
+.footer-links ul { margin: 0; padding: 0; }
+.footer-links li { margin: 0; }  /* remove vertical gap between items */
+
+/* 5) Social row: ensure no extra vertical space */
+.social-links { margin: 0; padding: 0; gap: 8px; }
+.social-link img { width: 20px; height: 20px; } /* slightly smaller icons */
+
+/* 6) Bottom strip: remove padding, avoid border height cost */
+.footer-bottom {
+  margin: 0;
+  padding: 0;                              /* no vertical padding */
+  border-top: 0;                           /* borders add height */
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.15); /* visual divider w/o height */
+}
+.footer-bottom p {
+  margin: 0;
+  line-height: 1.2;         /* compact text */
+  opacity: .8;
+}
+
+/* 7) Mobile keeps things tight too */
+@media (max-width: 768px) {
+  .footer-grid { gap: 8px; row-gap: 4px; }
+}
+@media (max-width: 520px) {
+  .site-footer { text-align: center; }
+}
