@@ -20,6 +20,7 @@
     .actions button { font-size:12px; }
     .submit-row { margin-top: 16px; display:flex; gap:8px; }
   </style>
+  <script src="/js/api-base.js"></script>
 </head>
 <body>
   <div class="admin-wrap">
@@ -147,7 +148,7 @@
     files.forEach(f => fd.append('photos', f)); // append in our chosen order
 
     try {
-      const res = await fetch('/api/listings', { method: 'POST', body: fd });
+      const res = await fetch(`${API_BASE}/api/listings`, { method: 'POST', body: fd });
       if (!res.ok) {
         const text = await res.text();
         throw new Error(text || ('HTTP ' + res.status));

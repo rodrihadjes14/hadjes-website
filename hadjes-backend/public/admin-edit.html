@@ -26,6 +26,7 @@
     .btn.primary { background:#0d6efd; color:#fff; border-color:#0d6efd; }
     .btn:disabled { opacity:.6; cursor:not-allowed; }
   </style>
+  <script src="/js/api-base.js"></script>
 </head>
 <body>
   <div class="admin-wrap">
@@ -133,13 +134,13 @@
       let listing = null;
 
       if (isObjectId) {
-        const r = await fetch('/listings/' + key);
+        const r = await fetch(`${API_BASE}/listings/${key}`);
         if (r.ok) listing = await r.json();
       }
 
       if (!listing) {
         // Fallback: fetch all and filter by slug or _id string
-        const r = await fetch('/listings');
+        const r = await fetch(`${API_BASE}/listings`);
         const all = await r.json();
         listing = all.find(i => i.slug === key || i._id === key);
       }
@@ -214,7 +215,7 @@
       };
       Object.keys(payload).forEach(k => payload[k] === undefined && delete payload[k]);
 
-      const res = await fetch('/api/listings/' + currentId, {
+      const res = const res = await fetch(`${API_BASE}/api/listings/${currentId}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload)
