@@ -1635,10 +1635,11 @@ footer {
   align-items: center;
 }
 .social-link img {
-  width: 24px;
-  height: 24px;
+  width: 18px;
+  height: 18px;
   display: block;
   transition: transform .15s ease, opacity .15s ease;
+  color: aliceblue
 }
 .social-link:hover img {
   transform: translateY(-1px);
@@ -1649,24 +1650,13 @@ footer {
   display: flex;
   gap: 12px;
   align-items: center;
+  justify-content: center; 
 }
 .social-link img {
   width: 24px;
   height: 24px;
   display: block;
   transition: transform .15s ease, opacity .15s ease;
-}
-.social-link:hover img {
-  transform: translateY(-1px);
-  opacity: .9;
-}
-
-/*Center the social icons row */
-
-.social-links {
-  display: flex;        /* you already have this from before, keep it */
-  gap: 12px;            /* keep your spacing */
-  justify-content: center;  /* <-- centers horizontally */
 }
 
 
@@ -1679,7 +1669,7 @@ footer {
 
 /* 3) Grid + columns: reduce vertical gaps further */
 .footer-grid {
-  gap: 8px;                 /* was 24px; smaller overall gap */
+  gap: 4px;                 /* was 24px; smaller overall gap */
   row-gap: 4px;             /* extra-tight vertical gap */
 }
 .footer-col {
