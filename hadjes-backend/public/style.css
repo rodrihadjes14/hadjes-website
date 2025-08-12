@@ -1575,7 +1575,7 @@ footer {
 
 /* Links */
 .site-footer a {
-  color: #9ecbff;
+  color: #f0f4f9;
   text-decoration: none;
 }
 .site-footer a:hover { text-decoration: underline; }
@@ -1596,8 +1596,8 @@ footer {
 }
 
 .footer-title {
-  margin: 0 0 8px;
-  font-weight: 500;
+  margin: 0 0 4px;
+  font-weight: 400;
 }
 
 /* Clean lists in link column */
@@ -1612,8 +1612,9 @@ footer {
 .footer-bottom {
   margin-top: 10px;
   margin-bottom: 10px;
-  padding-top: 16px;
+  padding-top: 8px;
   border-top: 1px solid rgba(255,255,255,.15);
+  text-align: center;
 }
 
 .footer-bottom p { margin: 0; opacity: .8; }
@@ -1670,13 +1671,6 @@ footer {
 
 /* === Ultra-compact footer overrides (paste AFTER your current CSS) === */
 
-/* 1) Footer container: remove vertical padding, tighten type */
-.site-footer {
-  padding-top: 5px;
-  padding-bottom: 5px;
-  font-size: 14px;          /* slightly smaller text */
-  line-height: 1.2;         /* compact line-height */
-}
 
 /* 2) Kill accidental top/bottom margins from first/last children */
 .site-footer > *:first-child { margin-top: 0; }
@@ -1688,7 +1682,7 @@ footer {
   row-gap: 4px;             /* extra-tight vertical gap */
 }
 .footer-col {
-  gap: 4px;                 /* tighter spacing inside each column */
+  gap: 2px;                 /* tighter spacing inside each column */
 }
 
 /* 4) Titles + lists: trim margins to minimum */
