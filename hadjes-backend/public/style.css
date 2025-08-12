@@ -1599,6 +1599,7 @@ footer {
 .footer-title {
   margin: 0 0 4px;
   font-weight: 400;
+  font-size: 1.4rem;
 }
 
 /* Clean lists in link column */
