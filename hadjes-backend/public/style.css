@@ -24,14 +24,18 @@ a { color: #0066cc; text-decoration: none; }
 
 nav a { margin: 0 15px; }
 
-/* Hero section */
+/* HERO SECTION */
 
 .hero {
   position: relative;
-  height: 100vh; /* full screen height */
+  height: 80vh; /* full screen height */
   overflow: hidden;
 }
-
+@media (max-width: 600px) {
+  .hero {
+    height: 65vh;
+  }
+}
 .hero-video {
   position: absolute;
   top: 0;
