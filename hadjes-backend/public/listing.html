@@ -273,7 +273,8 @@ async function fetchListings() {
   
   // FETCHING A SINGLE LISTING
   
- async function fetchSingleListing(slug) {
+
+async function fetchSingleListing(slug) {
   try {
     // 1) Grab containers and guard early
     const container = document.getElementById('search-listings');
@@ -289,38 +290,96 @@ async function fetchListings() {
     container.classList.add('single-view');
     if (pager) pager.style.display = 'none';
 
-    // 3) Quick loader feedback
+    // 3) Loader
     container.innerHTML = '<p>Loading listing…</p>';
 
-    const res = await fetch('https://hadjes-backend.onrender.com/listings');
-    const listings = await res.json();
+    // 4) Try direct fetch by ID first, then fallback to list+filter by slug
+    const isObjectId = /^[a-f\d]{24}$/i.test(slug);
+    let listing = null;
 
-    const listing = listings.find(item => item.slug === slug || item._id === slug);
-
+    if (isObjectId) {
+      try {
+        const res = await fetch(`/listings/${slug}`);
+        if (res.ok) listing = await res.json();
+      } catch (_) {}
+    }
+    if (!listing) {
+      const res = await fetch('https://hadjes-backend.onrender.com/listings');
+      const all = await res.json();
+      listing = all.find(item => item.slug === slug || item._id === slug);
+    }
 
     if (!listing) {
       container.innerHTML = '<p>❌ Listing not found.</p>';
       return;
     }
 
+    // 5) Build images array (fallback to legacy imageUrl)
+    const images = Array.isArray(listing.images) && listing.images.length
+      ? listing.images
+      : (listing.imageUrl ? [{ url: listing.imageUrl, alt: listing.title || 'Listing', isPrimary: true }] : []);
+
+    // 6) Render detail + gallery shell
     const div = document.createElement('div');
     div.className = 'listing-detail';
     div.innerHTML = `
-      <h2>${listing.title}</h2>
-      <img src="${listing.imageUrl}" width="400" />
-      <p>${listing.description}</p>
-      <p><strong>Price:</strong> $${listing.price}</p>
-      <p><strong>Location:</strong> ${listing.location}</p>
-      <p><strong>Type:</strong> ${listing.type}</p>
-      <p><strong>Operation:</strong> ${listing.operation}</p>
+      <h2>${listing.title || 'Listing'}</h2>
+
+      <div class="gallery" ${images.length ? '' : 'style="display:none"'} >
+        <div class="gallery-main">
+          <img id="g-main" src="${images[0]?.url || ''}" alt="${images[0]?.alt || ''}">
+          <div class="gallery-controls" ${images.length > 1 ? '' : 'style="display:none"'}>
+            <button type="button" id="g-prev" aria-label="Previous photo">⟨</button>
+            <button type="button" id="g-next" aria-label="Next photo">⟩</button>
+          </div>
+        </div>
+        <div class="thumbs" id="g-thumbs">
+          ${images.map((im, i) =>
+            `<img data-idx="${i}" src="${im.url}" alt="${im.alt || ('Photo ' + (i+1))}" class="${i===0?'active':''}">`
+          ).join('')}
+        </div>
+      </div>
+
+      ${listing.description ? `<p>${listing.description}</p>` : ''}
+      ${typeof listing.price !== 'undefined' ? `<p><strong>Price:</strong> $${listing.price}</p>` : ''}
+      ${listing.location ? `<p><strong>Location:</strong> ${listing.location}</p>` : ''}
+      ${listing.type ? `<p><strong>Type:</strong> ${listing.type}</p>` : ''}
+      ${listing.operation ? `<p><strong>Operation:</strong> ${listing.operation}</p>` : ''}
     `;
-    
-    container.innerHTML = ''; 
+    container.innerHTML = '';
     container.appendChild(div);
+
+    // 7) Wire gallery interactions (only when images exist)
+    if (images.length) {
+      const main = document.getElementById('g-main');
+      const thumbs = document.getElementById('g-thumbs');
+      let idx = 0;
+
+      function setActive(i) {
+        idx = (i + images.length) % images.length;
+        main.src = images[idx].url;
+        main.alt = images[idx].alt || ('Photo ' + (idx+1));
+        thumbs.querySelectorAll('img').forEach((t, k) => t.classList.toggle('active', k === idx));
+      }
+
+      thumbs?.addEventListener('click', (e) => {
+        const t = e.target.closest('img[data-idx]');
+        if (!t) return;
+        setActive(Number(t.dataset.idx));
+      });
+
+      document.getElementById('g-prev')?.addEventListener('click', () => setActive(idx - 1));
+      document.getElementById('g-next')?.addEventListener('click', () => setActive(idx + 1));
+    }
   } catch (err) {
     console.error('Error loading single listing:', err);
   }
 }
+
+
+  
+  
+ 
   // SIDEBAR FUNCTIONS
   
   document.addEventListener('DOMContentLoaded', () => {
