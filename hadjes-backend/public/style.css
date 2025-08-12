@@ -1050,29 +1050,26 @@ footer {
 
 
 
-/* Make option-box match listing card style */
+/* OPTION GRID AND BOXES */
 
 .options-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Same card width as slider */
-  gap: 20px; /* Same gap between cards as slider */
+  gap: 10px; /* Same gap between cards as slider */
   max-width: 100%; /* Same max width as slider wrapper */
-  margin: 40px 0; /* Center the grid horizontally */
-  padding: 0 10px; /* Remove extra side padding to match slider alignment */
+  margin: 70px; /* Center the grid horizontally */
+  padding: 0; /* Remove extra side padding to match slider alignment */
 }
 
 .option-box {
   /* Copy look from listing-box */
   background-color: #fff;
-  border-radius: 8px;
-  padding: 15px;
+  border-radius: 5px;
+  padding: 10px;
   text-align: center;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  
-  /* Match width and height */
-  width: 100%;
+  width: 80%;
   min-height: 100%; /* fill height in grid row */
-
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -1080,9 +1077,10 @@ footer {
 
 .option-box h3 {
   font-family: 'Exo 2', sans-serif;
-  font-weight: 700;
+  font-weight: 400;
   letter-spacing: 0.015em;
-  font-size: 1.7rem;
+  font-size: 1.4rem;
+  margin-bottom: 10px;
 }
 
 .option-box ul {
