@@ -1667,3 +1667,68 @@ footer {
 @media (max-width: 520px) {
   .site-footer { text-align: center; }
 }
+
+
+
+
+
+/* LISTING DETAIL GALLERY*/
+
+.listing-detail { display: grid; gap: 8px; }
+
+.listing-detail .gallery { display: grid; gap: 10px; margin: 12px 0; }
+
+.listing-detail .gallery-main {
+  position: relative;
+  overflow: hidden;
+  border-radius: 8px;
+}
+
+.listing-detail .gallery-main img {
+  width: 100%;
+  height: 360px;
+  object-fit: cover;
+  display: block;
+}
+
+.listing-detail .gallery-controls {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  pointer-events: none;
+}
+
+.listing-detail .gallery-controls button {
+  pointer-events: all;
+  background: rgba(0, 0, 0, .45);
+  color: #fff;
+  border: 0;
+  padding: 8px 10px;
+  margin: 0 6px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.listing-detail .thumbs {
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  padding-bottom: 4px;
+}
+
+.listing-detail .thumbs img {
+  width: 80px;
+  height: 60px;
+  object-fit: cover;
+  border-radius: 6px;
+  opacity: .7;
+  cursor: pointer;
+  border: 2px solid transparent;
+}
+
+.listing-detail .thumbs img.active {
+  opacity: 1;
+  border-color: #0d6efd;
+}
