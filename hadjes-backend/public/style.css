@@ -1665,6 +1665,13 @@ footer {
   transition: transform .15s ease, opacity .15s ease;
 }
 
+.social-links a {
+  color: #fff; /* sets icon color to white */
+}
+.social-links img {
+  filter: brightness(0) invert(1); /* turns them white */
+}
+
 
 /* === Ultra-compact footer overrides (paste AFTER your current CSS) === */
 
