@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Admin · New Listing</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .admin-wrap { max-width: 820px; margin: 24px auto; padding: 16px; background:#fff; border:1px solid #e5e5e5; border-radius: 8px; }
+    .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    label { font-weight: 600; }
+    input, select, textarea { width: 100%; padding: 8px; border:1px solid #ccc; border-radius:6px; }
+    textarea { min-height: 100px; }
+    .photos { margin-top: 12px; }
+    .preview-grid { display:grid; grid-template-columns: repeat(auto-fill, minmax(120px,1fr)); gap: 10px; margin-top: 10px; }
+    .preview-item { position: relative; border:1px solid #ddd; border-radius: 6px; overflow: hidden; background:#fafafa; }
+    .preview-item img { width: 100%; height: 100px; object-fit: cover; display: block; }
+    .badge { position:absolute; top:6px; left:6px; background:#0d6efd; color:#fff; font-size:11px; padding:2px 6px; border-radius:12px; }
+    .actions { display:flex; gap:6px; padding:6px; background:#fff; border-top:1px solid #eee; }
+    .actions button { font-size:12px; }
+    .submit-row { margin-top: 16px; display:flex; gap:8px; }
+  </style>
+</head>
+<body>
+  <div class="admin-wrap">
+    <h1>New Listing</h1>
+
+    <form id="listing-form">
+      <div class="grid">
+        <div>
+          <label>Title</label>
+          <input name="title" required>
+        </div>
+        <div>
+          <label>Slug (optional)</label>
+          <input name="slug" placeholder="mi-listing-123">
+        </div>
+        <div>
+          <label>Price</label>
+          <input name="price" type="number" min="0" step="1" placeholder="123456">
+        </div>
+        <div>
+          <label>Location</label>
+          <input name="location" placeholder="Buenos Aires">
+        </div>
+        <div>
+          <label>Type</label>
+          <select name="type">
+            <option value="">(none)</option>
+            <option value="casa">Casa</option>
+            <option value="departamento">Departamento</option>
+            <option value="oficina">Oficina</option>
+            <option value="local">Local</option>
+            <option value="campo">Campo</option>
+            <option value="lote">Lote</option>
+          </select>
+        </div>
+        <div>
+          <label>Operation</label>
+          <select name="operation">
+            <option value="">(none)</option>
+            <option value="venta">Venta</option>
+            <option value="alquiler">Alquiler</option>
+            <option value="temporal">Temporal</option>
+          </select>
+        </div>
+        <div>
+          <label>Ambientes</label>
+          <input name="ambientes" type="number" min="0" step="1">
+        </div>
+        <div style="grid-column: 1 / -1">
+          <label>Description</label>
+          <textarea name="description" placeholder="Descripción..."></textarea>
+        </div>
+      </div>
+
+      <div class="photos">
+        <label>Photos (choose multiple) — first one becomes the cover</label>
+        <input id="photos" type="file" name="photos" accept="image/*" multiple>
+        <div id="preview" class="preview-grid" aria-live="polite"></div>
+      </div>
+
+      <div class="submit-row">
+        <button type="submit">Create Listing</button>
+        <span id="status" aria-live="polite"></span>
+      </div>
+    </form>
+  </div>
+
+  <script>
+  const form = document.getElementById('listing-form');
+  const input = document.getElementById('photos');
+  const preview = document.getElementById('preview');
+  const statusEl = document.getElementById('status');
+
+  // We'll manage order in this array and NOT touch input.files (better cross-browser)
+  let files = [];
+
+  input.addEventListener('change', () => {
+    files = Array.from(input.files); // initial order from file picker
+    renderPreview();
+  });
+
+  function renderPreview() {
+    preview.innerHTML = '';
+    files.forEach((file, i) => {
+      const url = URL.createObjectURL(file);
+      const item = document.createElement('div');
+      item.className = 'preview-item';
+      item.innerHTML = `
+        ${i === 0 ? '<span class="badge">Cover</span>' : ''}
+        <img src="${url}" alt="photo ${i + 1}">
+        <div class="actions">
+          <button type="button" data-action="set-cover" data-idx="${i}">Set cover</button>
+          <button type="button" data-action="remove" data-idx="${i}">Remove</button>
+        </div>
+      `;
+      preview.appendChild(item);
+    });
+  }
+
+  preview.addEventListener('click', (e) => {
+    const btn = e.target.closest('button');
+    if (!btn) return;
+    const idx = Number(btn.dataset.idx);
+    const action = btn.dataset.action;
+
+    if (action === 'remove') {
+      files.splice(idx, 1);           // remove from our array
+      renderPreview();                // re-render (no DataTransfer used)
+    }
+
+    if (action === 'set-cover') {
+      const [f] = files.splice(idx, 1);
+      files.unshift(f);               // move to front (cover)
+      renderPreview();
+    }
+  });
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    statusEl.textContent = 'Uploading…';
+
+    // Build FormData from the form, then overwrite the 'photos' entries
+    const fd = new FormData(form);
+    fd.delete('photos');              // remove auto-attached files
+    files.forEach(f => fd.append('photos', f)); // append in our chosen order
+
+    try {
+      const res = await fetch('/api/listings', { method: 'POST', body: fd });
+      if (!res.ok) {
+        const text = await res.text();
+        throw new Error(text || ('HTTP ' + res.status));
+      }
+      const json = await res.json();
+      statusEl.textContent = '✅ Created #' + json._id;
+      console.log('Created listing:', json);
+    } catch (err) {
+      console.error(err);
+      statusEl.textContent = '❌ ' + (err.message || 'Upload failed');
+    }
+  });
+</script>
+
+</body>
+</html>
