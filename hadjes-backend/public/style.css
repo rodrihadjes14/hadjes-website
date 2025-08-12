@@ -7,7 +7,8 @@ body {
   color: #222;
 }
 
-/* Headings & brand — Exo 2 */
+/* TITLES — Exo 2 */
+
 h1, h2, h3, h4, h5, h6,
 .brand-button, nav a {
   font-family: 'Exo 2', sans-serif;
@@ -72,7 +73,7 @@ nav a { margin: 0 15px; }
 
 
 
-/* ===== Hero Section ===== */
+
 
 
 
@@ -1149,7 +1150,7 @@ footer {
 .who-we-are-section h2 {
   text-align: center;
   font-family: 'Exo 2', sans-serif;
-  font-weight: 600;
+  font-weight: 400;
   letter-spacing: 0.015em;
   
 }
@@ -1161,8 +1162,8 @@ footer {
 }
 .who-we-are-section h2 { 
   font-size: 1.75rem;
-  margin-bottom: 50px;
-  margin-top: 30px;
+  margin-bottom: 30px;
+  margin-top: 40px;
 }
 
 .who-we-are-section h1:first-child {
@@ -1696,18 +1697,7 @@ footer {
 .social-links { margin: 0; padding: 0; gap: 8px; }
 .social-link img { width: 20px; height: 20px; } /* slightly smaller icons */
 
-/* 6) Bottom strip: remove padding, avoid border height cost */
-.footer-bottom {
-  margin: 5px;
-  padding: 0;                              /* no vertical padding */
-  border-top: 0;                           /* borders add height */
-  box-shadow: inset 0 1px 0 rgba(255,255,255,.15); /* visual divider w/o height */
-}
-.footer-bottom p {
-  margin-top: 5px;
-  line-height: 1.2;         /* compact text */
-  opacity: .8;
-}
+
 
 /* 7) Mobile keeps things tight too */
 @media (max-width: 768px) {
