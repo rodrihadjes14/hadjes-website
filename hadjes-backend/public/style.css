@@ -1628,6 +1628,12 @@ footer {
   .footer-grid { grid-template-columns: 1fr; }
   .site-footer { text-align: center; }
 }
+@media (max-width: 520px) {
+  .site-footer .footer-title {
+    font-weight: 400;   /* lighter weight for mobile */
+    margin-bottom: 6px; /* a bit more breathing room below the title */
+  }
+}
 
 .social-links {
   display: flex;
@@ -1696,8 +1702,6 @@ footer {
 @media (max-width: 520px) {
   .site-footer { text-align: center; }
 }
-
-
 
 
 
