@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Admin · Edit Listing</title>
+  <link rel="stylesheet" href="/style.css">
+  <style>
+    /* Small, page-local styles (we can move to style.css later) */
+    .admin-wrap { max-width: 900px; margin: 24px auto; padding: 16px; background:#fff; border:1px solid #e5e5e5; border-radius: 8px; }
+    .row { display:grid; grid-template-columns: 1fr 1fr; gap:12px; }
+    .row-1 { display:grid; grid-template-columns: 1fr auto; gap:8px; align-items:center; }
+    label { font-weight:600; }
+    input, select, textarea { width:100%; padding:8px; border:1px solid #ccc; border-radius:6px; }
+    textarea { min-height: 100px; }
+    .photos { margin-top: 12px; }
+    .thumbs { display:flex; flex-wrap:wrap; gap:8px; }
+    .thumb { position:relative; border:1px solid #ddd; border-radius:6px; overflow:hidden; background:#fafafa; width:120px; }
+    .thumb img { width:100%; height:90px; object-fit:cover; display:block; }
+    .thumb .cap { padding:6px; font-size:12px; }
+    .status { margin-left: 8px; color:#666; }
+    .muted { color:#666; font-size: 12px; }
+    .danger { color:#b00020; }
+    .actions { margin-top: 14px; display:flex; gap:8px; align-items:center; }
+    .btn { padding:8px 12px; border-radius:6px; border:1px solid #ccc; background:#f6f6f6; cursor:pointer; }
+    .btn.primary { background:#0d6efd; color:#fff; border-color:#0d6efd; }
+    .btn:disabled { opacity:.6; cursor:not-allowed; }
+  </style>
+</head>
+<body>
+  <div class="admin-wrap">
+    <h1>Edit Listing</h1>
+
+    <!-- Load by ID or slug -->
+    <div class="row-1">
+      <input id="lookup" placeholder="Enter listing ID (24 hex) or slug…">
+      <button id="btn-load" class="btn">Load</button>
+    </div>
+    <p class="muted">Tip: You can paste the ID you saw when creating a listing (e.g., <code>689a9b7d9b3294a8bd3dba42</code>) or use the slug if you set one.</p>
+
+    <!-- The edit form (view-only for now) -->
+    <form id="edit-form" style="display:none; margin-top:12px;">
+      <div class="row">
+        <div>
+          <label>Title</label>
+          <input name="title" required>
+        </div>
+        <div>
+          <label>Slug</label>
+          <input name="slug" placeholder="mi-listing-123">
+        </div>
+        <div>
+          <label>Price</label>
+          <input name="price" type="number" min="0" step="1">
+        </div>
+        <div>
+          <label>Location</label>
+          <input name="location">
+        </div>
+        <div>
+          <label>Type</label>
+          <select name="type">
+            <option value="">(none)</option>
+            <option value="casa">Casa</option>
+            <option value="departamento">Departamento</option>
+            <option value="oficina">Oficina</option>
+            <option value="local">Local</option>
+            <option value="campo">Campo</option>
+            <option value="lote">Lote</option>
+          </select>
+        </div>
+        <div>
+          <label>Operation</label>
+          <select name="operation">
+            <option value="">(none)</option>
+            <option value="venta">Venta</option>
+            <option value="alquiler">Alquiler</option>
+            <option value="temporal">Temporal</option>
+          </select>
+        </div>
+        <div>
+          <label>Ambientes</label>
+          <input name="ambientes" type="number" min="0" step="1">
+        </div>
+        <div style="grid-column:1 / -1">
+          <label>Description</label>
+          <textarea name="description"></textarea>
+        </div>
+      </div>
+
+      <!-- Existing photos preview (view-only in Step 1) -->
+      <div class="photos">
+        <label>Existing Photos</label>
+        <div id="thumbs" class="thumbs"></div>
+      </div>
+
+      <div class="actions">
+        <button type="button" id="btn-save" class="btn primary" disabled>Save Changes</button>
+        <span id="status" class="status"></span>
+      </div>
+      <p class="muted">Save is disabled in Step 1. We’ll enable it after we add the update endpoint in the next step.</p>
+    </form>
+  </div>
+
+<script>
+  const lookup   = document.getElementById('lookup');
+  const btnLoad  = document.getElementById('btn-load');
+  const form     = document.getElementById('edit-form');
+  const statusEl = document.getElementById('status');
+  const thumbs   = document.getElementById('thumbs');
+  const btnSave  = document.getElementById('btn-save');
+  let currentId  = null; // will hold the loaded listing _id
+
+  // Convenience: map of form fields
+  const fields = ['title','slug','price','location','type','operation','ambientes','description']
+    .reduce((acc, name) => (acc[name] = form.querySelector(`[name="${name}"]`), acc), {});
+
+  // Load button
+  btnLoad.addEventListener('click', () => {
+    const key = (lookup.value || '').trim();
+    if (!key) { alert('Enter an ID or slug'); return; }
+    loadListing(key);
+  });
+
+  // Load an existing listing by ID (preferred) or by slug (fallback)
+  async function loadListing(key) {
+    try {
+      statusEl.textContent = 'Loading…';
+      form.style.display = 'none';
+      thumbs.innerHTML = '';
+
+      const isObjectId = /^[a-f\d]{24}$/i.test(key); // correct regex for Mongo ObjectId
+      let listing = null;
+
+      if (isObjectId) {
+        const r = await fetch('/listings/' + key);
+        if (r.ok) listing = await r.json();
+      }
+
+      if (!listing) {
+        // Fallback: fetch all and filter by slug or _id string
+        const r = await fetch('/listings');
+        const all = await r.json();
+        listing = all.find(i => i.slug === key || i._id === key);
+      }
+
+      if (!listing) {
+        statusEl.textContent = '';
+        alert('Listing not found');
+        return;
+      }
+
+      // Prefill form fields
+      fields.title.value       = listing.title || '';
+      fields.slug.value        = listing.slug || '';
+      fields.price.value       = (listing.price ?? '');
+      fields.location.value    = listing.location || '';
+      fields.type.value        = listing.type || '';
+      fields.operation.value   = listing.operation || '';
+      fields.ambientes.value   = (listing.ambientes ?? '');
+      fields.description.value = listing.description || '';
+
+      // Enable Save and remember the loaded ID
+      currentId = listing._id;
+      btnSave.disabled = false;
+      statusEl.textContent = 'Loaded ✔️';
+
+      // Build images array (fallback to legacy imageUrl)
+      const images = Array.isArray(listing.images) && listing.images.length
+        ? listing.images
+        : (listing.imageUrl ? [{ url: listing.imageUrl, alt: listing.title || 'Listing', isPrimary: true }] : []);
+
+      // Render thumbnails (view-only in this step)
+      if (images.length) {
+        thumbs.innerHTML = '';
+        images.forEach((im, i) => {
+          const div = document.createElement('div');
+          div.className = 'thumb';
+          div.innerHTML = `
+            <img src="${im.url}" alt="${im.alt || ('Photo ' + (i+1))}">
+            <div class="cap">${(i===0 || im.isPrimary) ? 'Cover' : 'Photo ' + (i+1)}</div>
+          `;
+          thumbs.appendChild(div);
+        });
+      } else {
+        thumbs.innerHTML = '<span class="muted">No photos</span>';
+      }
+
+      // Reveal the form
+      form.style.display = '';
+    } catch (err) {
+      console.error(err);
+      statusEl.textContent = '❌ ' + (err.message || 'Failed to load');
+    }
+  }
+
+  // Save changes (text fields only in this step)
+  btnSave.addEventListener('click', async () => {
+    try {
+      if (!currentId) { alert('Load a listing first'); return; }
+      btnSave.disabled = true;
+      statusEl.textContent = 'Saving…';
+
+      // Build payload from form fields (convert numbers; drop empties)
+      const payload = {
+        title:       fields.title.value.trim(),
+        slug:        fields.slug.value.trim() || undefined,
+        price:       fields.price.value ? Number(fields.price.value) : undefined,
+        location:    fields.location.value.trim() || undefined,
+        type:        fields.type.value,
+        operation:   fields.operation.value,
+        ambientes:   fields.ambientes.value ? Number(fields.ambientes.value) : undefined,
+        description: fields.description.value.trim()
+      };
+      Object.keys(payload).forEach(k => payload[k] === undefined && delete payload[k]);
+
+      const res = await fetch('/api/listings/' + currentId, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      });
+
+      if (!res.ok) {
+        const txt = await res.text();
+        throw new Error(txt || ('HTTP ' + res.status));
+      }
+
+      await res.json();
+      statusEl.textContent = 'Saved ✔️';
+    } catch (err) {
+      console.error(err);
+      statusEl.textContent = '❌ ' + (err.message || 'Save failed');
+    } finally {
+      btnSave.disabled = false;
+    }
+  });
+
+  // Auto-load if URL contains ?id=... or ?slug=...
+  const params = new URLSearchParams(location.search);
+  const q = params.get('id') || params.get('slug');
+  if (q) { lookup.value = q; loadListing(q); }
+</script>
+
+
+
+</body>
+</html>

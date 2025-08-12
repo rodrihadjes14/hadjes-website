@@ -7,7 +7,6 @@ const path = require('path');
 const { upload } = require('./middleware/upload');
 const { uploadBuffer } = require('./utils/cloudinary');
 
-
 const app = express();
 
 // ✅ Middleware
@@ -19,38 +18,21 @@ const propertyRoutes = require('./routes/properties');
 const listingsRoute = require('./routes/listings');
 const Listing = require('./models/Listing');
 
-app.use("/listings", listingsRoute);
+app.use('/listings', listingsRoute);
 app.use('/properties', propertyRoutes);
 
-
-
-// Create listing with multiple photos (multipart/form-data)
-// Field name for files: "photos"
+// ✅ Create listing (multiple photos)
 app.post('/api/listings', upload.array('photos', 20), async (req, res) => {
   try {
-    const Listing = require('./models/Listing');
-
-    // Pull text fields (adapt names if your schema differs)
     const {
-      title,
-      description,
-      price,
-      location,
-      type,
-      operation,
-      ambientes,
-      slug
+      title, description, price, location, type, operation, ambientes, slug
     } = req.body;
 
-    // Upload all files to Cloudinary, preserving order (first = cover)
     const files = req.files || [];
     const uploads = [];
-    for (const f of files) {
-      uploads.push(uploadBuffer(f.buffer, 'listings'));
-    }
+    for (const f of files) uploads.push(uploadBuffer(f.buffer, 'listings'));
     const results = await Promise.all(uploads);
 
-    // Build images[]
     const images = results.map((img, i) => ({
       url: img.url,
       alt: `${title || 'Listing'} photo ${i + 1}`,
@@ -59,16 +41,13 @@ app.post('/api/listings', upload.array('photos', 20), async (req, res) => {
       isPrimary: i === 0
     }));
 
-    // Backward-compat: keep legacy imageUrl
     let imageUrl;
-    if (images.length > 0) {
-      imageUrl = images[0].url;
-    } else if (req.body.imageUrl) {
+    if (images.length > 0) imageUrl = images[0].url;
+    else if (req.body.imageUrl) {
       imageUrl = req.body.imageUrl;
       images.push({ url: imageUrl, alt: title || 'Listing', isPrimary: true });
     }
 
-    // Create the listing doc
     const doc = await Listing.create({
       title,
       description,
@@ -78,8 +57,8 @@ app.post('/api/listings', upload.array('photos', 20), async (req, res) => {
       operation,
       ambientes: ambientes ? Number(ambientes) : undefined,
       slug,
-      imageUrl,   // legacy single image (still used by your front-end today)
-      images      // new multi-image array
+      imageUrl,
+      images
     });
 
     res.status(201).json(doc);
@@ -89,45 +68,70 @@ app.post('/api/listings', upload.array('photos', 20), async (req, res) => {
   }
 });
 
+// ✅ Update listing (text-only)
+app.put('/api/listings/:id', async (req, res) => {
+  try {
+    const { id } = req.params;
+    const allowed = ['title', 'description', 'price', 'location', 'type', 'operation', 'ambientes', 'slug'];
+    const update = {};
 
-// ✅ Serve static files from the frontend
+    for (const key of allowed) {
+      if (req.body[key] !== undefined) {
+        if (key === 'price' || key === 'ambientes') {
+          const raw = req.body[key];
+          if (raw !== '' && raw !== null) {
+            const num = Number(raw);
+            if (!Number.isNaN(num)) update[key] = num;
+          }
+        } else {
+          update[key] = req.body[key];
+        }
+      }
+    }
+    for (const k of Object.keys(update)) if (update[k] === undefined) delete update[k];
+
+    const doc = await Listing.findByIdAndUpdate(id, { $set: update }, { new: true, runValidators: true });
+    if (!doc) return res.status(404).json({ error: 'Listing not found' });
+    res.json(doc);
+  } catch (err) {
+    console.error('Update listing failed:', err);
+    res.status(500).json({ error: 'Failed to update listing' });
+  }
+});
+
+// DEBUG: list registered routes (remove later)
+app.get('/__routes', (req, res) => {
+  const routes = [];
+  app._router.stack.forEach(layer => {
+    if (layer.route) {
+      const methods = Object.keys(layer.route.methods).join(',').toUpperCase();
+      routes.push(`${methods} ${layer.route.path}`);
+    }
+  });
+  res.json(routes);
+});
+
+// ✅ Static + HTML
 app.use(express.static(path.join(__dirname, 'public')));
-
-// ✅ Serve index.html for root
-app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, 'public/index.html'));
-});
-
-// ✅ Serve listing.html manually
-app.get('/listing.html', (req, res) => {
-  res.sendFile(path.join(__dirname, 'public/listing.html'));
-});
+app.get('/', (req, res) => res.sendFile(path.join(__dirname, 'public/index.html')));
+app.get('/listing.html', (req, res) => res.sendFile(path.join(__dirname, 'public/listing.html')));
 
 // ✅ Single Listing by ID (API)
 app.get('/listings/:id', async (req, res) => {
   try {
     const listing = await Listing.findById(req.params.id);
-    if (!listing) {
-      return res.status(404).send('Listing not found');
-    }
+    if (!listing) return res.status(404).send('Listing not found');
     res.json(listing);
   } catch (err) {
     res.status(500).send('Server error');
   }
 });
 
-// ✅ MongoDB Connection + Start Server
+// ✅ MongoDB connect + start
 const PORT = process.env.PORT || 10000;
-
 mongoose.connect(process.env.MONGO_URI)
   .then(() => {
     console.log('✅ MongoDB connected');
     app.listen(PORT, () => console.log(`🚀 Server running on http://localhost:${PORT}`));
   })
-  .catch(err => {
-    console.error('❌ MongoDB connection error:', err);
-  });
-
-
-
-
+  .catch(err => console.error('❌ MongoDB connection error:', err));
