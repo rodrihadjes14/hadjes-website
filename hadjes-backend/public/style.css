@@ -1052,31 +1052,39 @@ footer {
 
 /* OPTION GRID AND BOXES */
 
+/* Grid wrapper: 3 centered cards with minimal gaps */
 .options-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Same card width as slider */
-  gap: 10px; /* Same gap between cards as slider */
-  max-width: 100%; /* Same max width as slider wrapper */
-  margin: 70px; /* Center the grid horizontally */
-  padding: 0; /* Remove extra side padding to match slider alignment */
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); /* a bit wider cards */
+  gap: 10px;                     /* minimal space between boxes */
+  max-width: 1200px;             /* keeps the row from stretching too wide on big screens */
+  margin: 40px auto;             /* center horizontally, sane top/bottom spacing */
+  padding: 0 10px;               /* small side breathing room */
+  justify-content: center;       /* center tracks when fewer columns fit */
+  justify-items: stretch;        /* make items fill their tracks (pairs with width:100%) */
+  align-items: start;            /* keep rows aligned at the top */
 }
 
+/* Card: fill the grid column, no extra margins */
 .option-box {
-  /* Copy look from listing-box */
   background-color: #fff;
   border-radius: 5px;
-  padding: 10px;
+  padding: 12px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  width: 80%;
-  min-height: 100%; /* fill height in grid row */
+
+  width: 100%;                   /* <-- was 80%; removes inner “mystery gaps” */
+  height: 100%;
+  min-height: 100%;
+
   display: flex;
-  flex-direction: column;   /* stack title and list vertically */
-  justify-content: flex-start; /* keep content starting from the top */
-  align-items: center;  /* keep text aligned left (if needed) */
-  height: 100%;  
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;           /* center content horizontally */
   text-align: center;
+  margin: 0;                     /* ensure no outer margin */
 }
 
+/* Title and list: unchanged except small polish */
 .option-box h3 {
   font-family: 'Exo 2', sans-serif;
   font-weight: 400;
@@ -1101,22 +1109,24 @@ footer {
   color: #2f3133;
   font-weight: 500;
   font-size: 14px;
-  padding: 2px 6px;          /* less clickable padding */
-  margin: 0;                 /* remove extra outside spacing */
-  line-height: 0.8; 
+  padding: 2px 6px;
+  margin: 0;
+  line-height: 1.2;              /* 0.8 was very tight; 1.2 reads better and still compact */
 }
 
 .option-box ul li a:hover {
   text-decoration: underline;
 }
 
-
-/* ===== Responsive adjustments ===== */
-@media (max-width: 768px) {
+/* Mobile tweak: stack cleanly with small gaps */
+@media (max-width: 600px) {
   .options-grid {
-    grid-template-columns: 1fr; /* 1 column on small screens */
+    grid-template-columns: 1fr;  /* single column on narrow screens */
+    gap: 8px;
+    margin: 24px auto;
   }
 }
+
 
 
 
