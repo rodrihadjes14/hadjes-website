@@ -91,6 +91,47 @@
           Enviar Consulta
         </a>
       </p>
+      
+      <!-- Formulario de Postulación -->
+<h2>Postulación</h2>
+<form id="apply-form" class="apply-form who-intro" style="max-width: 720px; margin: 0 auto;">
+  <div style="display:grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+    <div>
+      <label for="role"><strong>Rol</strong></label>
+      <select id="role" required>
+        <option value="" disabled selected>Seleccioná un rol</option>
+        <option>Asesor/a Comercial Inmobiliario</option>
+        <option>Coordinación de Ventas y Alquileres</option>
+        <option>Marketing & Contenido (part-time)</option>
+        <option>Otro</option>
+      </select>
+    </div>
+    <div>
+      <label for="name"><strong>Nombre y Apellido</strong></label>
+      <input id="name" type="text" required placeholder="Tu nombre" />
+    </div>
+    <div>
+      <label for="email"><strong>Email</strong></label>
+      <input id="email" type="email" required placeholder="tu@correo.com" />
+    </div>
+    <div>
+      <label for="phone"><strong>Teléfono</strong></label>
+      <input id="phone" type="tel" placeholder="+54 ..." />
+    </div>
+    <div style="grid-column:1 / -1;">
+      <label for="cv"><strong>Link al CV (Drive/URL)</strong></label>
+      <input id="cv" type="url" placeholder="https://..." />
+    </div>
+    <div style="grid-column:1 / -1;">
+      <label for="message"><strong>Mensaje</strong></label>
+      <textarea id="message" rows="5" placeholder="Contanos por qué te interesa sumarte…"></textarea>
+    </div>
+  </div>
+  <div style="margin-top:12px; text-align:center;">
+    <button type="submit" class="brand-button" style="padding:10px 16px;">Enviar Postulación</button>
+  </div>
+</form>
+
     </section>
   </main>
 
@@ -115,6 +156,42 @@
       }
     });
   </script>
+
+
+  <script>
+  // Manejar el envío del formulario: abrir mail con los datos
+  document.addEventListener('DOMContentLoaded', () => {
+    const form = document.getElementById('apply-form');
+    if (!form) return;
+
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const to = 'info@hadjespropiedades.com'; // cambiá si usás otro correo
+      const role    = document.getElementById('role')?.value || '';
+      const name    = document.getElementById('name')?.value || '';
+      const email   = document.getElementById('email')?.value || '';
+      const phone   = document.getElementById('phone')?.value || '';
+      const cv      = document.getElementById('cv')?.value || '';
+      const message = document.getElementById('message')?.value || '';
+
+      const subject = `Postulación: ${role} — ${name}`;
+      const body = [
+        `Rol: ${role}`,
+        `Nombre: ${name}`,
+        `Email: ${email}`,
+        `Teléfono: ${phone}`,
+        `CV: ${cv}`,
+        '',
+        'Mensaje:',
+        message
+      ].join('\n');
+
+      const mailto = `mailto:${encodeURIComponent(to)}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+      window.location.href = mailto;
+    });
+  });
+</script>
+
 
   <script src="/js/footer-loader.js" defer></script>
 </body>
