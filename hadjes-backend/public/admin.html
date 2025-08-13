@@ -115,22 +115,23 @@
     });
 
     function renderPreview() {
-      preview.innerHTML = '';
-      files.forEach((file, i) => {
-        const url = URL.createObjectURL(file);
-        const item = document.createElement('div');
-        item.className = 'preview-item';
-        item.innerHTML = \`
-          \${i === 0 ? '<span class="badge">Cover</span>' : ''}
-          <img src="\${url}" alt="photo \${i+1}">
-          <div class="actions">
-            <button type="button" data-action="set-cover" data-idx="\${i}">Set cover</button>
-            <button type="button" data-action="remove" data-idx="\${i}">Remove</button>
-          </div>
-        \`;
-        preview.appendChild(item);
-      });
-    }
+    preview.innerHTML = '';
+    files.forEach((file, i) => {
+      const url = URL.createObjectURL(file);
+      const item = document.createElement('div');
+      item.className = 'preview-item';
+      item.innerHTML = `
+      ${i === 0 ? '<span class="badge">Cover</span>' : ''}
+      <img src="${url}" alt="photo ${i + 1}">
+      <div class="actions">
+        <button type="button" data-action="set-cover" data-idx="${i}">Set cover</button>
+        <button type="button" data-action="remove" data-idx="${i}">Remove</button>
+      </div>
+    `;
+    preview.appendChild(item);
+  });
+}
+
 
     preview.addEventListener('click', (e) => {
       const btn = e.target.closest('button');
