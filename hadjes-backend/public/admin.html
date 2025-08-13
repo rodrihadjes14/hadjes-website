@@ -87,6 +87,7 @@
     </form>
     <hr>
     <h2>Existing Listings</h2>
+    <div id="toast" role="status" aria-live="polite" style="display:none"></div>
     <div id="listing-admin-list" class="preview-grid"></div>
   </div>
 
@@ -95,6 +96,16 @@
     const input = document.getElementById('photos');
     const preview = document.getElementById('preview');
     const statusEl = document.getElementById('status');
+    
+    const toast = document.getElementById('toast');
+    function showToast(msg) {
+  if (!toast) return;
+  toast.textContent = msg;
+  toast.style.display = 'block';
+  clearTimeout(showToast._t);
+  showToast._t = setTimeout(() => { toast.style.display = 'none'; }, 3000);
+}
+
 
     let files = []; // ordered list of selected files
 
@@ -163,8 +174,14 @@
         if (!res.ok) throw new Error('Upload failed');
         const json = await res.json();
         statusEl.textContent = '✅ Created #' + json._id;
-        // Optional: navigate to the public detail page
-        // window.location.href = 'listing.html?slug=' + (json.slug || json._id);
+        showToast('Listing creado correctamente');
+        // reset form + previews
+        form.reset();
+        files = [];
+        preview.innerHTML = '';
+        // refresh the admin list (call the non-module function on window)
+        if (window.loadListings) window.loadListings();
+
       } catch (err) {
         console.error(err);
         statusEl.textContent = '❌ ' + err.message;
@@ -223,9 +240,11 @@
   try {
     const res = await fetch(`/api/listings/${id}`, { method: 'DELETE' });
     if (res.status === 204) {
-        // Optimistic UI: remove the card from the grid
-      card.remove();
+    // Reload list to keep UI in sync
+    if (typeof showToast === 'function') showToast('Listing eliminado');
+    await loadListings();
     } else {
+
       alert('No se pudo eliminar (estado ' + res.status + ').');
       btn.disabled = false;
       btn.textContent = '🗑️ Delete';

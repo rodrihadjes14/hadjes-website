@@ -1764,4 +1764,16 @@ footer {
   }
 }
 
+#toast {
+  position: sticky;
+  top: 0;
+  margin: 10px 0;
+  padding: 10px 12px;
+  border-radius: 6px;
+  font-weight: 600;
+  color: #0f5132;
+  background: #d1e7dd; /* success green */
+  border: 1px solid #badbcc;
+  z-index: 5;
+}
 
