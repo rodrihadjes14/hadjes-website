@@ -2049,3 +2049,83 @@ footer {
   .search-grid .card-meta li { font-size: .875rem; }
 }
 
+/* ===== Work-with-us application form ===== */
+.apply-form {
+  /* already centered by your inline style; keeping typography coherent */
+  font-family: "Open Sans", system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+  color: #2f3133;
+}
+
+/* Grid: two columns on desktop, single column on mobile */
+.apply-form > div {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+/* Force single column on small screens even if inline style exists */
+@media (max-width: 640px) {
+  .apply-form > div { grid-template-columns: 1fr !important; }
+}
+
+/* Labels */
+.apply-form label {
+  display: block;
+  margin-bottom: 6px;
+  font-weight: 600;
+  font-family: "Exo 2", "Open Sans", sans-serif;
+  letter-spacing: .15px;
+}
+
+/* Inputs, selects, textareas */
+.apply-form input,
+.apply-form select,
+.apply-form textarea {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid #cfd4dc;
+  border-radius: 8px;
+  font-size: 1rem;
+  background: #fff;
+  color: #1f2328;
+  transition: border-color .15s ease, box-shadow .15s ease, background-color .15s ease;
+  appearance: none;
+}
+
+/* Placeholder */
+.apply-form input::placeholder,
+.apply-form textarea::placeholder {
+  color: #8a939e;
+}
+
+/* Focus state (accessible/high-contrast) */
+.apply-form input:focus,
+.apply-form select:focus,
+.apply-form textarea:focus {
+  outline: none;
+  border-color: #0d6efd;
+  box-shadow: 0 0 0 3px rgba(13, 110, 253, .15);
+}
+
+
+
+/* Textarea sizing/behavior */
+.apply-form textarea {
+  min-height: 120px;
+  resize: vertical;
+  line-height: 1.5;
+}
+
+/* Button alignment tweaks (brand-button already styled globally) */
+.apply-form .brand-button {
+  font-weight: 500;
+  letter-spacing: .2px;
+}
+
+/* ===== Work-with-us: inline-style cleanup ===== */
+.apply-form { max-width: 720px; margin: 0 auto; }      /* replaces form inline style */
+.apply-form .span-all { grid-column: 1 / -1; }         /* replaces grid-column inline style */
+.apply-form .form-actions { margin-top: 12px; text-align: center; }  /* replaces actions inline style */
+
+/* Optional utility for that bullet list under “Posiciones Abiertas” */
+.who-intro.list { list-style: disc; padding-left: 20px; }
