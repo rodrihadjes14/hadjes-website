@@ -99,6 +99,21 @@ app.put('/api/listings/:id', async (req, res) => {
   }
 });
 
+
+// ✅ DELETE LISTING
+app.delete('/api/listings/:id', async (req, res) => {
+  try {
+    const { id } = req.params;
+    const deleted = await Listing.findByIdAndDelete(id);
+    if (!deleted) return res.status(404).json({ error: 'Listing not found' });
+    res.status(204).send(); // No content, but successful
+  } catch (err) {
+    console.error('Delete listing failed:', err);
+    res.status(500).json({ error: 'Failed to delete listing' });
+  }
+});
+
+
 // DEBUG: list registered routes (remove later)
 app.get('/__routes', (req, res) => {
   const routes = [];

@@ -114,7 +114,7 @@ header {
   border-radius: 4px;
   transition: background-color 0.3s ease;
   display: inline-block;
-  margin-left: 92px;
+  margin-left: 100px;
 }
 
 .brand-button:hover {
@@ -134,7 +134,7 @@ header {
   flex-wrap: wrap;
   gap: 5px;
   background: white;
-  padding: 5px 20px 5px 20px;
+  padding: 2px 5px 2px 5px;
   border-radius: 10px;
   justify-content: center;
   align-items: center;
@@ -155,9 +155,10 @@ header {
 .filter-options label {
   margin-right: 15px;
   font-family: 'Exo 2', sans-serif;
-  font-weight: 500;
+  font-weight: 400;
   color: #272727;
   text-transform: capitalize;
+  size: 0.4rem;
 }
 
 /*APPLIES SPACE BETWEEN RADIO BUTTON AND TEXT*/
@@ -409,9 +410,10 @@ section { padding: 40px 20px; }
 
 .listing-box img {
   width: 100%;
-  height: auto;
+  height: 180px;
   border-radius: 4px;
-  margin-top: 10px;
+  object-fit: cover;
+  display: block;
 }
 
 /* SLIDER INDEX PAGE */
@@ -457,7 +459,7 @@ section { padding: 40px 20px; }
 
 .search-grid .listing-box img {
   width: 100%;
-  height: auto;
+  height: 180px;
   display: block;
 }
 
@@ -776,7 +778,7 @@ footer {
     border-radius: 8px;
     white-space: nowrap;         /* keep radio + text together */
     margin: 0;                   /* neutralize stray margins */
-    font-size: 14px;
+    font-size: 5px;
   }
 
   .filter-bar .filter-options input[type="radio"] {
@@ -937,11 +939,10 @@ footer {
 .search-grid .listing-box img {
   display: block;
   width: 100%;
-  height: auto;
-  max-height: 220px;
+  height: 300px;
   object-fit: cover;
-  border-radius: 6px;
-  margin-bottom: 10px;
+  border-radius: 5px;
+  margin-bottom: -4px
 }
 
 /* Titles: reduce extra spacing */
@@ -1145,7 +1146,7 @@ footer {
 }
 
 
-/*H1 AND H2 */
+/*  H1 AND H2 */
 
 .who-we-are-section h1,
 .who-we-are-section h2 {
@@ -1444,7 +1445,10 @@ footer {
   .header-links {
     display: flex;
     gap: 18px;
-    margin-left: 10px;      /* match .filter-bar's left margin (10px) */
+    margin-left: 10px;
+    padding: 2px, 5px, 2px, 5px;/* match .filter-bar's left margin (10px) */
+    margin-top: 0;
+    margin-bottom: 0;
   }
 
   .header-links a {
@@ -1454,6 +1458,8 @@ footer {
     text-decoration: none;
     line-height: 1;
     padding: 0 0;
+    margin-top: 0;
+    margin-bottom: 0;
   }
 
   .header-links a:hover {
@@ -1506,19 +1512,6 @@ footer {
     margin-right: 20px;/* prevents cramped wrapping on medium desktops */
   }
 }
-
-
-
-  /* Make the search input flexible so it absorbs leftover space */
-  .header-right .filter-bar .search-input {
-    width: 80px;              /* override fixed width in base CSS */
-    flex: 1 1 280px;          /* grows/shrinks as needed, starts at ~320px */        /* don’t get too tiny */
-  }
-
-  /* Button stays compact on the right of the row */
-  .header-right .filter-bar .search-button {
-    flex: 0 0 auto;
-  }
 
 
 @media (min-width: 1025px) {
@@ -1765,6 +1758,10 @@ footer {
   border-color: #0d6efd;
 }
 
-
+@media (min-width: 1025px) {
+  .filter-bar .filter-options label {
+    font-size: 0.9rem; /* smaller text size for desktop */
+  }
+}
 
 
