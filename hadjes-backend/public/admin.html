@@ -20,7 +20,6 @@
     .actions button { font-size:12px; }
     .submit-row { margin-top: 16px; display:flex; gap:8px; }
   </style>
-  <script src="/js/api-base.js"></script>
 </head>
 <body>
   <div class="admin-wrap">
@@ -86,81 +85,123 @@
         <span id="status" aria-live="polite"></span>
       </div>
     </form>
+    <hr>
+    <h2>Existing Listings</h2>
+    <div id="listing-admin-list" class="preview-grid"></div>
   </div>
 
-  <script>
-  const form = document.getElementById('listing-form');
-  const input = document.getElementById('photos');
-  const preview = document.getElementById('preview');
-  const statusEl = document.getElementById('status');
+  <script type="module">
+    const form = document.getElementById('listing-form');
+    const input = document.getElementById('photos');
+    const preview = document.getElementById('preview');
+    const statusEl = document.getElementById('status');
 
-  // We'll manage order in this array and NOT touch input.files (better cross-browser)
-  let files = [];
+    let files = []; // ordered list of selected files
 
-  input.addEventListener('change', () => {
-    files = Array.from(input.files); // initial order from file picker
-    renderPreview();
-  });
-
-  function renderPreview() {
-    preview.innerHTML = '';
-    files.forEach((file, i) => {
-      const url = URL.createObjectURL(file);
-      const item = document.createElement('div');
-      item.className = 'preview-item';
-      item.innerHTML = `
-        ${i === 0 ? '<span class="badge">Cover</span>' : ''}
-        <img src="${url}" alt="photo ${i + 1}">
-        <div class="actions">
-          <button type="button" data-action="set-cover" data-idx="${i}">Set cover</button>
-          <button type="button" data-action="remove" data-idx="${i}">Remove</button>
-        </div>
-      `;
-      preview.appendChild(item);
+    input.addEventListener('change', () => {
+      files = [...input.files]; // order preserved; index 0 = cover
+      renderPreview();
     });
+
+    function renderPreview() {
+      preview.innerHTML = '';
+      files.forEach((file, i) => {
+        const url = URL.createObjectURL(file);
+        const item = document.createElement('div');
+        item.className = 'preview-item';
+        item.innerHTML = \`
+          \${i === 0 ? '<span class="badge">Cover</span>' : ''}
+          <img src="\${url}" alt="photo \${i+1}">
+          <div class="actions">
+            <button type="button" data-action="set-cover" data-idx="\${i}">Set cover</button>
+            <button type="button" data-action="remove" data-idx="\${i}">Remove</button>
+          </div>
+        \`;
+        preview.appendChild(item);
+      });
+    }
+
+    preview.addEventListener('click', (e) => {
+      const btn = e.target.closest('button');
+      if (!btn) return;
+      const idx = Number(btn.dataset.idx);
+      const action = btn.dataset.action;
+
+      if (action === 'remove') {
+        files.splice(idx, 1);
+        // reflect back to input (so FormData uses updated files)
+        const dt = new DataTransfer();
+        files.forEach(f => dt.items.add(f));
+        input.files = dt.files;
+        renderPreview();
+      }
+
+      if (action === 'set-cover') {
+        const [f] = files.splice(idx, 1);
+        files.unshift(f);
+        const dt = new DataTransfer();
+        files.forEach(file => dt.items.add(file));
+        input.files = dt.files;
+        renderPreview();
+      }
+    });
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      statusEl.textContent = 'Uploading…';
+
+      const fd = new FormData(form);
+      // Ensure we append files in the chosen order
+      const dt = new DataTransfer();
+      files.forEach(f => dt.items.add(f));
+      // Replace any auto-attached files in fd with our ordered ones
+      fd.delete('photos');
+      [...dt.files].forEach(f => fd.append('photos', f));
+
+      try {
+        const res = await fetch('/api/listings', { method: 'POST', body: fd });
+        if (!res.ok) throw new Error('Upload failed');
+        const json = await res.json();
+        statusEl.textContent = '✅ Created #' + json._id;
+        // Optional: navigate to the public detail page
+        // window.location.href = 'listing.html?slug=' + (json.slug || json._id);
+      } catch (err) {
+        console.error(err);
+        statusEl.textContent = '❌ ' + err.message;
+      }
+    });
+  </script>
+  
+  <script>
+  const adminList = document.getElementById('listing-admin-list');
+
+  async function loadListings() {
+    try {
+      const res = await fetch(`${API_BASE}/listings`);
+      const listings = await res.json();
+
+      adminList.innerHTML = ''; // clear
+
+      listings.forEach(listing => {
+        const item = document.createElement('div');
+        item.className = 'preview-item';
+        item.innerHTML = `
+          <img src="${listing.imageUrl || 'placeholder.jpg'}" alt="${listing.title}" />
+          <div class="actions">
+            <button data-id="${listing._id}" class="delete-btn">🗑️ Delete</button>
+          </div>
+          <p style="padding: 6px; font-size: 0.9rem;"><strong>${listing.title}</strong><br>${listing.location || ''}</p>
+        `;
+        adminList.appendChild(item);
+      });
+    } catch (err) {
+      console.error('Error loading listings:', err);
+      adminList.innerHTML = '<p style="color:red;">Failed to load listings</p>';
+    }
   }
 
-  preview.addEventListener('click', (e) => {
-    const btn = e.target.closest('button');
-    if (!btn) return;
-    const idx = Number(btn.dataset.idx);
-    const action = btn.dataset.action;
-
-    if (action === 'remove') {
-      files.splice(idx, 1);           // remove from our array
-      renderPreview();                // re-render (no DataTransfer used)
-    }
-
-    if (action === 'set-cover') {
-      const [f] = files.splice(idx, 1);
-      files.unshift(f);               // move to front (cover)
-      renderPreview();
-    }
-  });
-
-  form.addEventListener('submit', async (e) => {
-    e.preventDefault();
-    statusEl.textContent = 'Uploading…';
-
-    // Build FormData from the form, then overwrite the 'photos' entries
-    const fd = new FormData(form);
-    fd.delete('photos');              // remove auto-attached files
-    files.forEach(f => fd.append('photos', f)); // append in our chosen order
-
-    try {
-      const res = await fetch(`${API_BASE}/api/listings`, { method: 'POST', body: fd });
-      if (!res.ok) {
-        const text = await res.text();
-        throw new Error(text || ('HTTP ' + res.status));
-      }
-      const json = await res.json();
-      statusEl.textContent = '✅ Created #' + json._id;
-      console.log('Created listing:', json);
-    } catch (err) {
-      console.error(err);
-      statusEl.textContent = '❌ ' + (err.message || 'Upload failed');
-    }
-  });
+  // Call it after page loads
+  loadListings();
 </script>
 
 </body>
