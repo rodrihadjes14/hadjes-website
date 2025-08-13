@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Trabajá con Nosotros — Hadjes Propiedades</title>
+  <meta name="description" content="Sumate a Hadjes Propiedades. Oportunidades para profesionales inmobiliarios." />
+  <link rel="stylesheet" href="style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@500;700&family=Open+Sans:wght@300;400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+
+  <!-- Header (same structure as your other pages) -->
+  <header>
+    <div class="header-logo-and-search">
+      <a href="index.html" class="brand-button">HADJES</a>
+
+      <div class="header-right">
+        <div class="filter-bar">
+          <div class="filter-options">
+            <label><input type="radio" name="operation" value="venta"> Venta</label>
+            <label><input type="radio" name="operation" value="alquiler"> Alquiler</label>
+            <label><input type="radio" name="operation" value="temporal"> Alquiler Temporal</label>
+          </div>
+
+          <select class="property-type" name="type">
+            <option value="">Propiedad</option>
+            <option value="casa">Casa</option>
+            <option value="departamento">Departamento</option>
+            <option value="edificio">Edificio</option>
+            <option value="cochera">Cochera</option>
+            <option value="local">Local</option>
+            <option value="oficina">Oficina</option>
+            <option value="campo">Campo</option>
+            <option value="lote">Lote</option>
+          </select>
+
+          <input name="q" type="text" class="search-input" placeholder="Ubicación / Location, keyword..." />
+          <button id="search-button" class="search-button">Buscar</button>
+        </div>
+
+        <nav class="header-links" aria-label="Páginas del sitio">
+          <a href="who-we-are.html">Quiénes Somos</a>
+          <a href="contact.html">Hacé tu consulta</a>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <main class="page-layout">
+    <!-- Reuse your existing CSS by keeping this class -->
+    <section class="who-we-are-section">
+      <h1>Trabajá con Nosotros</h1>
+
+      <p class="who-intro">
+        En Hadjes Propiedades buscamos personas apasionadas por el servicio al cliente,
+        con visión analítica del mercado y ganas de crecer en un entorno profesional.
+        Si te entusiasma el Real Estate y querés desarrollarte con un equipo de trayectoria,
+        ¡nos gustaría conocerte!
+      </p>
+
+      <h2>¿Por qué unirte a Hadjes?</h2>
+      <p class="who-intro">
+        • Equipo con más de 30 años de experiencia<br>
+        • Acompañamiento y capacitación continua<br>
+        • Herramientas digitales y base de clientes activa<br>
+        • Cultura de transparencia y datos
+      </p>
+
+      <h2>Posiciones Abiertas</h2>
+      <p class="who-intro">
+        A continuación verás puestos típicos. Si tu perfil no encaja exactamente, igual postulate.
+      </p>
+      <ul class="who-intro" style="list-style:disc; padding-left: 20px;">
+        <li>Asesor/a Comercial Inmobiliario</li>
+        <li>Coordinación de Ventas y Alquileres</li>
+        <li>Marketing & Contenido (part-time)</li>
+      </ul>
+
+      <h2>¿Cómo Postular?</h2>
+      <p class="who-intro">
+        Envianos tu CV y una breve presentación a
+        <a href="mailto:info@hadjespropiedades.com">info@hadjespropiedades.com</a>,
+        o dejá tu consulta desde la página de contacto.
+      </p>
+
+      <p class="who-intro" style="text-align:center; margin-top: 20px;">
+        <a href="contact.html" class="brand-button" style="display:inline-block; padding:10px 16px;">
+          Enviar Consulta
+        </a>
+      </p>
+    </section>
+  </main>
+
+  <div id="footer-root"></div>
+
+  <!-- Keep your search redirect script so the header filters work -->
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const btn = document.getElementById('search-button');
+      if (btn) {
+        btn.addEventListener('click', function (e) {
+          e.preventDefault();
+          const params = new URLSearchParams();
+          const q = document.querySelector('input[name="q"]')?.value;
+          if (q) params.set('q', q);
+          const operation = document.querySelector('input[name="operation"]:checked')?.value;
+          if (operation) params.set('operation', operation);
+          const type = document.querySelector('select[name="type"]')?.value;
+          if (type) params.set('type', type);
+          window.location.href = `listing.html?${params.toString()}`;
+        });
+      }
+    });
+  </script>
+
+  <script src="/js/footer-loader.js" defer></script>
+</body>
+</html>
