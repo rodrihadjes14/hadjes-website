@@ -1905,3 +1905,19 @@ footer {
   }
 }
 
+/* --- Slider card image overrides --- */
+.slider-track .listing-box .card {
+  height: 400px !important;        /* ensure our grid height wins */
+}
+
+.slider-track .listing-box .card-media {
+  height: 80% !important;           /* top area = 80% of card */
+}
+
+.slider-track .listing-box .card-media .card-img {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;     /* fill without distortion, crop if needed */
+  display: block;
+}
+
