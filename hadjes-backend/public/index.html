@@ -201,15 +201,40 @@
       return;
     }
 
+    
+    // Transform Cloudinary images for sharp 16:9 cards without re-uploading
+function cardImageUrl(url) {
+  if (!url) return '';
+  try {
+    const u = new URL(url);
+    // Only transform Cloudinary URLs that have the /upload/ segment
+    if (u.hostname.includes('cloudinary') && u.pathname.includes('/upload/')) {
+      // 16:9 crop, ~800px wide, smart quality/format
+      u.pathname = u.pathname.replace('/upload/', '/upload/c_fill,ar_16:9,w_800,q_auto,f_auto/');
+      return u.toString();
+    }
+    return url; // non-Cloudinary or different CDN: leave as-is
+  } catch {
+    return url;
+  }
+}
+
+    
     // Render slider cards (safe href/src)
     filtered.forEach(listing => {
   const targetSlug = listing.slug || listing._id || '';
   const href = targetSlug ? `listing.html?slug=${targetSlug}` : '#';
 
   // Image HTML (hide if fails)
-  const imgTag = listing.imageUrl
-    ? `<img class="card-img" src="${listing.imageUrl}" alt="${(listing.title || '').replace(/"/g,'&quot;')}" onerror="this.style.display='none'">`
-    : `<div class="no-img">Sin imagen</div>`;
+  const displayUrl = cardImageUrl(listing.imageUrl || '');
+  const imgTag = displayUrl
+  ? `<img class="card-img"
+           src="${displayUrl}"
+           alt="${(listing.title || '').replace(/"/g,'&quot;')}"
+           style="object-fit:cover!important;width:100%;height:100%;"
+           onerror="this.style.display='none'">`
+  : `<div class="no-img">Sin imagen</div>`;
+
 
   // Basic fields
   const title = listing.title || 'Sin título';
