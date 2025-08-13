@@ -153,7 +153,7 @@
   
 async function fetchListings() {
   // 1) Fetch all listings from your backend
-  const res = await fetch(`${API_BASE}/listings`);
+  const res = await fetch('/listings', { cache: 'no-store' });
   const listings = await res.json();
 
   // 2) Read filters from URL (keeps your current behavior)
@@ -203,6 +203,24 @@ async function fetchListings() {
     return;
   }
 
+  // Transform Cloudinary images for sharp 16:9 cards without re-uploading
+  function cardImageUrl(url) {
+  if (!url) return '';
+  try {
+    const u = new URL(url);
+    if (u.hostname.includes('cloudinary') && u.pathname.includes('/upload/')) {
+      u.pathname = u.pathname.replace('/upload/', '/upload/c_fill,ar_16:9,w_800,q_auto,f_auto/');
+      return u.toString();
+    }
+    return url;
+  } catch {
+    return url;
+  }
+}
+
+  
+  
+  
   // 6) Pagination state
   const PAGE_SIZE = 24; // 3 columns × 8 rows
   let currentPage = 1;
@@ -217,22 +235,67 @@ async function fetchListings() {
     const end = start + PAGE_SIZE;
     const slice = filtered.slice(start, end);
 
-    slice.forEach(listing => {
-      // Each item is a child of the grid; .search-grid CSS makes it fit the column
-      const wrapper = document.createElement('div');
-      wrapper.innerHTML = `
-        <a href="listing.html?slug=${listing.slug || listing._id}" style="text-decoration: none; color: inherit;">
-          <div class="listing-box">
-            ${listing.imageUrl ? `<img src="${listing.imageUrl}" alt="${listing.title || ''}" />` : ''}
-            <h3>${listing.title || 'Untitled listing'}</h3>
-            ${listing.description ? `<p>${listing.description}</p>` : ''}
-            ${typeof listing.price !== 'undefined' ? `<p><strong>Price:</strong> $${listing.price}</p>` : ''}
-            ${listing.location ? `<p><strong>Location:</strong> ${listing.location}</p>` : ''}
-          </div>
-        </a>
-      `;
-      grid.appendChild(wrapper);
-    });
+    
+  slice.forEach(listing => {
+  const targetSlug = listing.slug || listing._id || '';
+  const href = targetSlug ? `listing.html?slug=${targetSlug}` : '#';
+
+  const displayUrl = cardImageUrl(listing.imageUrl || '');
+  const imgTag = displayUrl
+    ? `<img class="card-img"
+             src="${displayUrl}"
+             alt="${(listing.title || '').replace(/"/g,'&quot;')}"
+             style="object-fit:cover!important;width:100%;height:100%;"
+             onerror="this.style.display='none'>"`
+    : `<div class="no-img">Sin imagen</div>`;
+
+  const title = listing.title || 'Sin título';
+  const address = listing.location || '';
+  const neighborhood = listing.neighborhood || '';
+  const coveredM2 = listing.coveredM2 ?? listing.cubiertos ?? '';
+  const totalM2   = listing.totalM2   ?? listing.totales  ?? '';
+  const rooms     = listing.ambientes ?? listing.rooms    ?? '';
+  const bathrooms = listing.bathrooms ?? listing.baños    ?? listing.banos ?? '';
+
+  const priceNum  = (typeof listing.price === 'number') ? listing.price : null;
+  const priceText = priceNum !== null ? new Intl.NumberFormat('es-AR').format(priceNum) : '';
+
+  function meta(label, value, unit = '') {
+    if (value === '' || value === null || value === undefined) return '';
+    const shown = unit ? `${value}${unit}` : value;
+    return `<li><span class="meta-label">${label}</span><span class="meta-value">${shown}</span></li>`;
+  }
+
+  const metaList = [
+    meta('Precio', priceText ? `$ ${priceText}` : ''),
+    meta('Dirección', address),
+    meta('Barrio', neighborhood),
+    meta('Cubiertos', coveredM2, ' m²'),
+    meta('Totales', totalM2, ' m²'),
+    meta('Ambientes', rooms),
+    meta('Baños', bathrooms),
+  ].join('');
+
+  const wrapper = document.createElement('div');
+  wrapper.className = 'listing-box';
+  wrapper.innerHTML = `
+    <a href="${href}" class="card" style="text-decoration:none; color:inherit;">
+      <div class="card-media">
+        ${imgTag}
+      </div>
+      <div class="card-body">
+        <h3 class="card-title">${title}</h3>
+        <ul class="card-meta">
+          ${metaList}
+        </ul>
+      </div>
+    </a>
+  `;
+  grid.appendChild(wrapper);
+});
+
+    
+  
 
     renderPagination();
     // Optional: jump to top after page change
