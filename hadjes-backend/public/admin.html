@@ -177,7 +177,7 @@
 
   async function loadListings() {
     try {
-      const res = await fetch(`${API_BASE}/listings`);
+      const res = await fetch('/listings', { cache: 'no-store' });
       const listings = await res.json();
 
       adminList.innerHTML = ''; // clear
