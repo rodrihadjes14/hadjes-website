@@ -1951,3 +1951,96 @@ footer {
   padding-top: 10px;        /* slight breathing room for text */
 }
 
+
+
+
+
+
+
+
+/* ===== LISTING RESULTS ===== */
+
+/* Reset the card layout ONLY inside results grid */
+.search-grid .listing-box .card {
+  display: flex !important;          /* override slider's grid split */
+  flex-direction: column;
+  height: auto !important;           /* no fixed 400px here */
+  text-decoration: none;
+  color: inherit;
+}
+
+/* Card container visuals (same look as slider) */
+.search-grid .listing-box {
+  border-radius: 12px;
+  overflow: hidden;
+  background: #fff;
+  box-shadow: 0 4px 12px rgba(0,0,0,.08);
+  transition: transform .2s ease, box-shadow .2s ease;
+}
+.search-grid .listing-box:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 20px rgba(0,0,0,.12);
+}
+
+/* Media: use a 16:9 box so cards don’t get too tall in the narrow column */
+.search-grid .card-media {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  line-height: 0;                    /* remove inline image baseline gap */
+  background: #eee;
+}
+.search-grid .card-media .card-img {
+  position: absolute;
+  inset: 0;
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
+  display: block;
+}
+
+/* Body */
+.search-grid .card-body {
+  padding: 12px;
+  background: #fff;
+  transition: background-color .25s ease, color .25s ease;
+}
+.search-grid .card-title {
+  margin: 0 0 6px;
+  font-size: 1rem;
+  line-height: 1.2;
+  max-height: 2.4em;                 /* ~2 lines */
+  overflow: hidden;
+}
+
+/* Meta list with auto colon + tidy spacing (same as slider) */
+.search-grid .card-meta {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: 4px;
+}
+.search-grid .card-meta li {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  align-items: baseline;
+  column-gap: 8px;
+  font-size: .9rem;
+}
+.search-grid .meta-label { color: #555; white-space: nowrap; }
+.search-grid .meta-label::after { content: ":"; margin: 0 6px 0 4px; color: currentColor; }
+.search-grid .meta-value { color: #111; text-align: right; overflow-wrap: anywhere; }
+
+/* Hover invert (match slider) */
+.search-grid .listing-box:hover .card-body { background: #111; color: #fff; }
+.search-grid .listing-box:hover .card-title,
+.search-grid .listing-box:hover .meta-label,
+.search-grid .listing-box:hover .meta-value { color: #fff; }
+
+/* Optional: if your grid column is very narrow next to the sidebar, let the card breathe */
+@media (max-width: 1024px) {
+  .search-grid .card-title { font-size: .95rem; }
+  .search-grid .card-meta li { font-size: .875rem; }
+}
+
