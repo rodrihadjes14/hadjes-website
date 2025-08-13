@@ -204,9 +204,9 @@
         const item = document.createElement('div');
         item.className = 'preview-item';
         item.innerHTML = `
-          <img src="${listing.imageUrl || 'placeholder.jpg'}" alt="${listing.title}" />
           <div class="actions">
-            <button data-id="${listing._id}" class="delete-btn">🗑️ Delete</button>
+          <button data-id="${listing._id}" class="edit-btn">✏️ Edit</button>
+          <button data-id="${listing._id}" class="delete-btn">🗑️ Delete</button>
           </div>
           <p style="padding: 6px; font-size: 0.9rem;"><strong>${listing.title}</strong><br>${listing.location || ''}</p>
         `;
@@ -223,40 +223,49 @@
   loadListings();
     
     
-  adminList.addEventListener('click', async (e) => {
-  const btn = e.target.closest('.delete-btn');
-  if (!btn) return;
+  // Handle both Edit and Delete buttons via event delegation
+adminList.addEventListener('click', async (e) => {
+  // ✏️ EDIT button
+  const editBtn = e.target.closest('.edit-btn');
+  if (editBtn) {
+    const id = editBtn.getAttribute('data-id');
+    window.location.href = `/admin-edit.html?id=${encodeURIComponent(id)}`;
+    return; // stop here so we don't run delete logic
+  }
 
-  const id = btn.getAttribute('data-id');
-  const card = btn.closest('.preview-item');
+  // 🗑️ DELETE button
+  const delBtn = e.target.closest('.delete-btn');
+  if (!delBtn) return;
 
-  // Friendly confirm
+  const id = delBtn.getAttribute('data-id');
+  const card = delBtn.closest('.preview-item');
+
   const ok = confirm('¿Eliminar este listing? Esta acción no se puede deshacer.');
   if (!ok) return;
 
-  // Disable button while deleting
-  btn.disabled = true;
-  btn.textContent = 'Deleting…';
+  delBtn.disabled = true;
+  delBtn.textContent = 'Deleting…';
 
   try {
     const res = await fetch(`/api/listings/${id}`, { method: 'DELETE' });
     if (res.status === 204) {
-    // Reload list to keep UI in sync
-    if (typeof showToast === 'function') showToast('Listing eliminado');
-    await loadListings();
+      // Option A: reload list to stay perfectly in sync
+      if (typeof showToast === 'function') showToast('Listing eliminado');
+      await loadListings();
+      // Option B (if you prefer no reload): card.remove();
     } else {
-
       alert('No se pudo eliminar (estado ' + res.status + ').');
-      btn.disabled = false;
-      btn.textContent = '🗑️ Delete';
+      delBtn.disabled = false;
+      delBtn.textContent = '🗑️ Delete';
     }
-    } catch (err) {
-      console.error('Delete failed:', err);
-      alert('Error eliminando el listing.');
-      btn.disabled = false;
-      btn.textContent = '🗑️ Delete';
-    }
-  });
+  } catch (err) {
+    console.error('Delete failed:', err);
+    alert('Error eliminando el listing.');
+    delBtn.disabled = false;
+    delBtn.textContent = '🗑️ Delete';
+  }
+});
+
     
     
 </script>
