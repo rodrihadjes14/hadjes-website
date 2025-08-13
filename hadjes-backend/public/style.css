@@ -1921,3 +1921,33 @@ footer {
   display: block;
 }
 
+/* === Patch: remove micro-gap between image and text in slider cards === */
+.slider-track .listing-box .card {
+  /* switch grid -> flex to avoid row rounding seams */
+  display: flex !important;
+  flex-direction: column;
+  height: 400px;            /* keep your card height */
+  row-gap: 0 !important;    /* just in case */
+}
+
+.slider-track .listing-box .card-media {
+  flex: 0 0 80%;            /* top area = 80% */
+  position: relative;
+  line-height: 0;           /* kill any inline image baseline gap */
+}
+
+.slider-track .listing-box .card-media .card-img {
+  position: absolute;       /* pin the image to fill exactly */
+  inset: 0;
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
+  display: block;
+}
+
+.slider-track .listing-box .card-body {
+  flex: 1 0 20%;            /* bottom area = 20% */
+  margin-top: 0;            /* ensure no seam */
+  padding-top: 10px;        /* slight breathing room for text */
+}
+
