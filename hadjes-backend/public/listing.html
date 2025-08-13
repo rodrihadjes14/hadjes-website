@@ -242,12 +242,13 @@ async function fetchListings() {
 
   const displayUrl = cardImageUrl(listing.imageUrl || '');
   const imgTag = displayUrl
-    ? `<img class="card-img"
-             src="${displayUrl}"
-             alt="${(listing.title || '').replace(/"/g,'&quot;')}"
-             style="object-fit:cover!important;width:100%;height:100%;"
-             onerror="this.style.display='none'>"`
-    : `<div class="no-img">Sin imagen</div>`;
+  ? `<img class="card-img"
+           src="${displayUrl}"
+           alt="${(listing.title || '').replace(/"/g,'&quot;')}"
+           style="object-fit:cover!important;width:100%;height:100%;"
+           onerror="this.style.display='none'">`
+  : `<div class="no-img">Sin imagen</div>`;
+
 
   const title = listing.title || 'Sin título';
   const address = listing.location || '';
