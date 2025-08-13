@@ -1952,7 +1952,12 @@ footer {
 }
 
 
+/*MOBILE FOR FILTER OPTIONS */
 
+
+@media (max-width: 480px) {
+  .filter-bar .filter-options label { font-size: 0.9rem; } /* ≈ 14px */
+}
 
 
 
