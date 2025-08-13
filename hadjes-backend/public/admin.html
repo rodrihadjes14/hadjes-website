@@ -201,7 +201,44 @@
   }
 
   // Call it after page loads
+    
   loadListings();
+    
+    
+  adminList.addEventListener('click', async (e) => {
+  const btn = e.target.closest('.delete-btn');
+  if (!btn) return;
+
+  const id = btn.getAttribute('data-id');
+  const card = btn.closest('.preview-item');
+
+  // Friendly confirm
+  const ok = confirm('¿Eliminar este listing? Esta acción no se puede deshacer.');
+  if (!ok) return;
+
+  // Disable button while deleting
+  btn.disabled = true;
+  btn.textContent = 'Deleting…';
+
+  try {
+    const res = await fetch(`/api/listings/${id}`, { method: 'DELETE' });
+    if (res.status === 204) {
+        // Optimistic UI: remove the card from the grid
+      card.remove();
+    } else {
+      alert('No se pudo eliminar (estado ' + res.status + ').');
+      btn.disabled = false;
+      btn.textContent = '🗑️ Delete';
+    }
+    } catch (err) {
+      console.error('Delete failed:', err);
+      alert('Error eliminando el listing.');
+      btn.disabled = false;
+      btn.textContent = '🗑️ Delete';
+    }
+  });
+    
+    
 </script>
 
 </body>
