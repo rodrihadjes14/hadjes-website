@@ -203,39 +203,63 @@
 
     // Render slider cards (safe href/src)
     filtered.forEach(listing => {
-      const targetSlug = listing.slug || listing._id || '';
-      const href = targetSlug ? `listing.html?slug=${targetSlug}` : '#';
+  const targetSlug = listing.slug || listing._id || '';
+  const href = targetSlug ? `listing.html?slug=${targetSlug}` : '#';
 
-      // If you have a local placeholder, swap Option B for Option A:
-      // const imageHTML = listing.imageUrl
-      //   ? `<img src="${listing.imageUrl}" alt="${listing.title || ''}" onerror="this.onerror=null; this.src='placeholder.jpg'">`
-      //   : `<img src="placeholder.jpg" alt="No image">`;
+  // Image HTML (hide if fails)
+  const imgTag = listing.imageUrl
+    ? `<img class="card-img" src="${listing.imageUrl}" alt="${(listing.title || '').replace(/"/g,'&quot;')}" onerror="this.style.display='none'">`
+    : `<div class="no-img">Sin imagen</div>`;
 
-      // Option B: hide <img> if missing/broken
-      const imageHTML = listing.imageUrl
-        ? `<img src="${listing.imageUrl}" alt="${listing.title || ''}" onerror="this.style.display='none'">`
-        : '';
+  // Basic fields
+  const title = listing.title || 'Sin título';
+  const address = listing.location || '';
+  const neighborhood = listing.neighborhood || '';          // optional (if you add it later)
+  const coveredM2 = listing.coveredM2 ?? listing.cubiertos ?? ''; // optional
+  const totalM2   = listing.totalM2   ?? listing.totales  ?? '';  // optional
+  const rooms     = listing.ambientes ?? listing.rooms    ?? '';   // ambientes = rooms
+  const bathrooms = listing.bathrooms ?? listing.baños    ?? listing.banos ?? ''; // optional
 
-      const title = listing.title || 'Untitled listing';
-      const desc  = listing.description ? `<p>${listing.description}</p>` : '';
-      const price = (typeof listing.price !== 'undefined') ? `<p><strong>Price:</strong> $${listing.price}</p>` : '';
-      const loc   = listing.location ? `<p><strong>Location:</strong> ${listing.location}</p>` : '';
+  // Price formatting (if present)
+  const priceNum  = (typeof listing.price === 'number') ? listing.price : null;
+  const priceText = priceNum !== null ? new Intl.NumberFormat('es-AR').format(priceNum) : '';
 
-      const div = document.createElement('div');
-      div.className = 'listing-box';
-      div.innerHTML = `
-        <a href="${href}" ,style="text-decoration: none; color: inherit;">
-          <div>
-            ${imageHTML}
-            <h3>${title}</h3>
-            ${desc}
-            ${price}
-            ${loc}
-          </div>
-        </a>
-      `;
-      listingsDiv.appendChild(div);
-    });
+  // Helper to render meta items only when there is a value
+  function meta(label, value, unit = '') {
+    if (value === '' || value === null || value === undefined) return '';
+    const shown = unit ? `${value}${unit}` : value;
+    return `<li><span class="meta-label">${label}</span><span class="meta-value">${shown}</span></li>`;
+  }
+
+  const metaList = [
+    meta('Precio', priceText ? `$ ${priceText}` : ''),
+    meta('Dirección', address),
+    meta('Barrio', neighborhood),
+    meta('Cubiertos', coveredM2, ' m²'),
+    meta('Totales', totalM2, ' m²'),
+    meta('Ambientes', rooms),
+    meta('Baños', bathrooms),
+  ].join('');
+
+  const div = document.createElement('div');
+  div.className = 'listing-box';
+  div.innerHTML = `
+    <a href="${href}" class="card" style="text-decoration:none; color:inherit;">
+      <div class="card-media">
+        ${imgTag}
+      </div>
+      <div class="card-body">
+        <h3 class="card-title">${title}</h3>
+        <ul class="card-meta">
+          ${metaList}
+        </ul>
+      </div>
+    </a>
+  `;
+  listingsDiv.appendChild(div);
+});
+
+    
 
     initializeSlider();
   }
