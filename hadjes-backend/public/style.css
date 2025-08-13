@@ -1777,3 +1777,131 @@ footer {
   z-index: 5;
 }
 
+
+
+
+/* ===== SLIDER ===== */
+.slider-track {
+  display: flex;
+  gap: 20px;
+  align-items: stretch; /* make all cards equal height */
+}
+
+/* Outer card box */
+.listing-box {
+  flex: 0 0 300px;        /* fixed card width for slider */
+  width: 300px;
+  border-radius: 12px;
+  overflow: hidden;       /* keep inner content clipped */
+  background: #fff;
+  box-shadow: 0 4px 12px rgba(0,0,0,.08);
+  transition: transform .2s ease, box-shadow .2s ease;
+}
+.listing-box:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 20px rgba(0,0,0,.12);
+}
+
+/* The clickable card */
+.listing-box .card {
+  display: grid;
+  grid-template-rows: 80% 1fr; /* image ≈ 80% height, body ≈ 20% */
+  height: 400px;               /* sets the reference height */
+  color: inherit;
+  text-decoration: none;
+}
+
+/* Media (top 80%) */
+.card-media {
+  position: relative;
+  overflow: hidden;
+  background: #eee;
+}
+.card-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;   /* cover without distortion */
+  display: block;
+}
+.no-img {
+  height: 100%;
+  display: grid;
+  place-items: center;
+  color: #777;
+  font-size: .9rem;
+}
+
+/* Body (bottom 20%) */
+.card-body {
+  padding: 12px;
+  background: #fff;
+  transition: background-color .25s ease, color .25s ease;
+}
+.card-title {
+  margin: 0 0 6px;
+  font-size: 1rem;
+  line-height: 1.2;
+  max-height: 2.4em;           /* ~2 lines */
+  overflow: hidden;
+}
+
+/* Meta list */
+.card-meta {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: 4px;
+}
+.card-meta li {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  align-items: baseline;
+  column-gap: 8px;
+  font-size: .9rem;
+}
+
+/* Label + value with auto colon */
+.meta-label {
+  color: #555;
+  white-space: nowrap;
+}
+.meta-label::after {
+  content: ":";
+  margin: 0 6px 0 4px;
+  color: currentColor;
+}
+.meta-value {
+  color: #111;
+  text-align: right;
+  overflow-wrap: anywhere;  /* prevent overflow on long addresses */
+}
+
+/* Hover invert (body only) */
+.listing-box:hover .card-body {
+  background: #111;
+  color: #fff;
+}
+.listing-box:hover .meta-label,
+.listing-box:hover .meta-value,
+.listing-box:hover .card-title {
+  color: #fff;
+}
+
+/* Optional: a little image lift on hover */
+.listing-box:hover .card-img {
+  transform: scale(1.03);
+  transition: transform .3s ease;
+}
+
+/* Mobile: make cards wider/taller so text breathes */
+@media (max-width: 768px) {
+  .listing-box {
+    flex-basis: 85vw;
+    width: 85vw;
+  }
+  .listing-box .card {
+    height: 440px; /* keeps 80/20 split visually */
+  }
+}
+
