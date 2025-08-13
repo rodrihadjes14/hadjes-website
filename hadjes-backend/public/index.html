@@ -163,7 +163,7 @@
   async function fetchListings() {
     let listings = [];
     try {
-      listings = await fetchWithRetry('https://hadjes-backend.onrender.com/listings', 3);
+      listings = await fetchWithRetry('/listings', 3);
     } catch (e) {
       console.error('Could not load listings:', e);
       const slider = document.getElementById('slider-listings');
