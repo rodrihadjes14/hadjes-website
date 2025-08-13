@@ -114,6 +114,7 @@ header {
   border-radius: 4px;
   transition: background-color 0.3s ease;
   display: inline-block;
+  margin-left: 82px;
 }
 
 .brand-button:hover {
@@ -1439,13 +1440,6 @@ footer {
 
 /* DESKTOP */
 
-@media (min-width: 769px) {
-  .header-right {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start; /* left edges align */
-    gap: 6px;
-  }
 
   .header-links {
     display: flex;
@@ -1465,7 +1459,7 @@ footer {
   .header-links a:hover {
     text-decoration: underline;
   }
-}
+
 
 @media (max-width: 600px) {
   .header-links {
@@ -1508,36 +1502,29 @@ footer {
     align-items: flex-start;  /* left edges align */
     gap: 6px;
     flex: 1 1 auto;           /* take the remaining row space */
-    min-width: 640px;         /* prevents cramped wrapping on medium desktops */
+    min-width: 640px; 
+    margin-right: 20px;/* prevents cramped wrapping on medium desktops */
   }
 }
 
-@media (min-width: 1025px) {
-  /* Let the bar use full width and avoid wrapping */
-  .header-right .filter-bar {
-    width: 100%;
-    max-width: none;          /* override the global 90% cap */
-    flex-wrap: nowrap;        /* keep on one line */
-    align-items: center;
-    gap: 20px;                /* a bit tighter so it all fits */
-  }
+
 
   /* Make the search input flexible so it absorbs leftover space */
   .header-right .filter-bar .search-input {
-    width: 100px;              /* override fixed width in base CSS */
-    flex: 1 1 320px;          /* grows/shrinks as needed, starts at ~320px */        /* don’t get too tiny */
+    width: 80px;              /* override fixed width in base CSS */
+    flex: 1 1 280px;          /* grows/shrinks as needed, starts at ~320px */        /* don’t get too tiny */
   }
 
   /* Button stays compact on the right of the row */
   .header-right .filter-bar .search-button {
     flex: 0 0 auto;
   }
-}
+
 
 @media (min-width: 1025px) {
   /* More space between brand-button and header-right */
   .header-logo-and-search {
-    column-gap: 140px;  /* try 24–32px to taste */
+    column-gap: 220px;  /* try 24–32px to taste */
   }
 }
 
@@ -1548,13 +1535,13 @@ footer {
     flex-wrap: nowrap;     /* keep everything on one line */
     align-items: center;
     gap: 10px;
-    margin-right: 24px;    /* more right space; adjust 16–40px to taste */
+    margin-right: 10px;    /* more right space; adjust 16–40px to taste */
   }
 }
 @media (min-width: 1025px) {
   .header-right .filter-bar .search-input {
-    width: 220px;          /* shorter input again */
-    min-width: 220px;
+    width: 180px;          /* shorter input again */
+    min-width: 180px;
     flex: 0 0 220px;       /* prevents flex from stretching it */
   }
 
@@ -1563,7 +1550,11 @@ footer {
   }
 }
 
-/* ===== Footer layout & style ===== */
+
+
+
+
+/* ===== FOOTER ===== */
 
 /* Visual base */
 .site-footer {
