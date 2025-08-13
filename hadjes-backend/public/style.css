@@ -57,7 +57,7 @@ nav a { margin: 0 15px; }
   height: 100%;
   color: white;
   text-align: center;
-  background: rgba(0, 0, 0, 0.3); /* optional transparent overlay for readability */
+  background: rgba(147, 147, 147, 0.1); /* optional transparent overlay for readability */
   padding: 20px;
 }
 
