@@ -9,9 +9,35 @@ const { uploadBuffer } = require('./utils/cloudinary');
 
 const app = express();
 
+// Trust Render/Cloudflare proxy headers so req.secure works
+app.set('trust proxy', 1);
+
+
 // ✅ Middleware
 app.use(cors());
 app.use(express.json());
+
+
+// Canonicalize to HTTPS + www
+app.use((req, res, next) => {
+  const host = (req.headers.host || '').toLowerCase();
+  const isHttps = req.secure || req.headers['x-forwarded-proto'] === 'https';
+  const targetHost = 'www.hadjes.com.ar';
+
+  // 1) Force HTTPS (send everything to https://www.hadjes.com.ar)
+  if (!isHttps) {
+    return res.redirect(301, `https://${targetHost}${req.originalUrl}`);
+  }
+
+  // 2) Force www (if user hit bare hadjes.com.ar over https)
+  if (host === 'hadjes.com.ar') {
+    return res.redirect(301, `https://${targetHost}${req.originalUrl}`);
+  }
+
+  return next();
+});
+
+
 
 // ✅ API Routes
 const propertyRoutes = require('./routes/properties');
