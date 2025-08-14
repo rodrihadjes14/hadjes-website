@@ -18,24 +18,29 @@ app.use(cors());
 app.use(express.json());
 
 
-// Canonicalize to HTTPS + www
 app.use((req, res, next) => {
   const host = (req.headers.host || '').toLowerCase();
   const isHttps = req.secure || req.headers['x-forwarded-proto'] === 'https';
   const targetHost = 'www.hadjes.com.ar';
 
-  // 1) Force HTTPS (send everything to https://www.hadjes.com.ar)
+  // If someone hits any non-HTTPS URL, send them to HTTPS on your primary host
   if (!isHttps) {
     return res.redirect(301, `https://${targetHost}${req.originalUrl}`);
   }
 
-  // 2) Force www (if user hit bare hadjes.com.ar over https)
+  // If someone hits the bare apex over HTTPS, send them to www
   if (host === 'hadjes.com.ar') {
     return res.redirect(301, `https://${targetHost}${req.originalUrl}`);
   }
 
-  return next();
+  // If someone hits the Render subdomain, also send them to www
+  if (host.endsWith('.onrender.com')) {
+    return res.redirect(301, `https://${targetHost}${req.originalUrl}`);
+  }
+
+  next();
 });
+
 
 
 
