@@ -2129,3 +2129,62 @@ footer {
 
 /* Optional utility for that bullet list under “Posiciones Abiertas” */
 .who-intro.list { list-style: disc; padding-left: 20px; }
+
+
+
+/* === Metal frame (ring only) for options === */
+/* This draws a metallic BORDER inside the card edges, leaving the interior white. */
+.options-grid .option-box {
+  position: relative;              /* anchor the ring */
+  z-index: 0;
+  /* keep your current background/padding/border-radius from your CSS */
+}
+
+/* Ring: drawn as an inner border using a mask (works great in modern browsers) */
+.options-grid .option-box::before {
+  content: "";
+  position: absolute;
+  inset: 0;                        /* sit exactly on the element’s box */
+  border-radius: 5px;              /* match your .option-box radius */
+  padding: 6px;                    /* <-- ring thickness (tweak to 4–10px) */
+  box-sizing: border-box;
+  pointer-events: none;
+
+  /* metal shader */
+  background:
+    /* subtle brushed lines */
+    repeating-linear-gradient(90deg,
+      rgba(255,255,255,.35) 0 1px,
+      rgba(0,0,0,.06) 1px 2px),
+    /* gentle highlight */
+    radial-gradient(120% 180% at 20% 20%,
+      rgba(255,255,255,.6), rgba(255,255,255,0) 60%),
+    /* metallic sheen */
+    conic-gradient(from 0deg at 50% 50%,
+      #d9d9d9 0deg, #f2f2f2 70deg, #a7a7a7 110deg, #f9f9f9 160deg,
+      #9e9e9e 200deg, #f2f2f2 250deg, #bdbdbd 300deg, #eaeaea 360deg);
+
+  /* show only the border area (mask out the center) */
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;     /* Safari/Chromium */
+  mask-composite: exclude;         /* Firefox */
+}
+
+/* Soft bevel where frame meets the card */
+.options-grid .option-box::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 5px;
+  pointer-events: none;
+  box-shadow:
+    0 1px 0 rgba(255,255,255,.7) inset,
+    0 -1px 0 rgba(0,0,0,.06) inset;
+}
+
+/* Subtle shimmer on hover */
+.options-grid .option-box:hover::before {
+  background-position: 10% 0, center, center;
+  filter: saturate(1.06) brightness(1.02);
+  transition: background-position .6s ease, filter .25s ease, box-shadow .25s ease;
+}
