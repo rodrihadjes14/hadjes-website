@@ -156,6 +156,67 @@
       <br />
     </p>
   </section>
+  
+  
+  <!-- === Formulario de tasación === -->
+<form id="valuacion-form" style="max-width:520px;margin:24px auto;padding:16px;border:1px solid #eee;border-radius:12px">
+  <h3 style="margin:0 0 12px">Solicitar tasación</h3>
+
+  <label>Nombre y apellido *</label>
+  <input name="nombre" required style="width:100%;margin:6px 0 12px;padding:10px">
+
+  <label>WhatsApp (solo dígitos) *</label>
+  <input name="whatsapp" required inputmode="tel" style="width:100%;margin:6px 0 12px;padding:10px">
+
+  <label>Email</label>
+  <input type="email" name="email" style="width:100%;margin:6px 0 12px;padding:10px">
+
+  <label>Zona</label>
+  <select name="zona" style="width:100%;margin:6px 0 12px;padding:10px">
+    <option value="">—</option>
+    <option>CABA</option>
+    <option>Zona Norte</option>
+    <option>Zona Sur</option>
+  </select>
+
+  <label>Barrio</label>
+  <input name="barrio" style="width:100%;margin:6px 0 12px;padding:10px">
+
+  <label>Tipo de propiedad</label>
+  <select name="tipo" style="width:100%;margin:6px 0 12px;padding:10px">
+    <option value="">—</option>
+    <option>Departamento</option>
+    <option>Casa</option>
+    <option>PH</option>
+    <option>Lote</option>
+    <option>Local</option>
+  </select>
+
+  <label>Metros cuadrados (m²)</label>
+  <input type="number" name="m2" min="0" step="1" style="width:100%;margin:6px 0 12px;padding:10px">
+
+  <label>Estado</label>
+  <select name="estado" style="width:100%;margin:6px 0 12px;padding:10px">
+    <option value="">—</option>
+    <option>A estrenar</option>
+    <option>Reciclado</option>
+    <option>A refaccionar</option>
+  </select>
+
+  <label>Precio esperado (opcional)</label>
+  <input name="precio_esperado" style="width:100%;margin:6px 0 12px;padding:10px">
+
+  <!-- Valores ocultos -->
+  <input type="hidden" name="intencion" value="Vender">
+
+  <label style="display:flex;gap:8px;align-items:center;margin:6px 0 12px">
+    <input type="checkbox" name="consentimiento" value="Si" required>
+    Acepto la <a href="/privacidad" target="_blank" rel="noopener">Política de Privacidad</a>.
+  </label>
+
+  <button type="submit" style="padding:10px 14px;border:0;border-radius:8px;background:#111;color:#fff">Solicitar valoración</button>
+  <p id="val-msg" hidden style="margin-top:10px;color:#25D366">¡Gracias! Te contactaremos a la brevedad.</p>
+</form>
 
   <section id="contact">
     <h2>Contacto</h2>
@@ -498,6 +559,27 @@ function cardImageUrl(url) {
   });
 </script>
 
+<script>
+  const WEBAPP_URL = 'PASTE_YOUR_WEBAPP_URL_HERE';
+
+  document.getElementById('valuacion-form').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const fd = new FormData(e.target);
+    const phone = (fd.get('whatsapp') || '').replace(/\D/g,'');
+    fd.set('whatsapp', phone);
+    if (!fd.get('consentimiento')) fd.set('consentimiento','No');
+
+    try {
+      await fetch(WEBAPP_URL, { method:'POST', body: fd, mode:'no-cors' });
+      document.getElementById('val-msg').hidden = false;
+      e.target.reset();
+    } catch (err) {
+      alert('Error al enviar. Intentá nuevamente.');
+      console.error(err);
+    }
+  });
+</script>
+</body>
 
 
 
