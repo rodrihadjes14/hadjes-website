@@ -8,7 +8,15 @@
   <link rel="stylesheet" href="style.css" />  
   <link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@500;700&family=Open+Sans:wght@300;400;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-BTJN1VZ617"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
 
+  gtag('config', 'G-BTJN1VZ617');
+</script>
 </head>
   
 <body>
@@ -455,6 +463,36 @@ function cardImageUrl(url) {
 </script>
 
 <script src="/js/footer-loader.js" defer></script>
+
+<!-- WhatsApp chat button -->
+<a
+  href="https://wa.me/54911XXXXXXXXX?text=Hola%20soy%20interesado%2Fa%20en%20propiedades.%20%C2%BFMe%20asesoran%3F"
+  class="wa-float"
+  target="_blank"
+  rel="noopener noreferrer"
+  aria-label="WhatsApp"
+  title="Escríbenos por WhatsApp"
+>
+  <!-- WhatsApp SVG icon -->
+  <svg viewBox="0 0 32 32" width="28" height="28" aria-hidden="true">
+    <path d="M19.11 17.17c-.27-.14-1.58-.79-1.83-.88-.25-.09-.43-.14-.61.14-.18.27-.7.88-.86 1.06-.16.18-.32.2-.59.07-.27-.14-1.13-.42-2.16-1.34-.79-.7-1.32-1.56-1.48-1.83-.16-.27-.02-.42.12-.55.12-.12.27-.32.41-.48.14-.16.18-.27.27-.45.09-.18.05-.34-.02-.48-.07-.14-.61-1.47-.84-2.01-.22-.52-.44-.45-.61-.45-.16 0-.34-.02-.52-.02-.18 0-.48.07-.73.34-.25.27-.96.93-.96 2.27s.99 2.63 1.13 2.81c.14.18 1.95 2.98 4.73 4.18.66.29 1.18.46 1.58.59.66.21 1.26.18 1.74.11.53-.08 1.58-.64 1.8-1.26.22-.62.22-1.15.16-1.26-.07-.11-.25-.18-.52-.32zM16.01 28c-2.07 0-4.01-.56-5.7-1.54L6 28l1.58-4.22A11.92 11.92 0 0 1 4 16.03C4 9.38 9.37 4 16.01 4c3.21 0 6.22 1.25 8.49 3.52A11.95 11.95 0 0 1 28 16.03C28 22.67 22.63 28 16.01 28zm9.2-21.2A13.06 13.06 0 0 0 16.01 2C8.27 2 2 8.27 2 16.03c0 2.29.59 4.47 1.7 6.41L2 30l7.73-1.69a13.92 13.92 0 0 0 6.28 1.47c7.74 0 14.01-6.27 14.01-14.03 0-3.75-1.46-7.28-4.21-9.95z" fill="currentColor"/>
+  </svg>
+</a>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const wa = document.querySelector('.wa-float');
+    if (!wa) return;
+    wa.addEventListener('click', function () {
+      // GA4 custom event
+      gtag('event', 'whatsapp_click', {
+        link_url: wa.href,
+        position: 'floating_button',
+        page_location: location.href
+      });
+    });
+  });
+</script>
 
 
 </body>
