@@ -484,15 +484,16 @@ function cardImageUrl(url) {
     const wa = document.querySelector('.wa-float');
     if (!wa) return;
     wa.addEventListener('click', function () {
-      // GA4 custom event
       gtag('event', 'whatsapp_click', {
         link_url: wa.href,
         position: 'floating_button',
-        page_location: location.href
+        page_location: location.href,
+        debug_mode: true   // <-- add this line
       });
     });
   });
 </script>
+
 
 
 </body>
