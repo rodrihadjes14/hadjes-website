@@ -559,6 +559,84 @@ function cardImageUrl(url) {
   });
 </script>
 
+  
+  <script>
+/* Robust UTM + page + referrer injection */
+(function () {
+  const UTM_KEYS = ["utm_source","utm_medium","utm_campaign","utm_content","utm_term"];
+  const STORE_KEY = "lead_utm";
+  const TTL_MS = 90 * 24 * 60 * 60 * 1000; // 90 days
+
+  function parseUTM() {
+    const q = new URLSearchParams(location.search);
+    const out = {};
+    for (const k of UTM_KEYS) {
+      const v = q.get(k);
+      if (v) out[k] = v.trim();
+    }
+    out.page_location = location.href;
+    out.referrer = document.referrer || "";
+    return out;
+  }
+  function loadSaved() {
+    try { return JSON.parse(localStorage.getItem(STORE_KEY) || "{}"); }
+    catch { return {}; }
+  }
+  function save(data) {
+    try { localStorage.setItem(STORE_KEY, JSON.stringify({ ...data, _ts: Date.now() })); } catch {}
+  }
+  function currentTracking() {
+    const now = Date.now();
+    const fresh = parseUTM();
+    let saved = loadSaved();
+    if (saved._ts && now - saved._ts > TTL_MS) saved = {};
+    const data = { ...saved, ...fresh };
+    if (Object.keys(fresh).length) save(data);
+    return data;
+  }
+
+  function ensureHidden(form, name) {
+    let el = form.querySelector(`[name="${name}"]`);
+    if (!el) {
+      el = document.createElement("input");
+      el.type = "hidden";
+      el.name = name;
+      form.appendChild(el);
+    }
+    return el;
+  }
+  function injectHidden(form) {
+    const data = currentTracking();
+    for (const k of [...UTM_KEYS, "page_location", "referrer"]) {
+      const el = ensureHidden(form, k);
+      el.value = data[k] || "";
+    }
+  }
+
+  // Pre-inject on load so even custom fetch(FormData) sees fields
+  document.addEventListener("DOMContentLoaded", () => {
+    document.querySelectorAll("form").forEach(injectHidden);
+  });
+
+  // Refresh right before submit
+  document.addEventListener("submit", (ev) => {
+    const form = ev.target;
+    if (form instanceof HTMLFormElement) injectHidden(form);
+  }, true);
+
+  // Safety: handle clicks on submit buttons used by custom JS
+  document.addEventListener("click", (ev) => {
+    const btn = ev.target && ev.target.closest('button, input[type="submit"]');
+    if (!btn || !btn.form) return;
+    injectHidden(btn.form);
+  }, true);
+
+  // For manual fetch payloads: Object.assign(payload, window.getLeadTracking())
+  window.getLeadTracking = currentTracking;
+})();
+</script>
+
+  
 <script>
   const WEBAPP_URL = 'https://script.google.com/macros/s/AKfycbzluoCRt2FJ6uNboeZ6FaiKk5fi2uxOTnchXlmbdf54qNVh2R7sNxbXGkDRrHkAzMxs/exec';
 
@@ -580,6 +658,8 @@ function cardImageUrl(url) {
   });
 </script>
 
+  
+  
 
 
 
