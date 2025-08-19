@@ -483,16 +483,21 @@ function cardImageUrl(url) {
   document.addEventListener('DOMContentLoaded', function () {
     const wa = document.querySelector('.wa-float');
     if (!wa) return;
+
+    const isDebug = location.search.includes('debug=1') || location.hostname === 'localhost';
+
     wa.addEventListener('click', function () {
-      gtag('event', 'whatsapp_click', {
+      const params = {
         link_url: wa.href,
         position: 'floating_button',
-        page_location: location.href,
-        debug_mode: true   // <-- add this line
-      });
+        page_location: location.href
+      };
+      if (isDebug) params.debug_mode = true; // only when ?debug=1 or localhost
+      gtag('event', 'whatsapp_click', params);
     });
   });
 </script>
+
 
 
 
