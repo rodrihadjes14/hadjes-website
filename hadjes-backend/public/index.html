@@ -159,64 +159,54 @@
   
   
   <!-- === Formulario de tasación === -->
-<form id="valuacion-form" style="max-width:520px;margin:24px auto;padding:16px;border:1px solid #eee;border-radius:12px">
-  <h3 style="margin:0 0 12px">Solicitar tasación</h3>
-
-  <label>Nombre y apellido *</label>
-  <input name="nombre" required style="width:100%;margin:6px 0 12px;padding:10px">
-
-  <label>WhatsApp (solo dígitos) *</label>
-  <input name="whatsapp" required inputmode="tel" style="width:100%;margin:6px 0 12px;padding:10px">
-
-  <label>Email</label>
-  <input type="email" name="email" style="width:100%;margin:6px 0 12px;padding:10px">
-
-  <label>Zona</label>
-  <select name="zona" style="width:100%;margin:6px 0 12px;padding:10px">
-    <option value="">—</option>
-    <option>CABA</option>
-    <option>Zona Norte</option>
-    <option>Zona Sur</option>
-  </select>
-
-  <label>Barrio</label>
-  <input name="barrio" style="width:100%;margin:6px 0 12px;padding:10px">
-
-  <label>Tipo de propiedad</label>
-  <select name="tipo" style="width:100%;margin:6px 0 12px;padding:10px">
-    <option value="">—</option>
-    <option>Departamento</option>
-    <option>Casa</option>
-    <option>PH</option>
-    <option>Lote</option>
-    <option>Local</option>
-  </select>
-
-  <label>Metros cuadrados (m²)</label>
-  <input type="number" name="m2" min="0" step="1" style="width:100%;margin:6px 0 12px;padding:10px">
-
-  <label>Estado</label>
-  <select name="estado" style="width:100%;margin:6px 0 12px;padding:10px">
-    <option value="">—</option>
-    <option>A estrenar</option>
-    <option>Reciclado</option>
-    <option>A refaccionar</option>
-  </select>
-
-  <label>Precio esperado (opcional)</label>
-  <input name="precio_esperado" style="width:100%;margin:6px 0 12px;padding:10px">
-
-  <!-- Valores ocultos -->
-  <input type="hidden" name="intencion" value="Vender">
-
-  <label style="display:flex;gap:8px;align-items:center;margin:6px 0 12px">
-    <input type="checkbox" name="consentimiento" value="Si" required>
-    Acepto la <a href="/privacidad" target="_blank" rel="noopener">Política de Privacidad</a>.
+<form action="https://script.google.com/macros/s/AKfycbzwA0C7c-tVlHjQV4F-_XfMowUdcMtfRBxQikqy__iKeWhdlkni-Tg3SuVuMLZpxfYK5A/exec" method="POST" accept-charset="UTF-8">
+  <!-- Campos visibles -->
+  <label>Nombre
+    <input type="text" name="nombre" required>
+  </label>
+  <label>Email
+    <input type="email" name="email" required>
+  </label>
+  <label>Teléfono
+    <input type="tel" name="tel">
+  </label>
+  <label>Zona
+    <input type="text" name="zona" placeholder="Belgrano, Palermo, etc.">
+  </label>
+  <label>Tipo de propiedad
+    <input type="text" name="tipo" placeholder="2/3 ambientes, PH, casa…">
+  </label>
+  <label>Presupuesto (USD)
+    <input type="number" name="presupuesto" min="0" step="1000">
+  </label>
+  <label>Tiempo de compra
+    <select name="tiempo_compra">
+      <option value="0-3 meses">0-3 meses</option>
+      <option value="3-6 meses">3-6 meses</option>
+      <option value="6-12 meses">6-12 meses</option>
+      <option value=">12 meses">&gt;12 meses</option>
+    </select>
+  </label>
+  <label>Interés
+    <select name="interes">
+      <option value="alto">alto</option>
+      <option value="medio">medio</option>
+      <option value="bajo">bajo</option>
+    </select>
   </label>
 
-  <button type="submit" style="padding:10px 14px;border:0;border-radius:8px;background:#111;color:#fff">Solicitar valoración</button>
-  <p id="val-msg" hidden style="margin-top:10px;color:#25D366">¡Gracias! Te contactaremos a la brevedad.</p>
+  <!-- Hidden: seguridad básica y metadata -->
+  <input type="hidden" name="token" value="hadjes_sdfdsgnjkwernbwjik348534unn">
+  <input type="hidden" name="owner" value="Rodrigo">
+
+  <!-- Honeypot anti-bot (no remover) -->
+  <div style="position:absolute;left:-5000px;" aria-hidden="true">
+    <label>Dejar vacío: <input type="text" name="website"></label>
+  </div>
+
+  <button type="submit">Quiero recibir opciones</button>
 </form>
+
 
   <section id="contact">
     <h2>Contacto</h2>
