@@ -1,0 +1,11 @@
+<!doctype html><html lang="es"><meta charset="utf-8">
+<title>OAuth callback</title><meta name="viewport" content="width=device-width,initial-scale=1">
+<body style="font-family:system-ui;max-width:720px;margin:40px auto;padding:0 16px">
+<h1>OAuth callback</h1>
+<p>Copia el valor de <code>code</code> de la URL (barra del navegador) o de aquí abajo:</p>
+<pre id="out" style="background:#f5f5f5;padding:12px;border-radius:8px"></pre>
+<script>
+  const p = new URLSearchParams(location.search);
+  document.getElementById('out').textContent = location.search || 'sin parámetros';
+</script>
+</body></html>
