@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Hadjes — Oxanium 500 Preview</title>
+
+<!-- Loads Oxanium 500 from Google Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Oxanium:wght@500&display=swap" rel="stylesheet" />
+
+<style>
+  :root { --brand-font: 'Oxanium', system-ui, -apple-system, Segoe UI, Roboto, 'Helvetica Neue', Arial, 'Noto Sans', 'Liberation Sans', sans-serif; }
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: var(--brand-font); background: #fff; color: #000; }
+  .wrap { display: grid; grid-template-columns: 1fr 1fr; min-height: 100vh; }
+  .panel { display: flex; flex-direction: column; gap: 24px; justify-content: center; align-items: center; padding: 32px; }
+  .dark { background: #000; color: #fff; }
+  .guide { opacity: .6; font: 12px/1.4 system-ui, sans-serif; margin-bottom: 8px; }
+  .grid { display: grid; gap: 16px; }
+  .row { display: grid; grid-template-columns: 64px 1fr 1fr 1fr; gap: 24px; align-items: baseline; }
+  .size { font: 12px/1.2 system-ui, sans-serif; opacity: .75; }
+  .w16 { font-size: 16px; line-height: 1.1; }
+  .w24 { font-size: 24px; line-height: 1.1; }
+  .w96 { font-size: 96px; line-height: 1; }
+  .t-tight  { letter-spacing: -0.01em; }
+  .t-normal { letter-spacing:  0em; }
+  .t-loose  { letter-spacing:  0.02em; }
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <section class="panel">
+      <div class="guide">Black on white</div>
+      <div class="grid">
+        <div class="row">
+          <div class="size">16px</div>
+          <div class="w16 t-tight">Hadjes</div>
+          <div class="w16 t-normal">Hadjes</div>
+          <div class="w16 t-loose">Hadjes</div>
+        </div>
+        <div class="row">
+          <div class="size">24px</div>
+          <div class="w24 t-tight">Hadjes</div>
+          <div class="w24 t-normal">Hadjes</div>
+          <div class="w24 t-loose">Hadjes</div>
+        </div>
+        <div class="row">
+          <div class="size">96px</div>
+          <div class="w96 t-tight">Hadjes</div>
+          <div class="w96 t-normal">Hadjes</div>
+          <div class="w96 t-loose">Hadjes</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="panel dark">
+      <div class="guide">White on black</div>
+      <div class="grid">
+        <div class="row">
+          <div class="size">16px</div>
+          <div class="w16 t-tight">Hadjes</div>
+          <div class="w16 t-normal">Hadjes</div>
+          <div class="w16 t-loose">Hadjes</div>
+        </div>
+        <div class="row">
+          <div class="size">24px</div>
+          <div class="w24 t-tight">Hadjes</div>
+          <div class="w24 t-normal">Hadjes</div>
+          <div class="w24 t-loose">Hadjes</div>
+        </div>
+        <div class="row">
+          <div class="size">96px</div>
+          <div class="w96 t-tight">Hadjes</div>
+          <div class="w96 t-normal">Hadjes</div>
+          <div class="w96 t-loose">Hadjes</div>
+        </div>
+      </div>
+    </section>
+  </div>
+</body>
+</html>
