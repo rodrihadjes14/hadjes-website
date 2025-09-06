@@ -1448,6 +1448,7 @@ footer {
     padding: 2px, 5px, 2px, 5px;/* match .filter-bar's left margin (10px) */
     margin-top: 0;
     margin-bottom: 0;
+    letter-spacing: 0.03rem;
   }
 
   .header-links a {
