@@ -73,6 +73,19 @@ nav a { margin: 0 15px; }
 
 
 
+/* Bottom hero: solid black, no video showing */
+.hero.hero--bottom {
+  background: #000;           /* solid black backdrop */
+}
+
+.hero.hero--bottom .hero-video {
+  display: none;              /* don't render/load the video visually */
+}
+
+.hero.hero--bottom .hero-overlay {
+  background: transparent;    /* remove gray overlay */
+  color: #fff;                /* keep text readable on black */
+}
 
 
 
