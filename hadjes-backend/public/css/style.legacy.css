@@ -1088,8 +1088,8 @@ footer {
 
 /* Title and list: unchanged except small polish */
 .option-box h3 {
-  font-family: 'Exo 2', sans-serif;
-  font-weight: 400;
+  font-family: 'Oxanium', sans-serif;
+  font-weight: 500;
   letter-spacing: 0.015em;
   font-size: 1.4rem;
   margin-bottom: 10px;
@@ -1150,11 +1150,11 @@ footer {
 .who-we-are-section h1,
 .who-we-are-section h2 {
   text-align: center;
-  font-family: 'Exo 2', sans-serif;
-  font-weight: 400;
-  letter-spacing: 0.015em;
-  
+  font-family: 'Oxanium', sans-serif;
+  font-weight: 500;
+  letter-spacing: 0.1em;
 }
+
 
 .who-we-are-section h1 { 
   font-size: 2rem;
