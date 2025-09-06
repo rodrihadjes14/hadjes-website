@@ -2,7 +2,7 @@
 * { margin: 0; padding: 0; box-sizing: border-box; }
 /* Body text — Open Sans */
 body {
-  font-family: 'Manrope', sans-serif;
+  font-family: 'Manrope', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
   font-weight: 400;
   color: #222;
 }
@@ -130,7 +130,7 @@ header {
 /*FILTER BAR */
 
 .filter-bar {
-  font-family: 'Open Sans', sans-serif;
+  font-family: 'Manrope', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
   display: flex;
   flex-wrap: wrap;
   gap: 5px;
@@ -155,7 +155,7 @@ header {
 
 .filter-options label {
   margin-right: 15px;
-  font-family: 'Open Sans', sans-serif;
+  font-family: 'Manrope', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
   font-weight: 400;
   color: #272727;
   text-transform: capitalize;
@@ -191,6 +191,7 @@ header {
   border: none;
   border-radius: 8px;
   font-size: 16px;
+  font-family: 'Manrope', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
   padding: 0 20px;
   height: 34px;
   display: flex;  
@@ -256,13 +257,13 @@ header {
   background-color: #fdfdfd;
   border: 1px solid #eee;
   padding: 20px;
-  font-family: 'Exo 2', sans-serif;
+  font-family: 'Oxanium', sans-serif;
 }
 
 /* SIDEBAR DROPDOWN-TOGGLE */
 
 .dropdown-toggle {
-  font-family: 'Exo 2', sans-serif; /* 🔤 Change the font here */
+  font-family: 'Oxanium', sans-serif; /* 🔤 Change the font here */
   font-size: 16px;                      /* 🔠 Adjust size as needed */
   font-weight: 600;                     /* 🔸 Optional: makes text bolder */
   color: #272727;                          /* 🎨 Text color */
@@ -842,7 +843,7 @@ footer {
   padding: 20px;
   background-color: #fff;
   border: 1px solid #ddd;
-  font-family: Arial, sans-serif;
+  font-family: 'Manrope', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
 }
   
 
