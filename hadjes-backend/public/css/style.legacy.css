@@ -1059,7 +1059,7 @@ footer {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); /* a bit wider cards */
   gap: 10px;                     /* minimal space between boxes */
-  max-width: 1200px;             /* keeps the row from stretching too wide on big screens */
+  max-width: 1600px;             /* keeps the row from stretching too wide on big screens */
   margin: 40px auto;             /* center horizontally, sane top/bottom spacing */
   padding: 0 10px;               /* small side breathing room */
   justify-content: center;       /* center tracks when fewer columns fit */
