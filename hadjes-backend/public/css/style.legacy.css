@@ -2206,15 +2206,113 @@ footer {
 @media (min-width:768px){ .wa-float{ right:24px; bottom:24px; width:64px; height:64px; } }
 
 
-/* Logo image sizing */
-.brand-button img { 
-  height: 20px;  /* roughly 1.2rem, adjust as needed */
-  display: inline-block; 
-  vertical-align: middle;
+/* === Logo as styled text (Oxanium 500) === */
+.brand-button,
+.brand-button .brand-text {
+  font-family: 'Oxanium', sans-serif;
+  font-weight: 500;
+  /* Ensure exact word "Hadjes" (no auto uppercase) */
+  text-transform: none;
+  /* Keep subtle tracking similar to headings; tweak if needed */
+  letter-spacing: 0.01em;
+  line-height: 1; /* keeps the wordmark compact inside the button */
 }
-.footer-logo { 
-  height: 16px;  /* roughly 1rem, adjust for balance */
-  vertical-align: middle;
+
+/* Footer logo text */
+.site-footer .footer-logo-text {
+  font-family: 'Oxanium', sans-serif;
+  font-weight: 500;
+  text-transform: none;
+  letter-spacing: 0.01em;
+  line-height: 1.1; /* slightly more breathing room in footer */
 }
-img { max-width: 100%; height: auto; }
+
+/* === Headings as Oxanium (keep sizes & breakpoints) === */
+h1, h2, h3 {
+  font-family: 'Oxanium', sans-serif;
+  font-weight: 500;           /* Medium 500 */
+  letter-spacing: 0.015em;    /* keep existing tracking */
+  line-height: 1.1;           /* preserves current rhythm; adjust only if needed */
+}
+
+
+/* === Step 4: High-contrast header/footer (pure black) === */
+
+/* Header: pure black background + white brand/nav */
+header {
+  background: #000; /* was #272727 */
+}
+
+/* Brand button (keeps current padding/border/hover behavior) */
+header .brand-button {
+  color: #fff;
+  border-color: #fff;
+  text-decoration: none;
+}
+header .brand-button:hover {
+  background: #fff;      /* invert on hover (optional) */
+  color: #000;
+}
+
+/* Primary nav links in header */
+header nav a,
+header .header-links a {
+  color: #fff;
+  text-decoration: none;
+}
+header nav a:hover,
+header .header-links a:hover {
+  color: #ddd; /* subtle hover */
+}
+
+/* If you have a header controls/filters/search strip that must stay white,
+   keep it white to preserve contrast. Apply to the class(es) you use. */
+.header-controls,
+.filter-bar,
+.search-bar {
+  background: #fff;
+  color: #111;
+}
+.header-controls a,
+.filter-bar a,
+.search-bar a {
+  color: #111;
+}
+.header-controls input,
+.header-controls select,
+.header-controls button,
+.filter-bar input,
+.filter-bar select,
+.filter-bar button,
+.search-bar input,
+.search-bar select,
+.search-bar button {
+  color: #111;
+}
+
+/* Footer: pure black background + light text/links */
+footer,
+.site-footer {
+  background: #000; /* was #272727 */
+  color: #fff;
+}
+
+/* Footer links and section headings */
+.site-footer a {
+  color: #f0f4f9;
+  text-decoration: none;
+}
+.site-footer a:hover {
+  color: #fff;
+}
+.site-footer .footer-title {
+  color: #fff;
+}
+
+/* If social icons are inline SVGs, ensure they render light */
+.site-footer svg,
+.site-footer svg * {
+  fill: #fff;
+}
+
 
