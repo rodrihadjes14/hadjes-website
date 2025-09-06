@@ -1074,8 +1074,7 @@ footer {
 
   width: 100%;                   /* <-- was 80%; removes inner “mystery gaps” */
   height: 100%;
-   min-height: 300px;
-   min-height: 300px;
+  min-height: 400px;
 
   display: flex;
   flex-direction: column;
