@@ -1460,6 +1460,7 @@ footer {
     padding: 0 0;
     margin-top: 0;
     margin-bottom: 0;
+    letter-spacing: 0.03rem;
   }
 
   .header-links a:hover {
