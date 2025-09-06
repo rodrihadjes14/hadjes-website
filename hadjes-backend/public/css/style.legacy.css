@@ -2246,7 +2246,7 @@ footer {
   font-size: 1.2rem;
   font-weight: 700;
   text-transform: none;
-  letter-spacing: 0.02em;
+  letter-spacing: 0.2em;
   line-height: 1; /* slightly more breathing room in footer */
 }
 
