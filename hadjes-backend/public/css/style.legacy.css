@@ -170,7 +170,14 @@ header {
 
 /* Adds 10px of internal space inside the PLACEHOLDER AND DROPDOWN BOX */
 
-
+.property-type,
+.search-input {
+  padding: 6px 8px;
+  height: 28px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  font-size: 0.85rem;
+}
 
 .search-input {
   width: 200px;
