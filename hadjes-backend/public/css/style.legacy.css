@@ -2214,7 +2214,7 @@ footer {
   /* Ensure exact word "Hadjes" (no auto uppercase) */
   text-transform: none;
   /* Keep subtle tracking similar to headings; tweak if needed */
-  letter-spacing: 0.03em;
+  letter-spacing: 0.2em;
   line-height: 1; /* keeps the wordmark compact inside the button */
 }
 
