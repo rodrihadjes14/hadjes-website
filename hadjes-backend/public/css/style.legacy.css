@@ -1054,70 +1054,58 @@ footer {
 
 /* OPTION GRID AND BOXES */
 
-.options-grid {
+/* OPTIONS: fix layout — no aspect-ratio, stable 3-col, tidy spacing */
+.options-grid{
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); /* keep current behavior */
+  gap: 16px;
+  padding: 0 16px;  /* keep modest inner padding */
+  justify-content: center;
+  justify-items: stretch;
+  align-items: start;
+}
+
+/* Cards: equal-ish height without forcing squares */
+.option-box{
+  /* kill any previous square/100% height constraints */
+  aspect-ratio: auto !important;
+  height: auto !important;
+  min-height: 280px;          /* adjust 260–320px to taste */
+
+  /* use internal grid to balance H3 + list */
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); /* a bit wider cards */
-  gap: 10px;                     /* minimal space between boxes */
-  max-width: 1600px;             /* keeps the row from stretching too wide on big screens */
-  margin: 40px auto;             /* center horizontally, sane top/bottom spacing */
-  padding: 0 10px;               /* small side breathing room */
-  justify-content: center;       /* center tracks when fewer columns fit */
-  justify-items: stretch;        /* make items fill their tracks (pairs with width:100%) */
-  align-items: start;            /* keep rows aligned at the top */
-}
+  grid-template-rows: auto 1fr; /* H3 top, list fills remaining space */
+  align-items: start;
+  justify-items: center;
+  gap: 12px;
 
-/* Card: fill the grid column, no extra margins */
-.option-box {
-  background-color: #fff;
-  border-radius: 5px;
-  padding: 12px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-
-  width: 100%;                   /* <-- was 80%; removes inner “mystery gaps” */
-  height: 100%;
-  min-height: 100%;
-
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-items: center;           /* center content horizontally */
+  width: 100%;
+  margin: 0;
+  padding: 16px 20px;
   text-align: center;
-  margin: 0;                     /* ensure no outer margin */
+
+  /* visuals (keep your existing values if different) */
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,.1);
 }
 
-/* Title and list: unchanged except small polish */
-.option-box h3 {
-  font-family: 'Oxanium', sans-serif;
-  font-weight: 500;
-  letter-spacing: 0.015em;
-  font-size: 1.4rem;
-  margin-bottom: 10px;
+.option-box h3{
+  margin: 0;            /* spacing handled by gap */
+  line-height: 1.2;
 }
 
-.option-box ul {
-  list-style: none;
+.option-box ul{
+  margin: 0;
   padding: 0;
-  margin: 0;
-  flex-grow: 1;
+  list-style: none;
+  display: grid;        /* neat vertical rhythm */
+  gap: 8px;
+  align-content: start; /* items hug top of their area */
+  line-height: 1.5;
 }
 
-.option-box ul li {
-  margin-bottom: 0;
-}
 
-.option-box ul li a {
-  text-decoration: none;
-  color: #2f3133;
-  font-weight: 500;
-  font-size: 14px;
-  padding: 2px 6px;
-  margin: 0;
-  line-height: 1.2;              /* 0.8 was very tight; 1.2 reads better and still compact */
-}
 
-.option-box ul li a:hover {
-  text-decoration: underline;
-}
 
 
 /* Mobile tweak: stack cleanly with small gaps */
