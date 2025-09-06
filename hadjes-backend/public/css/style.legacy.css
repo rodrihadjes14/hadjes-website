@@ -2243,6 +2243,7 @@ footer {
 /* Footer logo text */
 .site-footer .footer-logo-text {
   font-family: 'Oxanium', sans-serif;
+  font-size: 1.2rem;
   font-weight: 500;
   text-transform: none;
   letter-spacing: 0.01em;
