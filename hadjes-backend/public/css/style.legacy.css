@@ -2244,11 +2244,13 @@ footer {
 .site-footer .footer-logo-text {
   font-family: 'Oxanium', sans-serif;
   font-size: 1.2rem;
-  font-weight: 500;
+  font-weight: 700;
   text-transform: none;
-  letter-spacing: 0.01em;
-  line-height: 1.1; /* slightly more breathing room in footer */
+  letter-spacing: 0.02em;
+  line-height: 1; /* slightly more breathing room in footer */
 }
+
+
 
 /* === Headings as Oxanium (keep sizes & breakpoints) === */
 h1, h2, h3 {
